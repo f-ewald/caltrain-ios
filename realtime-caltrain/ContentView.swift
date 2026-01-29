@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
@@ -20,10 +21,15 @@ struct ContentView: View {
 
     private var nearestStation: CaltrainStation? {
         guard let userLocation = locationManager.location else { return nil }
-        return NearestStationService.findNearestStation(
+        guard let result = NearestStationService.findNearestStation(
             to: userLocation,
             from: stations
-        )?.station
+        ) else { return nil }
+
+        // Cache location and nearest station for widget
+        LocationCacheService.saveLocation(userLocation, nearestStationId: result.station.stationId)
+
+        return result.station
     }
 
     private var activeStation: CaltrainStation? {
@@ -180,6 +186,9 @@ struct ContentView: View {
                 modelContext: modelContext
             )
             // Success - SwiftData @Query will auto-update UI
+
+            // Trigger widget reload
+            WidgetCenter.shared.reloadAllTimelines()
         } catch {
             // Show error but keep old data visible
             refreshError = error

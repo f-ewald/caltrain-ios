@@ -11,19 +11,13 @@ import SwiftData
 @main
 struct realtime_caltrainApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            TrainDeparture.self,
-            CaltrainStation.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try SharedModelContainer.create()
         } catch {
-            // If migration fails, provide helpful error message
+            // If creation fails, provide helpful error message
             print("❌ ModelContainer creation failed: \(error)")
             print("💡 Solution: Delete the app from simulator or run: xcrun simctl erase all")
-            print("   (Schema changed - added lastRefreshed to CaltrainStation)")
+            print("   Common causes: App Group not configured or schema migration issue")
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()

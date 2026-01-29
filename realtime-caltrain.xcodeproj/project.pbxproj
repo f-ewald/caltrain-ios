@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6BA3ECB32F2BF44500FC18EE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3ECB22F2BF44500FC18EE /* WidgetKit.framework */; };
+		6BA3ECB52F2BF44500FC18EE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3ECB42F2BF44500FC18EE /* SwiftUI.framework */; };
+		6BA3ECC42F2BF44600FC18EE /* CaltrainWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6BA3EC452F29E57700FC18EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,17 +27,70 @@
 			remoteGlobalIDString = 6BA3EC342F29E57600FC18EE;
 			remoteInfo = "realtime-caltrain";
 		};
+		6BA3ECC22F2BF44600FC18EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6BA3EC2D2F29E57600FC18EE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6BA3ECAF2F2BF44500FC18EE;
+			remoteInfo = CaltrainWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6BA3ECC92F2BF44600FC18EE /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6BA3ECC42F2BF44600FC18EE /* CaltrainWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6BA3EC352F29E57600FC18EE /* realtime-caltrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "realtime-caltrain.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC442F29E57700FC18EE /* realtime-caltrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "realtime-caltrainTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC4E2F29E57700FC18EE /* realtime-caltrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "realtime-caltrainUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CaltrainWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BA3ECB22F2BF44500FC18EE /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6BA3ECB42F2BF44500FC18EE /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		6BA3ECD32F2BF4C700FC18EE /* CaltrainWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CaltrainWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6BA3ECC52F2BF44600FC18EE /* Exceptions for "CaltrainWidget" folder in "CaltrainWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */;
+		};
+		6BA3ECD52F2BF6BA00FC18EE /* Exceptions for "realtime-caltrain" folder in "CaltrainWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/API/GTFSRealtimeModels.swift,
+				Models/CaltrainStation.swift,
+				Models/TrainDeparture.swift,
+				Services/CaltrainAPIClient.swift,
+				Services/DepartureService.swift,
+				Services/LocationCacheService.swift,
+				Services/NearestStationService.swift,
+				Services/SharedModelContainer.swift,
+				Services/StationDataLoader.swift,
+			);
+			target = 6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6BA3EC372F29E57600FC18EE /* realtime-caltrain */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6BA3ECD52F2BF6BA00FC18EE /* Exceptions for "realtime-caltrain" folder in "CaltrainWidgetExtension" target */,
+			);
 			path = "realtime-caltrain";
 			sourceTree = "<group>";
 		};
@@ -43,6 +102,14 @@
 		6BA3EC512F29E57700FC18EE /* realtime-caltrainUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "realtime-caltrainUITests";
+			sourceTree = "<group>";
+		};
+		6BA3ECB62F2BF44500FC18EE /* CaltrainWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6BA3ECC52F2BF44600FC18EE /* Exceptions for "CaltrainWidget" folder in "CaltrainWidgetExtension" target */,
+			);
+			path = CaltrainWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -69,15 +136,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BA3ECAD2F2BF44500FC18EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BA3ECB52F2BF44500FC18EE /* SwiftUI.framework in Frameworks */,
+				6BA3ECB32F2BF44500FC18EE /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		6BA3EC2C2F29E57600FC18EE = {
 			isa = PBXGroup;
 			children = (
+				6BA3ECD32F2BF4C700FC18EE /* CaltrainWidgetExtension.entitlements */,
 				6BA3EC372F29E57600FC18EE /* realtime-caltrain */,
 				6BA3EC472F29E57700FC18EE /* realtime-caltrainTests */,
 				6BA3EC512F29E57700FC18EE /* realtime-caltrainUITests */,
+				6BA3ECB62F2BF44500FC18EE /* CaltrainWidget */,
+				6BA3ECB12F2BF44500FC18EE /* Frameworks */,
 				6BA3EC362F29E57600FC18EE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,8 +167,18 @@
 				6BA3EC352F29E57600FC18EE /* realtime-caltrain.app */,
 				6BA3EC442F29E57700FC18EE /* realtime-caltrainTests.xctest */,
 				6BA3EC4E2F29E57700FC18EE /* realtime-caltrainUITests.xctest */,
+				6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6BA3ECB12F2BF44500FC18EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6BA3ECB22F2BF44500FC18EE /* WidgetKit.framework */,
+				6BA3ECB42F2BF44500FC18EE /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,10 +191,12 @@
 				6BA3EC312F29E57600FC18EE /* Sources */,
 				6BA3EC322F29E57600FC18EE /* Frameworks */,
 				6BA3EC332F29E57600FC18EE /* Resources */,
+				6BA3ECC92F2BF44600FC18EE /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6BA3ECC32F2BF44600FC18EE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6BA3EC372F29E57600FC18EE /* realtime-caltrain */,
@@ -163,6 +254,28 @@
 			productReference = 6BA3EC4E2F29E57700FC18EE /* realtime-caltrainUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BA3ECC62F2BF44600FC18EE /* Build configuration list for PBXNativeTarget "CaltrainWidgetExtension" */;
+			buildPhases = (
+				6BA3ECAC2F2BF44500FC18EE /* Sources */,
+				6BA3ECAD2F2BF44500FC18EE /* Frameworks */,
+				6BA3ECAE2F2BF44500FC18EE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6BA3ECB62F2BF44500FC18EE /* CaltrainWidget */,
+			);
+			name = CaltrainWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = CaltrainWidgetExtension;
+			productReference = 6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -184,6 +297,9 @@
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 6BA3EC342F29E57600FC18EE;
 					};
+					6BA3ECAF2F2BF44500FC18EE = {
+						CreatedOnToolsVersion = 26.2;
+					};
 				};
 			};
 			buildConfigurationList = 6BA3EC302F29E57600FC18EE /* Build configuration list for PBXProject "realtime-caltrain" */;
@@ -203,6 +319,7 @@
 				6BA3EC342F29E57600FC18EE /* realtime-caltrain */,
 				6BA3EC432F29E57700FC18EE /* realtime-caltrainTests */,
 				6BA3EC4D2F29E57700FC18EE /* realtime-caltrainUITests */,
+				6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -223,6 +340,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		6BA3EC4C2F29E57700FC18EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BA3ECAE2F2BF44500FC18EE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,6 +377,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BA3ECAC2F2BF44500FC18EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -265,6 +396,11 @@
 			isa = PBXTargetDependency;
 			target = 6BA3EC342F29E57600FC18EE /* realtime-caltrain */;
 			targetProxy = 6BA3EC4F2F29E57700FC18EE /* PBXContainerItemProxy */;
+		};
+		6BA3ECC32F2BF44600FC18EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */;
+			targetProxy = 6BA3ECC22F2BF44600FC18EE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -393,10 +529,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "realtime-caltrain/realtime-caltrain.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Caltrain;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to show nearby Caltrain stations and real-time train arrivals.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -425,10 +565,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "realtime-caltrain/realtime-caltrain.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Caltrain;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to show nearby Caltrain stations and real-time train arrivals.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -458,6 +602,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 1.0;
@@ -479,6 +624,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 1.0;
@@ -497,8 +643,10 @@
 		6BA3EC5F2F29E57700FC18EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrainUITests";
@@ -516,8 +664,10 @@
 		6BA3EC602F29E57700FC18EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrainUITests";
@@ -529,6 +679,68 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "realtime-caltrain";
+			};
+			name = Release;
+		};
+		6BA3ECC72F2BF44600FC18EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CaltrainWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CaltrainWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CaltrainWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrain.CaltrainWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6BA3ECC82F2BF44600FC18EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CaltrainWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H93944JUWW;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CaltrainWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CaltrainWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrain.CaltrainWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -567,6 +779,15 @@
 			buildConfigurations = (
 				6BA3EC5F2F29E57700FC18EE /* Debug */,
 				6BA3EC602F29E57700FC18EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6BA3ECC62F2BF44600FC18EE /* Build configuration list for PBXNativeTarget "CaltrainWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BA3ECC72F2BF44600FC18EE /* Debug */,
+				6BA3ECC82F2BF44600FC18EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
