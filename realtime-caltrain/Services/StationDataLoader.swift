@@ -64,6 +64,7 @@ struct StationDataLoader {
                 let newStation = CaltrainStation(
                     stationId: station.id,
                     name: station.name,
+                    shortCode: station.shortCode,
                     gtfsStopIdSouth: station.gtfsStopIdSouth,
                     gtfsStopIdNorth: station.gtfsStopIdNorth,
                     latitude: station.latitude,
@@ -71,7 +72,13 @@ struct StationDataLoader {
                     zoneNumber: station.zone,
                     address: station.address,
                     hasParking: station.hasParking,
-                    hasBikeParking: station.hasBikeParking
+                    hasBikeParking: station.hasBikeParking,
+                    parkingSpaces: station.parkingSpaces,
+                    bikeRacks: station.bikeRacks,
+                    hasBikeLockers: station.hasBikeLockers,
+                    hasRestrooms: station.hasRestrooms,
+                    ticketMachines: station.ticketMachines,
+                    hasElevator: station.hasElevator
                 )
                 modelContext.insert(newStation)
             }
@@ -114,6 +121,7 @@ struct StationData: Decodable {
 struct StationJSON: Decodable {
     let id: String
     let name: String
+    let shortCode: String
     let gtfsStopIdSouth: String
     let gtfsStopIdNorth: String
     let latitude: Double
@@ -122,4 +130,10 @@ struct StationJSON: Decodable {
     let address: String?
     let hasParking: Bool
     let hasBikeParking: Bool
+    let parkingSpaces: Int?
+    let bikeRacks: Int?
+    let hasBikeLockers: Bool
+    let hasRestrooms: Bool
+    let ticketMachines: Int?
+    let hasElevator: Bool
 }

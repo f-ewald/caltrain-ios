@@ -3,6 +3,7 @@
     {
       "id": "sf",
       "name": "San Francisco",
+      "shortCode": "SF",
       "gtfsStopIdSouth": "70011",
       "gtfsStopIdNorth": "70012",
       "latitude": 37.776439,
@@ -10,11 +11,18 @@
       "zone": 1,
       "address": "700 4th Street",
       "hasParking": false,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": null,
+      "bikeRacks": null,
+      "hasBikeLockers": false,
+      "hasRestrooms": true,
+      "ticketMachines": 10,
+      "hasElevator": false
     },
     {
       "id": "22nd",
       "name": "22nd Street",
+      "shortCode": "22ND",
       "gtfsStopIdSouth": "70021",
       "gtfsStopIdNorth": "70022",
       "latitude": 37.757583,
@@ -22,11 +30,18 @@
       "zone": 1,
       "address": "1450 Pennsylvania Avenue",
       "hasParking": false,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": null,
+      "bikeRacks": 27,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "bayshore",
       "name": "Bayshore",
+      "shortCode": "BAYSH",
       "gtfsStopIdSouth": "70031",
       "gtfsStopIdNorth": "70032",
       "latitude": 37.709544,
@@ -34,11 +49,18 @@
       "zone": 1,
       "address": "Tunnel Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 11,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": true
     },
     {
       "id": "so_sf",
       "name": "South San Francisco",
+      "shortCode": "SO SF",
       "gtfsStopIdSouth": "70041",
       "gtfsStopIdNorth": "70042",
       "latitude": 37.656406,
@@ -46,11 +68,18 @@
       "zone": 2,
       "address": "110 South Linden Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 81,
+      "bikeRacks": 24,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "san_bruno",
       "name": "San Bruno",
+      "shortCode": "SANB",
       "gtfsStopIdSouth": "70051",
       "gtfsStopIdNorth": "70052",
       "latitude": 37.630176,
@@ -58,11 +87,18 @@
       "zone": 2,
       "address": "1151 Huntington Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 178,
+      "bikeRacks": 7,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": true
     },
     {
       "id": "millbrae",
       "name": "Millbrae",
+      "shortCode": "MLBR",
       "gtfsStopIdSouth": "70061",
       "gtfsStopIdNorth": "70062",
       "latitude": 37.600271,
@@ -70,11 +106,18 @@
       "zone": 2,
       "address": "200 North Rollins Road",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 175,
+      "bikeRacks": 28,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 6,
+      "hasElevator": true
     },
     {
       "id": "broadway",
       "name": "Broadway",
+      "shortCode": "BWAY",
       "gtfsStopIdSouth": "70071",
       "gtfsStopIdNorth": "70072",
       "latitude": 37.594015,
@@ -82,11 +125,18 @@
       "zone": 2,
       "address": "1000 Broadway",
       "hasParking": false,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 119,
+      "bikeRacks": 18,
+      "hasBikeLockers": false,
+      "hasRestrooms": false,
+      "ticketMachines": 1,
+      "hasElevator": false
     },
     {
       "id": "burlingame",
       "name": "Burlingame",
+      "shortCode": "BURL",
       "gtfsStopIdSouth": "70081",
       "gtfsStopIdNorth": "70082",
       "latitude": 37.579719,
@@ -94,11 +144,18 @@
       "zone": 2,
       "address": "1001 California Drive",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 68,
+      "bikeRacks": 13,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "san_mateo",
       "name": "San Mateo",
+      "shortCode": "SM",
       "gtfsStopIdSouth": "70091",
       "gtfsStopIdNorth": "70092",
       "latitude": 37.568337,
@@ -106,11 +163,18 @@
       "zone": 2,
       "address": "100 South B Street",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 42,
+      "bikeRacks": 11,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": true
     },
     {
       "id": "hayward_park",
       "name": "Hayward Park",
+      "shortCode": "HAY",
       "gtfsStopIdSouth": "70101",
       "gtfsStopIdNorth": "70102",
       "latitude": 37.553051,
@@ -118,11 +182,18 @@
       "zone": 2,
       "address": "500 Hayward Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 213,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "hillsdale",
       "name": "Hillsdale",
+      "shortCode": "HILL",
       "gtfsStopIdSouth": "70111",
       "gtfsStopIdNorth": "70112",
       "latitude": 37.537756,
@@ -130,11 +201,18 @@
       "zone": 2,
       "address": "400 East Hillsdale Boulevard",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": null,
+      "bikeRacks": null,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 4,
+      "hasElevator": false
     },
     {
       "id": "belmont",
       "name": "Belmont",
+      "shortCode": "BEL",
       "gtfsStopIdSouth": "70121",
       "gtfsStopIdNorth": "70122",
       "latitude": 37.520443,
@@ -142,11 +220,18 @@
       "zone": 2,
       "address": "700 Ralston Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 375,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": true
     },
     {
       "id": "san_carlos",
       "name": "San Carlos",
+      "shortCode": "SC",
       "gtfsStopIdSouth": "70131",
       "gtfsStopIdNorth": "70132",
       "latitude": 37.507544,
@@ -154,11 +239,18 @@
       "zone": 2,
       "address": "601 Laurel Street",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 251,
+      "bikeRacks": 24,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "redwood_city",
       "name": "Redwood City",
+      "shortCode": "RWC",
       "gtfsStopIdSouth": "70141",
       "gtfsStopIdNorth": "70142",
       "latitude": 37.485412,
@@ -166,11 +258,18 @@
       "zone": 2,
       "address": "975 Middlefield Road",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 557,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": true,
+      "ticketMachines": 4,
+      "hasElevator": false
     },
     {
       "id": "atherton",
       "name": "Atherton",
+      "shortCode": "ATH",
       "gtfsStopIdSouth": "70151",
       "gtfsStopIdNorth": "70152",
       "latitude": 37.463629,
@@ -178,11 +277,18 @@
       "zone": 3,
       "address": "200 Dinkelspiel Station Lane",
       "hasParking": false,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": null,
+      "bikeRacks": null,
+      "hasBikeLockers": false,
+      "hasRestrooms": false,
+      "ticketMachines": null,
+      "hasElevator": false
     },
     {
       "id": "menlo_park",
       "name": "Menlo Park",
+      "shortCode": "MP",
       "gtfsStopIdSouth": "70161",
       "gtfsStopIdNorth": "70162",
       "latitude": 37.454473,
@@ -190,11 +296,18 @@
       "zone": 3,
       "address": "1100 Merrill Street",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 150,
+      "bikeRacks": 8,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "palo_alto",
       "name": "Palo Alto",
+      "shortCode": "PA",
       "gtfsStopIdSouth": "70171",
       "gtfsStopIdNorth": "70172",
       "latitude": 37.443156,
@@ -202,11 +315,18 @@
       "zone": 3,
       "address": "95 University Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 389,
+      "bikeRacks": 178,
+      "hasBikeLockers": true,
+      "hasRestrooms": true,
+      "ticketMachines": 6,
+      "hasElevator": false
     },
     {
       "id": "california_ave",
       "name": "California Avenue",
+      "shortCode": "CALA",
       "gtfsStopIdSouth": "70191",
       "gtfsStopIdNorth": "70192",
       "latitude": 37.429371,
@@ -214,11 +334,18 @@
       "zone": 3,
       "address": "4261 El Camino Real",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 185,
+      "bikeRacks": 33,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "san_antonio",
       "name": "San Antonio",
+      "shortCode": "SANA",
       "gtfsStopIdSouth": "70201",
       "gtfsStopIdNorth": "70202",
       "latitude": 37.407046,
@@ -226,11 +353,18 @@
       "zone": 3,
       "address": "390 California Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 199,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "mountain_view",
       "name": "Mountain View",
+      "shortCode": "MTV",
       "gtfsStopIdSouth": "70211",
       "gtfsStopIdNorth": "70212",
       "latitude": 37.394465,
@@ -238,11 +372,18 @@
       "zone": 3,
       "address": "600 West Evelyn Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 340,
+      "bikeRacks": 23,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "sunnyvale",
       "name": "Sunnyvale",
+      "shortCode": "SUNV",
       "gtfsStopIdSouth": "70221",
       "gtfsStopIdNorth": "70222",
       "latitude": 37.378427,
@@ -250,11 +391,18 @@
       "zone": 3,
       "address": "217 East Evelyn Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 446,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": true,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "lawrence",
       "name": "Lawrence",
+      "shortCode": "LAW",
       "gtfsStopIdSouth": "70231",
       "gtfsStopIdNorth": "70232",
       "latitude": 37.370598,
@@ -262,11 +410,18 @@
       "zone": 4,
       "address": "200 Lockheed Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 122,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "santa_clara",
       "name": "Santa Clara",
+      "shortCode": "SCL",
       "gtfsStopIdSouth": "70241",
       "gtfsStopIdNorth": "70242",
       "latitude": 37.352877,
@@ -274,11 +429,18 @@
       "zone": 4,
       "address": "1500 Warburton Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 289,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 3,
+      "hasElevator": false
     },
     {
       "id": "college_park",
       "name": "College Park",
+      "shortCode": "CP",
       "gtfsStopIdSouth": "70251",
       "gtfsStopIdNorth": "70252",
       "latitude": 37.343024,
@@ -286,11 +448,18 @@
       "zone": 4,
       "address": "780 Stockton Avenue",
       "hasParking": false,
-      "hasBikeParking": true
+      "hasBikeParking": false,
+      "parkingSpaces": 0,
+      "bikeRacks": null,
+      "hasBikeLockers": false,
+      "hasRestrooms": false,
+      "ticketMachines": 1,
+      "hasElevator": false
     },
     {
       "id": "san_jose",
       "name": "San Jose Diridon",
+      "shortCode": "SJ",
       "gtfsStopIdSouth": "70261",
       "gtfsStopIdNorth": "70262",
       "latitude": 37.329732,
@@ -298,11 +467,18 @@
       "zone": 4,
       "address": "65 Cahill Street",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 581,
+      "bikeRacks": 16,
+      "hasBikeLockers": true,
+      "hasRestrooms": true,
+      "ticketMachines": 5,
+      "hasElevator": true
     },
     {
       "id": "tamien",
       "name": "Tamien",
+      "shortCode": "TAM",
       "gtfsStopIdSouth": "70271",
       "gtfsStopIdNorth": "70272",
       "latitude": 37.311412,
@@ -310,11 +486,18 @@
       "zone": 5,
       "address": "2600 Lick Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 275,
+      "bikeRacks": 18,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": true
     },
     {
       "id": "capitol",
       "name": "Capitol",
+      "shortCode": "CAP",
       "gtfsStopIdSouth": "70281",
       "gtfsStopIdNorth": "70282",
       "latitude": 37.286796,
@@ -322,11 +505,18 @@
       "zone": 5,
       "address": "5005 Blaney Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 379,
+      "bikeRacks": 12,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "blossom_hill",
       "name": "Blossom Hill",
+      "shortCode": "BLOS",
       "gtfsStopIdSouth": "70291",
       "gtfsStopIdNorth": "70292",
       "latitude": 37.252935,
@@ -334,11 +524,18 @@
       "zone": 5,
       "address": "5000 Chynoweth Avenue",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 425,
+      "bikeRacks": 10,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 1,
+      "hasElevator": false
     },
     {
       "id": "morgan_hill",
       "name": "Morgan Hill",
+      "shortCode": "MORG",
       "gtfsStopIdSouth": "70301",
       "gtfsStopIdNorth": "70302",
       "latitude": 37.129493,
@@ -346,11 +543,18 @@
       "zone": 6,
       "address": "17320 Depot Street",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 486,
+      "bikeRacks": 12,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "san_martin",
       "name": "San Martin",
+      "shortCode": "SANM",
       "gtfsStopIdSouth": "70311",
       "gtfsStopIdNorth": "70312",
       "latitude": 37.086036,
@@ -358,11 +562,18 @@
       "zone": 6,
       "address": "12901 Monterey Road",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 167,
+      "bikeRacks": null,
+      "hasBikeLockers": false,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     },
     {
       "id": "gilroy",
       "name": "Gilroy",
+      "shortCode": "GILR",
       "gtfsStopIdSouth": "70321",
       "gtfsStopIdNorth": "70322",
       "latitude": 37.003084,
@@ -370,9 +581,15 @@
       "zone": 6,
       "address": "7150 Monterey Street",
       "hasParking": true,
-      "hasBikeParking": true
+      "hasBikeParking": true,
+      "parkingSpaces": 471,
+      "bikeRacks": 13,
+      "hasBikeLockers": true,
+      "hasRestrooms": false,
+      "ticketMachines": 2,
+      "hasElevator": false
     }
   ],
-  "version": "2026-01-updated",
-  "lastUpdated": "2026-01-28"
+  "version": "2026-01-updated-with-amenities",
+  "lastUpdated": "2026-01-29"
 }

@@ -36,8 +36,9 @@ struct DeparturesSection: View {
 #Preview {
     let now = Date()
     let mockStation = CaltrainStation(
-        stationId: "station1",
+        stationId: "palo_alto",
         name: "Palo Alto",
+        shortCode: "PA",
         gtfsStopIdSouth: "70171",
         gtfsStopIdNorth: "70172",
         latitude: 37.4439,

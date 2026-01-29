@@ -47,37 +47,32 @@ struct ActiveStationSection: View {
         Section {
             switch displayMode {
             case .selected(let station):
-                // Selected station - tappable to clear selection
-                Button {
-                    withAnimation {
-                        StationSelectionService.clearSelection(from: stations)
-                    }
-                } label: {
-                    VStack(alignment: .leading, spacing: 12) {
+                // Selected station - not clickable (use toolbar button to jump to nearest)
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(station.name)
                             .font(.title2)
                             .fontWeight(.bold)
-                            .foregroundStyle(.primary)
-
-                        HStack {
-                            Image(systemName: "pin.circle.fill")
-                                .foregroundStyle(.blue)
-                            Text("Tap to use nearest instead")
-                                .foregroundStyle(.secondary)
-                        }
-
-                        if let zone = station.zoneNumber {
-                            Text("Zone \(zone)")
-                                .font(.caption)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(4)
-                        }
+                        Text(station.shortCode)
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.gray.opacity(0.15))
+                            .cornerRadius(4)
                     }
-                    .padding(.vertical, 8)
+
+                    if let zone = station.zoneNumber {
+                        Text("Zone \(zone)")
+                            .font(.caption)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.blue.opacity(0.1))
+                            .cornerRadius(4)
+                    }
                 }
-                .buttonStyle(.plain)
+                .padding(.vertical, 8)
 
             case .nearest(let station, let distance):
                 // Nearest station - navigation link to all stations
@@ -85,9 +80,19 @@ struct ActiveStationSection: View {
                     AllStationsListView()
                 } label: {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(station.name)
-                            .font(.title2)
-                            .fontWeight(.bold)
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Text(station.name)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Text(station.shortCode)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color.gray.opacity(0.15))
+                                .cornerRadius(4)
+                        }
 
                         HStack {
                             Image(systemName: "location.fill")
@@ -154,9 +159,10 @@ struct ActiveStationSection: View {
 }
 
 #Preview {
-    let previewStation = CaltrainStation(
+    let previewStation1 = CaltrainStation(
         stationId: "sf",
         name: "San Francisco",
+        shortCode: "SF",
         gtfsStopIdSouth: "70011",
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
@@ -164,11 +170,27 @@ struct ActiveStationSection: View {
         zoneNumber: 1
     )
 
+    let previewStation2 = CaltrainStation(
+        stationId: "mountain_view",
+        name: "Mountain View",
+        shortCode: "MTV",
+        gtfsStopIdSouth: "70211",
+        gtfsStopIdNorth: "70212",
+        latitude: 37.3945,
+        longitude: -122.0760,
+        zoneNumber: 3,
+        isSelected: true
+    )
+
     NavigationStack {
         List {
             ActiveStationSection(
                 userLocation: CLLocation(latitude: 37.7749, longitude: -122.4194),
-                stations: [previewStation]
+                stations: [previewStation1]
+            )
+            ActiveStationSection(
+                userLocation: CLLocation(latitude: 37.7749, longitude: -122.4194),
+                stations: [previewStation2]
             )
         }
     }

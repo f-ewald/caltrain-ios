@@ -42,6 +42,56 @@ struct AllStationsListView: View {
             } header: {
                 Text("All Stations")
             }
+
+            // Legend section
+            Section {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Amenities Legend")
+                        .font(.headline)
+                        .padding(.bottom, 4)
+
+                    HStack(spacing: 12) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "parkingsign.circle.fill")
+                                .foregroundStyle(.blue)
+                            Text("123")
+                                .font(.caption)
+                        }
+                        Text("Parking spaces")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    HStack(spacing: 12) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "bicycle.circle.fill")
+                                .foregroundStyle(.green)
+                            Text("45")
+                                .font(.caption)
+                        }
+                        Text("Bike racks")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    HStack(spacing: 12) {
+                        Image(systemName: "toilet.circle.fill")
+                            .foregroundStyle(.purple)
+                        Text("Restrooms")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    HStack(spacing: 12) {
+                        Image(systemName: "arrow.up.arrow.down.circle.fill")
+                            .foregroundStyle(.orange)
+                        Text("Elevator")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
         }
         .navigationTitle("Stations")
         .navigationBarTitleDisplayMode(.inline)

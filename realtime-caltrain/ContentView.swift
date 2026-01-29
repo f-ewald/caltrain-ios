@@ -11,12 +11,12 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(LocationManager.self) private var locationManager
-    @Query private var departures: [TrainDeparture]
     @Query private var stations: [CaltrainStation]
 
     @State private var refreshError: Error?
     @State private var showErrorAlert = false
     @State private var isLoadingDepartures = false
+    @State private var activeStationId: String?
 
     private var nearestStation: CaltrainStation? {
         guard let userLocation = locationManager.location else { return nil }
@@ -27,22 +27,59 @@ struct ContentView: View {
     }
 
     private var activeStation: CaltrainStation? {
-        // TODO: Add support for selected station when manual selection is implemented
+        // Check if a station is manually selected
+        if let selected = StationSelectionService.selectedStation(from: stations) {
+            return selected
+        }
         return nearestStation
+    }
+
+    private var hasSelectedStation: Bool {
+        StationSelectionService.selectedStation(from: stations) != nil
+    }
+
+    // Fetch departures only for the active station to avoid accessing deleted objects
+    private var departures: [TrainDeparture] {
+        guard let stationId = activeStationId else { return [] }
+
+        let descriptor = FetchDescriptor<TrainDeparture>(
+            predicate: #Predicate { $0.stationId == stationId },
+            sortBy: [SortDescriptor(\TrainDeparture.scheduledTime)]
+        )
+
+        do {
+            return try modelContext.fetch(descriptor)
+        } catch {
+            #if DEBUG
+            print("Error fetching departures: \(error)")
+            #endif
+            return []
+        }
     }
 
     var body: some View {
         NavigationSplitView {
             List {
-                #if DEBUG
-                // Debug info section (only in debug builds)
-                Section("Debug Info") {
-                    Text("Stations loaded: \(stations.count)")
-                    Text("Location: \(locationManager.location != nil ? "Available" : "Waiting...")")
-                    Text("Active station: \(activeStation?.name ?? "None")")
-                    Text("Departures: \(departures.count)")
+                // Caltrain Header
+                Section {
+                    VStack(spacing: 8) {
+                        Text("CALTRAIN")
+                            .font(.system(size: 32, weight: .bold, design: .rounded))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [Color(red: 0.9, green: 0.1, blue: 0.1), Color(red: 0.8, green: 0.0, blue: 0.0)],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                        Text("Real-time Departures")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .listRowBackground(Color.clear)
                 }
-                #endif
 
                 // Active Station Section (selected or nearest)
                 ActiveStationSection(
@@ -56,6 +93,21 @@ struct ContentView: View {
                     departures: departures,
                     isLoading: isLoadingDepartures
                 )
+                
+                #if DEBUG
+                // Debug info section (only in debug builds)
+                Section("Debug Info") {
+                    Text("Stations loaded: \(stations.count)")
+                    Text("Location: \(locationManager.location != nil ? "Available" : "Waiting...")")
+                    Text("Active station: \(activeStation?.name ?? "None")")
+                    Text("Departures: \(departures.count)")
+                    if let lastRefresh = activeStation?.lastRefreshed {
+                        Text("Last loaded: \(lastRefresh.formatted(date: .omitted, time: .standard))")
+                    } else {
+                        Text("Last loaded: Never")
+                    }
+                }
+                #endif
             }
             .refreshable {
                 await refreshDepartures()
@@ -69,13 +121,46 @@ struct ContentView: View {
                 Text(error.localizedDescription)
             }
             .onAppear {
+                // Set initial active station ID
+                activeStationId = activeStation?.stationId
                 Task {
                     await loadInitialDepartures()
                 }
             }
             .onChange(of: activeStation) { _, newStation in
+                // Update active station ID first (this updates the departures query)
+                activeStationId = newStation?.stationId
                 Task {
                     await loadInitialDepartures()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    HStack(spacing: 16) {
+                        // Location button - jump to nearest station
+                        Button {
+                            withAnimation {
+                                StationSelectionService.clearSelection(from: stations)
+                            }
+                        } label: {
+                            Image(systemName: "location.fill")
+                        }
+                        .disabled(!hasSelectedStation)
+                        .opacity(hasSelectedStation ? 1.0 : 0.3)
+
+                        // Refresh button
+                        Button {
+                            Task {
+                                await refreshDepartures()
+                            }
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                                .frame(width: 20, height: 20)
+                                .rotationEffect(.degrees(isLoadingDepartures ? 360 : 0))
+                                .animation(isLoadingDepartures ? .linear(duration: 1).repeatForever(autoreverses: false) : .default, value: isLoadingDepartures)
+                        }
+                        .disabled(isLoadingDepartures)
+                    }
                 }
             }
         } detail: {

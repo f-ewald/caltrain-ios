@@ -6,52 +6,70 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a SwiftUI-based iOS application for real-time Caltrain tracking. The project uses:
 - **SwiftUI** for the UI framework
-- **SwiftData** for data persistence and model management
+- **Caltrain GTFS Realtime API** for live train data
+- **Core Location** for finding nearest stations
 - **Swift Testing** framework (not XCTest) for unit tests
 
 ## Building and Running
 
 ### Build the app
 ```bash
-xcodebuild -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -configuration Debug build
+xcodebuild -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -configuration Debug build
 ```
 
 ### Build and run on simulator
 ```bash
-xcodebuild -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 15' build
+xcodebuild -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 ```
 
 ### Run tests
 ```bash
 # Run all tests
-xcodebuild test -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 15'
+xcodebuild test -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 
 # Run specific test
-xcodebuild test -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 15' -only-testing:realtime-caltrainTests/realtime_caltrainTests/example
+xcodebuild test -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -only-testing:realtime-caltrainTests/realtime_caltrainTests/example
 ```
 
 ## Architecture
 
 ### App Entry Point
 - `realtime_caltrainApp.swift` - The main app struct with `@main` attribute
-- Sets up SwiftData `ModelContainer` with a shared schema at app launch
-- Model container is injected into the environment via `.modelContainer()` modifier
+- Initializes core services and sets up the app environment
 
 ### Data Layer
-- Uses **SwiftData** (not Core Data) for persistence
-- Models are defined with the `@Model` macro (see `Item.swift`)
-- The `ModelContainer` is configured with a `Schema` and `ModelConfiguration`
-- By default, data is persisted to disk (`isStoredInMemoryOnly: false`)
+- **Models**: Define the data structures for stations and departures
+  - `CaltrainStation.swift` - Station model with coordinates and metadata
+  - `TrainDeparture.swift` - Departure information model
+  - `GTFSRealtimeModels.swift` - API response models for GTFS Realtime feed
+- **Services**: Business logic and data fetching
+  - `CaltrainAPIClient.swift` - API client for Caltrain GTFS Realtime data
+  - `DepartureService.swift` - Manages departure data fetching and processing
+  - `NearestStationService.swift` - Determines nearest station based on location
+  - `StationDataLoader.swift` - Loads station data from JSON file
+  - `StationSelectionService.swift` - Manages user station selection state
+- **Data**: Static data files
+  - `caltrain_stations.json` - Station database with coordinates and names
 
 ### UI Layer
-- `ContentView.swift` - Root view with navigation split view pattern
-- Uses `@Query` property wrapper to fetch SwiftData models reactively
-- Accesses `modelContext` from environment to insert/delete items
+- `ContentView.swift` - Main view orchestrating the app UI
+- **Views**: Modular UI components
+  - `ActiveStationSection.swift` - Displays currently selected station
+  - `AllStationsListView.swift` - List of all available stations
+  - `DeparturesByDirectionView.swift` - Shows departures organized by direction
+  - `DeparturesSection.swift` - Section displaying upcoming departures
+  - `DepartureRow.swift` - Individual departure item view
+  - `EmptyDeparturesView.swift` - Empty state when no departures available
+  - `StationRow.swift` - Individual station list item
+  - `PulsingTrainLoadingView.swift` - Loading indicator
+- **Location**: Location services integration
+  - `LocationManager.swift` - Manages Core Location functionality
+  - `LocationTestView.swift` - Test view for location features
 
 ### Key Patterns
-1. **SwiftData Integration**: Models use `@Model` macro, views use `@Query` for fetching and `@Environment(\.modelContext)` for mutations
-2. **Navigation**: Uses `NavigationSplitView` for adaptive master-detail interface
-3. **Previews**: SwiftUI previews are configured with in-memory model containers for testing
+1. **Service-based Architecture**: Business logic is separated into focused service classes
+2. **Observable Objects**: Services use `@Observable` for reactive state management
+3. **Environment Objects**: Shared services are passed via SwiftUI environment
 
 ## Testing
 
@@ -64,18 +82,53 @@ xcodebuild test -project realtime-caltrain.xcodeproj -scheme realtime-caltrain -
 ## Project Structure
 
 ```
-realtime-caltrain/          # Main app target
-├── realtime_caltrainApp.swift  # App entry point, SwiftData setup
+realtime-caltrain/              # Main app target
+├── realtime_caltrainApp.swift  # App entry point
 ├── ContentView.swift           # Main UI view
-├── Item.swift                  # SwiftData model example
+├── LocationManager.swift       # Core Location wrapper
+├── LocationTestView.swift      # Location testing view
+├── Models/                     # Data models
+│   ├── CaltrainStation.swift
+│   ├── TrainDeparture.swift
+│   └── API/
+│       └── GTFSRealtimeModels.swift
+├── Services/                   # Business logic layer
+│   ├── CaltrainAPIClient.swift
+│   ├── DepartureService.swift
+│   ├── NearestStationService.swift
+│   ├── StationDataLoader.swift
+│   └── StationSelectionService.swift
+├── Views/                      # UI components
+│   ├── ActiveStationSection.swift
+│   ├── AllStationsListView.swift
+│   ├── DeparturesByDirectionView.swift
+│   ├── DeparturesSection.swift
+│   ├── DepartureRow.swift
+│   ├── EmptyDeparturesView.swift
+│   ├── PulsingTrainLoadingView.swift
+│   └── StationRow.swift
+├── Data/                       # Static data files
+│   └── caltrain_stations.json
+├── Supporting Files/           # Configuration files
+│   ├── Config.plist
+│   └── Config.plist.template
 └── Assets.xcassets/           # App assets
+    ├── AppIcon.appiconset
+    └── AccentColor.colorset
 
-realtime-caltrainTests/     # Unit tests (Swift Testing)
-realtime-caltrainUITests/   # UI tests
+realtime-caltrainTests/         # Unit tests (Swift Testing)
+├── realtime_caltrainTests.swift
+└── NearestStationServiceTests.swift
+
+realtime-caltrainUITests/       # UI tests
+├── realtime_caltrainUITests.swift
+└── realtime_caltrainUITestsLaunchTests.swift
 ```
 
 ## Important Notes
 
-- When adding new SwiftData models, register them in the `Schema` array in `realtime_caltrainApp.swift`
-- For previews that need SwiftData, use `.modelContainer(for: ModelType.self, inMemory: true)`
+- The app uses `Config.plist` for API configuration (based on `Config.plist.template`)
+- Station data is loaded from the bundled `caltrain_stations.json` file
+- Services use the `@Observable` macro for reactive state management
 - The app name uses underscores in code (`realtime_caltrain`) but hyphens in the folder/project name
+- Location permissions are required for nearest station functionality

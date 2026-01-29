@@ -14,9 +14,19 @@ struct StationRow: View {
         HStack(spacing: 12) {
             // Station info
             VStack(alignment: .leading, spacing: 4) {
-                Text(station.name)
-                    .font(.body)
-                    .fontWeight(.medium)
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text(station.name)
+                        .font(.body)
+                        .fontWeight(.medium)
+                    Text(station.shortCode)
+                        .font(.caption2)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 2)
+                        .background(Color.gray.opacity(0.15))
+                        .cornerRadius(3)
+                }
 
                 HStack(spacing: 8) {
                     if let zone = station.zoneNumber {
@@ -25,16 +35,34 @@ struct StationRow: View {
                             .foregroundStyle(.secondary)
                     }
 
-                    if station.hasParking {
-                        Image(systemName: "parkingsign.circle.fill")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
+                    if let parkingSpaces = station.parkingSpaces, parkingSpaces > 0 {
+                        HStack(spacing: 2) {
+                            Image(systemName: "parkingsign.circle.fill")
+                            Text("\(parkingSpaces)")
+                        }
+                        .font(.caption)
+                        .foregroundStyle(.blue)
                     }
 
-                    if station.hasBikeParking {
-                        Image(systemName: "bicycle.circle.fill")
+                    if let bikeRacks = station.bikeRacks, bikeRacks > 0 {
+                        HStack(spacing: 2) {
+                            Image(systemName: "bicycle.circle.fill")
+                            Text("\(bikeRacks)")
+                        }
+                        .font(.caption)
+                        .foregroundStyle(.green)
+                    }
+
+                    if station.hasRestrooms {
+                        Image(systemName: "toilet.circle.fill")
                             .font(.caption)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.purple)
+                    }
+
+                    if station.hasElevator {
+                        Image(systemName: "arrow.up.arrow.down.circle.fill")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
                     }
                 }
             }
@@ -66,15 +94,22 @@ struct StationRow: View {
 
 #Preview {
     let previewStation = CaltrainStation(
-        stationId: "sf",
-        name: "San Francisco",
-        gtfsStopIdSouth: "70011",
-        gtfsStopIdNorth: "70012",
-        latitude: 37.7764,
-        longitude: -122.3943,
-        zoneNumber: 1,
-        hasParking: false,
+        stationId: "palo_alto",
+        name: "Palo Alto",
+        shortCode: "PA",
+        gtfsStopIdSouth: "70171",
+        gtfsStopIdNorth: "70172",
+        latitude: 37.4432,
+        longitude: -122.1649,
+        zoneNumber: 3,
+        hasParking: true,
         hasBikeParking: true,
+        parkingSpaces: 389,
+        bikeRacks: 178,
+        hasBikeLockers: true,
+        hasRestrooms: true,
+        ticketMachines: 6,
+        hasElevator: false,
         isFavorite: false
     )
 
