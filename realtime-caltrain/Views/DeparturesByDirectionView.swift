@@ -131,5 +131,7 @@ struct DeparturesByDirectionView: View {
                 isLoading: false
             )
         }
+        
+        TrainLogo(size: 60, color: .red)
     }
 }

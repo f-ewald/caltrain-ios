@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TrainLogo: View {
     var size: CGFloat = 60
-    var color: Color = .blue
+    var color: Color = .red
 
     var body: some View {
         GeometryReader { geometry in
@@ -57,63 +57,15 @@ struct TrainLogo: View {
     }
 }
 
-// Alternative minimalist train icon
-struct MinimalTrainLogo: View {
-    var size: CGFloat = 60
-    var color: Color = .blue
-
-    var body: some View {
-        GeometryReader { geometry in
-            let width = geometry.size.width
-
-            VStack(spacing: width * 0.05) {
-                // Train body
-                RoundedRectangle(cornerRadius: width * 0.1)
-                    .fill(color)
-                    .overlay(
-                        HStack(spacing: width * 0.08) {
-                            Rectangle()
-                                .fill(Color.white.opacity(0.8))
-                                .frame(width: width * 0.18, height: width * 0.25)
-                                .cornerRadius(width * 0.03)
-
-                            Rectangle()
-                                .fill(Color.white.opacity(0.8))
-                                .frame(width: width * 0.18, height: width * 0.25)
-                                .cornerRadius(width * 0.03)
-                        }
-                    )
-                    .frame(height: width * 0.5)
-
-                // Wheels
-                HStack(spacing: width * 0.4) {
-                    Circle()
-                        .strokeBorder(color, lineWidth: width * 0.08)
-                        .frame(width: width * 0.2, height: width * 0.2)
-
-                    Circle()
-                        .strokeBorder(color, lineWidth: width * 0.08)
-                        .frame(width: width * 0.2, height: width * 0.2)
-                }
-            }
-        }
-        .frame(width: size, height: size)
-    }
-}
-
 // Preview
 struct TrainLogo_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 30) {
-            TrainLogo(size: 80, color: .blue)
+            TrainLogo(size: 120, color: .red)
+            TrainLogo(size: 100, color: .red)
+            TrainLogo(size: 80, color: .red)
             TrainLogo(size: 60, color: .red)
-            TrainLogo(size: 40, color: .green)
-
-            Divider()
-
-            MinimalTrainLogo(size: 80, color: .blue)
-            MinimalTrainLogo(size: 60, color: .purple)
-            MinimalTrainLogo(size: 40, color: .orange)
+            TrainLogo(size: 40, color: .red)
         }
         .padding()
     }

@@ -70,7 +70,7 @@ struct ContentView: View {
                 Section {
                     VStack(spacing: 8) {
                         Text("CALTRAIN")
-                            .font(.system(size: 32, weight: .bold, design: .rounded))
+                            .font(.system(size: 48, weight: .bold, design: .rounded))
                             .foregroundStyle(
                                 LinearGradient(
                                     colors: [Color(red: 0.9, green: 0.1, blue: 0.1), Color(red: 0.8, green: 0.0, blue: 0.0)],
@@ -83,7 +83,7 @@ struct ContentView: View {
                             .foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
+                    .padding(.bottom, 6)
                     .listRowBackground(Color.clear)
                 }
 
@@ -114,6 +114,25 @@ struct ContentView: View {
                     }
                 }
                 #endif
+
+                // Train Logo at the bottom
+                Section {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            TrainLogo(size: 40, color: Color(red: 0.9, green: 0.1, blue: 0.1))
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+                            Spacer()
+                            Text("v\(version)").font(.footnote)
+                            Spacer()
+                        }
+                    }
+                    .listRowBackground(Color.clear)
+                }
             }
             .refreshable {
                 await refreshDepartures()

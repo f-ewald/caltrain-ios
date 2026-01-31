@@ -47,32 +47,35 @@ struct ActiveStationSection: View {
         Section {
             switch displayMode {
             case .selected(let station):
-                // Selected station - not clickable (use toolbar button to jump to nearest)
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Text(station.name)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(station.shortCode)
-                            .font(.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.secondary)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(Color.gray.opacity(0.15))
-                            .cornerRadius(4)
+                NavigationLink {
+                    AllStationsListView()
+                } label: {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Text(station.name)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Text(station.shortCode)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(Color.gray.opacity(0.15))
+                                .cornerRadius(4)
+                        }
+                        
+                        if let zone = station.zoneNumber {
+                            Text("Zone \(zone)")
+                                .font(.caption)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color.blue.opacity(0.1))
+                                .cornerRadius(4)
+                        }
                     }
-
-                    if let zone = station.zoneNumber {
-                        Text("Zone \(zone)")
-                            .font(.caption)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color.blue.opacity(0.1))
-                            .cornerRadius(4)
-                    }
+                    .padding(.vertical, 8)
                 }
-                .padding(.vertical, 8)
 
             case .nearest(let station, let distance):
                 // Nearest station - navigation link to all stations
