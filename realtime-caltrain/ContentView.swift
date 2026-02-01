@@ -220,17 +220,6 @@ struct ContentView: View {
             #if DEBUG
             print("⚠️ No active station - waiting for location or station selection")
             #endif
-
-            // If no location yet, load mock data for first available station as fallback
-            if let firstStation = stations.first {
-                #if DEBUG
-                print("📍 Loading mock data for fallback station: \(firstStation.name)")
-                #endif
-                DepartureService.loadMockDeparturesIfNeeded(
-                    for: firstStation,
-                    modelContext: modelContext
-                )
-            }
             return
         }
 
@@ -241,7 +230,6 @@ struct ContentView: View {
         isLoadingDepartures = true
         defer { isLoadingDepartures = false }
 
-        // Try API first
         do {
             #if DEBUG
             print("🌐 Fetching from API...")
@@ -258,14 +246,7 @@ struct ContentView: View {
             #if DEBUG
             print("❌ API fetch failed: \(error.localizedDescription)")
             #endif
-            // Fallback to mock data on error
-            DepartureService.loadMockDeparturesIfNeeded(
-                for: station,
-                modelContext: modelContext
-            )
-            #if DEBUG
-            print("📝 Loaded mock data as fallback")
-            #endif
+            // No fallback - just show empty state
         }
     }
 }
