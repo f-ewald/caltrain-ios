@@ -64,16 +64,8 @@ struct CaltrainTimelineProvider: TimelineProvider {
             )
         }
 
-        // Check if cache is fresh (within 30 minutes)
-        if !LocationCacheService.isCacheFresh() {
-            return CaltrainWidgetEntry(
-                date: Date(),
-                station: nil,
-                northboundDepartures: [],
-                southboundDepartures: [],
-                error: .cacheStale
-            )
-        }
+        // Note: We no longer check if cache is stale - we'll attempt to fetch fresh data
+        // and fall back to cached data if the fetch fails
 
         // Fetch station from SwiftData
         let stationDescriptor = FetchDescriptor<CaltrainStation>(

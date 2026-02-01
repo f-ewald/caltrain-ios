@@ -161,6 +161,7 @@ struct DirectionSection: View {
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, isCompact ? 12 : 16)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                Spacer()
             } else {
                 VStack(spacing: isCompact ? 4 : 6) {
                     ForEach(departures, id: \.departureId) { departure in
