@@ -147,7 +147,7 @@ struct DirectionSection: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
 
-                Text(direction == .northbound ? "North (To SF)" : "South (To SJ)")
+                Text(direction == .northbound ? "North (San Francisco)" : "South (San Jose)")
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
             }
@@ -210,7 +210,7 @@ struct CompactDepartureRow: View {
                         .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
                 }
             }
-            .frame(width: 50, alignment: .leading)
+            .frame(width: 60, alignment: .leading)
 
             // Train type indicator
             TrainTypeIndicator(trainType: departure.trainType)

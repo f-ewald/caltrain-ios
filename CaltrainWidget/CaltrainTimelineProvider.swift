@@ -31,8 +31,8 @@ struct CaltrainTimelineProvider: TimelineProvider {
         Task {
             let entry = await fetchAndCreateEntry()
 
-            // Update every 5 minutes
-            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 5, to: Date())!
+            // Update every 2 minutes
+            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 2, to: Date())!
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
 
             completion(timeline)
