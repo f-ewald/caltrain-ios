@@ -9,7 +9,7 @@ import SwiftData
 import Foundation
 
 struct SharedModelContainer {
-    static let appGroupIdentifier = "group.net.fewald.realtime-caltrain"
+    static let appGroupIdentifier = "group.net.fewald.caltrain"
 
     static func create() throws -> ModelContainer {
         let schema = Schema([

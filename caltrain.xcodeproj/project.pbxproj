@@ -51,9 +51,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6BA3EC352F29E57600FC18EE /* realtime-caltrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "realtime-caltrain.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BA3EC442F29E57700FC18EE /* realtime-caltrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "realtime-caltrainTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BA3EC4E2F29E57700FC18EE /* realtime-caltrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "realtime-caltrainUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BA3EC352F29E57600FC18EE /* caltrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = caltrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BA3EC442F29E57700FC18EE /* caltrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BA3EC4E2F29E57700FC18EE /* caltrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CaltrainWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3ECB22F2BF44500FC18EE /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		6BA3ECB42F2BF44500FC18EE /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -151,22 +151,22 @@
 		6BA3EC2C2F29E57600FC18EE = {
 			isa = PBXGroup;
 			children = (
-				6BA3ECD32F2BF4C700FC18EE /* CaltrainWidgetExtension.entitlements */,
 				6BA3EC372F29E57600FC18EE /* realtime-caltrain */,
 				6BA3EC472F29E57700FC18EE /* realtime-caltrainTests */,
 				6BA3EC512F29E57700FC18EE /* realtime-caltrainUITests */,
 				6BA3ECB62F2BF44500FC18EE /* CaltrainWidget */,
 				6BA3ECB12F2BF44500FC18EE /* Frameworks */,
 				6BA3EC362F29E57600FC18EE /* Products */,
+				6BA3ECD32F2BF4C700FC18EE /* CaltrainWidgetExtension.entitlements */,
 			);
 			sourceTree = "<group>";
 		};
 		6BA3EC362F29E57600FC18EE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6BA3EC352F29E57600FC18EE /* realtime-caltrain.app */,
-				6BA3EC442F29E57700FC18EE /* realtime-caltrainTests.xctest */,
-				6BA3EC4E2F29E57700FC18EE /* realtime-caltrainUITests.xctest */,
+				6BA3EC352F29E57600FC18EE /* caltrain.app */,
+				6BA3EC442F29E57700FC18EE /* caltrainTests.xctest */,
+				6BA3EC4E2F29E57700FC18EE /* caltrainUITests.xctest */,
 				6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */,
 			);
 			name = Products;
@@ -184,9 +184,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6BA3EC342F29E57600FC18EE /* realtime-caltrain */ = {
+		6BA3EC342F29E57600FC18EE /* caltrain */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6BA3EC582F29E57700FC18EE /* Build configuration list for PBXNativeTarget "realtime-caltrain" */;
+			buildConfigurationList = 6BA3EC582F29E57700FC18EE /* Build configuration list for PBXNativeTarget "caltrain" */;
 			buildPhases = (
 				6BA3EC312F29E57600FC18EE /* Sources */,
 				6BA3EC322F29E57600FC18EE /* Frameworks */,
@@ -201,16 +201,16 @@
 			fileSystemSynchronizedGroups = (
 				6BA3EC372F29E57600FC18EE /* realtime-caltrain */,
 			);
-			name = "realtime-caltrain";
+			name = caltrain;
 			packageProductDependencies = (
 			);
 			productName = "realtime-caltrain";
-			productReference = 6BA3EC352F29E57600FC18EE /* realtime-caltrain.app */;
+			productReference = 6BA3EC352F29E57600FC18EE /* caltrain.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6BA3EC432F29E57700FC18EE /* realtime-caltrainTests */ = {
+		6BA3EC432F29E57700FC18EE /* caltrainTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6BA3EC5B2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "realtime-caltrainTests" */;
+			buildConfigurationList = 6BA3EC5B2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "caltrainTests" */;
 			buildPhases = (
 				6BA3EC402F29E57700FC18EE /* Sources */,
 				6BA3EC412F29E57700FC18EE /* Frameworks */,
@@ -224,16 +224,16 @@
 			fileSystemSynchronizedGroups = (
 				6BA3EC472F29E57700FC18EE /* realtime-caltrainTests */,
 			);
-			name = "realtime-caltrainTests";
+			name = caltrainTests;
 			packageProductDependencies = (
 			);
 			productName = "realtime-caltrainTests";
-			productReference = 6BA3EC442F29E57700FC18EE /* realtime-caltrainTests.xctest */;
+			productReference = 6BA3EC442F29E57700FC18EE /* caltrainTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		6BA3EC4D2F29E57700FC18EE /* realtime-caltrainUITests */ = {
+		6BA3EC4D2F29E57700FC18EE /* caltrainUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6BA3EC5E2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "realtime-caltrainUITests" */;
+			buildConfigurationList = 6BA3EC5E2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "caltrainUITests" */;
 			buildPhases = (
 				6BA3EC4A2F29E57700FC18EE /* Sources */,
 				6BA3EC4B2F29E57700FC18EE /* Frameworks */,
@@ -247,11 +247,11 @@
 			fileSystemSynchronizedGroups = (
 				6BA3EC512F29E57700FC18EE /* realtime-caltrainUITests */,
 			);
-			name = "realtime-caltrainUITests";
+			name = caltrainUITests;
 			packageProductDependencies = (
 			);
 			productName = "realtime-caltrainUITests";
-			productReference = 6BA3EC4E2F29E57700FC18EE /* realtime-caltrainUITests.xctest */;
+			productReference = 6BA3EC4E2F29E57700FC18EE /* caltrainUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */ = {
@@ -302,7 +302,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6BA3EC302F29E57600FC18EE /* Build configuration list for PBXProject "realtime-caltrain" */;
+			buildConfigurationList = 6BA3EC302F29E57600FC18EE /* Build configuration list for PBXProject "caltrain" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -316,9 +316,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6BA3EC342F29E57600FC18EE /* realtime-caltrain */,
-				6BA3EC432F29E57700FC18EE /* realtime-caltrainTests */,
-				6BA3EC4D2F29E57700FC18EE /* realtime-caltrainUITests */,
+				6BA3EC342F29E57600FC18EE /* caltrain */,
+				6BA3EC432F29E57700FC18EE /* caltrainTests */,
+				6BA3EC4D2F29E57700FC18EE /* caltrainUITests */,
 				6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */,
 			);
 		};
@@ -389,12 +389,12 @@
 /* Begin PBXTargetDependency section */
 		6BA3EC462F29E57700FC18EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6BA3EC342F29E57600FC18EE /* realtime-caltrain */;
+			target = 6BA3EC342F29E57600FC18EE /* caltrain */;
 			targetProxy = 6BA3EC452F29E57700FC18EE /* PBXContainerItemProxy */;
 		};
 		6BA3EC502F29E57700FC18EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6BA3EC342F29E57600FC18EE /* realtime-caltrain */;
+			target = 6BA3EC342F29E57600FC18EE /* caltrain */;
 			targetProxy = 6BA3EC4F2F29E57700FC18EE /* PBXContainerItemProxy */;
 		};
 		6BA3ECC32F2BF44600FC18EE /* PBXTargetDependency */ = {
@@ -548,7 +548,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrain";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -584,7 +584,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrain";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -606,7 +606,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrainTests";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrainTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -614,7 +614,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/realtime-caltrain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/realtime-caltrain";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/caltrain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/caltrain";
 			};
 			name = Debug;
 		};
@@ -628,7 +628,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrainTests";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrainTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -636,7 +636,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/realtime-caltrain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/realtime-caltrain";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/caltrain.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/caltrain";
 			};
 			name = Release;
 		};
@@ -649,7 +649,7 @@
 				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrainUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrainUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -670,7 +670,7 @@
 				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrainUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrainUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -701,7 +701,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrain.CaltrainWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain.CaltrainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -732,7 +732,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.fewald.realtime-caltrain.CaltrainWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain.CaltrainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -747,7 +747,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6BA3EC302F29E57600FC18EE /* Build configuration list for PBXProject "realtime-caltrain" */ = {
+		6BA3EC302F29E57600FC18EE /* Build configuration list for PBXProject "caltrain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6BA3EC562F29E57700FC18EE /* Debug */,
@@ -756,7 +756,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6BA3EC582F29E57700FC18EE /* Build configuration list for PBXNativeTarget "realtime-caltrain" */ = {
+		6BA3EC582F29E57700FC18EE /* Build configuration list for PBXNativeTarget "caltrain" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6BA3EC592F29E57700FC18EE /* Debug */,
@@ -765,7 +765,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6BA3EC5B2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "realtime-caltrainTests" */ = {
+		6BA3EC5B2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "caltrainTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6BA3EC5C2F29E57700FC18EE /* Debug */,
@@ -774,7 +774,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6BA3EC5E2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "realtime-caltrainUITests" */ = {
+		6BA3EC5E2F29E57700FC18EE /* Build configuration list for PBXNativeTarget "caltrainUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6BA3EC5F2F29E57700FC18EE /* Debug */,
