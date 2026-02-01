@@ -127,4 +127,179 @@ struct CaltrainWidgetEntry: TimelineEntry {
             error: nil
         )
     }
+
+    // Sample with minimal departures
+    static var sampleMinimal: CaltrainWidgetEntry {
+        let station = CaltrainStation(
+            stationId: "70011",
+            name: "San Francisco",
+            shortCode: "SF",
+            gtfsStopIdSouth: "70011",
+            gtfsStopIdNorth: "70012",
+            latitude: 37.7764,
+            longitude: -122.3943
+        )
+
+        let now = Date()
+        let southbound = [
+            TrainDeparture(
+                departureId: "SB101",
+                stationId: "70011",
+                direction: .southbound,
+                destinationName: "San Jose Diridon",
+                scheduledTime: now.addingTimeInterval(180),
+                estimatedTime: now.addingTimeInterval(180),
+                trainNumber: "101",
+                trainType: .babyBullet,
+                status: .onTime
+            )
+        ]
+
+        return CaltrainWidgetEntry(
+            date: now,
+            station: station,
+            northboundDepartures: [],
+            southboundDepartures: southbound,
+            error: nil
+        )
+    }
+
+    // Sample with delays
+    static var sampleWithDelays: CaltrainWidgetEntry {
+        let station = CaltrainStation(
+            stationId: "70081",
+            name: "Millbrae",
+            shortCode: "MB",
+            gtfsStopIdSouth: "70081",
+            gtfsStopIdNorth: "70082",
+            latitude: 37.5997,
+            longitude: -122.3867
+        )
+
+        let now = Date()
+        let northbound = [
+            TrainDeparture(
+                departureId: "NB202",
+                stationId: "70081",
+                direction: .northbound,
+                destinationName: "San Francisco",
+                scheduledTime: now.addingTimeInterval(420),
+                estimatedTime: now.addingTimeInterval(720),
+                trainNumber: "202",
+                trainType: .local,
+                status: .delayed
+            ),
+            TrainDeparture(
+                departureId: "NB204",
+                stationId: "70081",
+                direction: .northbound,
+                destinationName: "San Francisco",
+                scheduledTime: now.addingTimeInterval(1200),
+                estimatedTime: now.addingTimeInterval(1620),
+                trainNumber: "204",
+                trainType: .limited,
+                status: .delayed
+            )
+        ]
+
+        let southbound = [
+            TrainDeparture(
+                departureId: "SB203",
+                stationId: "70081",
+                direction: .southbound,
+                destinationName: "San Jose Diridon",
+                scheduledTime: now.addingTimeInterval(600),
+                estimatedTime: now.addingTimeInterval(600),
+                trainNumber: "203",
+                trainType: .local,
+                status: .onTime
+            )
+        ]
+
+        return CaltrainWidgetEntry(
+            date: now,
+            station: station,
+            northboundDepartures: northbound,
+            southboundDepartures: southbound,
+            error: nil
+        )
+    }
+}
+
+// MARK: - Previews
+
+#Preview("Medium - Sample Data", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sample
+}
+
+#Preview("Large - Sample Data", as: .systemLarge) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sample
+}
+
+#Preview("Medium - Minimal Departures", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sampleMinimal
+}
+
+#Preview("Large - With Delays", as: .systemLarge) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sampleWithDelays
+}
+
+#Preview("Medium - No Location Error", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry(
+        date: Date(),
+        station: nil,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: .noLocation
+    )
+}
+
+#Preview("Medium - No Data Error", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    let station = CaltrainStation(
+        stationId: "70262",
+        name: "Palo Alto",
+        shortCode: "PA",
+        gtfsStopIdSouth: "70262",
+        gtfsStopIdNorth: "70261",
+        latitude: 37.4438,
+        longitude: -122.1643
+    )
+
+    CaltrainWidgetEntry(
+        date: Date(),
+        station: station,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: .noData
+    )
+}
+
+#Preview("Large - API Error", as: .systemLarge) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry(
+        date: Date(),
+        station: nil,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: .apiError
+    )
+}
+
+#Preview("Medium - Placeholder", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.placeholder
 }

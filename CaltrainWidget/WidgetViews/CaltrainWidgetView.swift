@@ -110,7 +110,7 @@ struct WidgetHeaderView: View {
     var body: some View {
         HStack {
             // Caltrain logo/text
-            Text("CALTRAIN")
+            Text("CALTRAIN DEPARTURES")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundStyle(
                     LinearGradient(
@@ -145,9 +145,9 @@ struct DirectionSection: View {
             HStack {
                 Image(systemName: direction == .northbound ? "arrow.up.circle.fill" : "arrow.down.circle.fill")
                     .font(.system(size: 12))
-                    .foregroundStyle(direction == .northbound ? .blue : .orange)
+                    .foregroundStyle(.secondary)
 
-                Text(direction == .northbound ? "North" : "South")
+                Text(direction == .northbound ? "North (To SF)" : "South (To SJ)")
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
             }
@@ -210,7 +210,7 @@ struct CompactDepartureRow: View {
                         .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
                 }
             }
-            .frame(width: 45, alignment: .leading)
+            .frame(width: 50, alignment: .leading)
 
             // Train type indicator
             TrainTypeIndicator(trainType: departure.trainType)

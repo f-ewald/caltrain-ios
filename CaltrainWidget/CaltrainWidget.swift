@@ -25,3 +25,41 @@ struct CaltrainWidget: Widget {
         .contentMarginsDisabled()
     }
 }
+
+// MARK: - Previews
+
+#Preview("Medium - Sample", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sample
+}
+
+#Preview("Large - Sample", as: .systemLarge) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sample
+}
+
+#Preview("Medium - No Location", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry(
+        date: Date(),
+        station: nil,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: .noLocation
+    )
+}
+
+#Preview("Large - Error", as: .systemLarge) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry(
+        date: Date(),
+        station: nil,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: .apiError
+    )
+}
