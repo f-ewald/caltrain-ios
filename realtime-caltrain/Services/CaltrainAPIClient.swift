@@ -9,18 +9,7 @@ import Foundation
 
 /// API client for fetching real-time Caltrain data from 511.org
 struct CaltrainAPIClient {
-    private static let baseURL = "http://api.511.org/transit/tripupdates"
-
-    /// Load API key from Config.plist
-    private static func loadAPIKey() -> String? {
-        guard let path = Bundle.main.path(forResource: "Config", ofType: "plist"),
-              let config = NSDictionary(contentsOfFile: path),
-              let apiKey = config["CaltrainAPIKey"] as? String,
-              apiKey != "YOUR_511_API_KEY_HERE" else {
-            return nil
-        }
-        return apiKey
-    }
+    private static let baseURL = "https://caltrain-gateway.fewald.net/transit/tripupdates"
 
     /// Load agency ID from Config.plist (defaults to "CT")
     private static func loadAgencyID() -> String {
@@ -34,15 +23,15 @@ struct CaltrainAPIClient {
 
     /// Fetch trip updates for specific station (or all if stationId is nil)
     static func fetchTripUpdates(for stationId: String? = nil) async throws -> GTFSRealtimeResponse {
-        // Load API key
-        guard let apiKey = loadAPIKey() else {
-            throw APIError.invalidAPIKey
-        }
-
         // Build URL
-        guard let url = buildURL(apiKey: apiKey, agencyID: loadAgencyID()) else {
+        guard let url = buildURL(agencyID: loadAgencyID()) else {
             throw APIError.invalidResponse
         }
+        
+        #if DEBUG
+        // Log API url for debugging purposes
+        print(String(format: "Loading from URL: %@", url.absoluteString))
+        #endif
 
         // Make request
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -64,10 +53,9 @@ struct CaltrainAPIClient {
     }
 
     /// Build URL with query parameters
-    private static func buildURL(apiKey: String, agencyID: String) -> URL? {
+    private static func buildURL(agencyID: String) -> URL? {
         var components = URLComponents(string: baseURL)
         components?.queryItems = [
-            URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "agency", value: agencyID),
             URLQueryItem(name: "format", value: "json")
         ]
@@ -85,7 +73,7 @@ enum APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidAPIKey:
-            return "API key not configured. Please add your 511.org API key to Config.plist."
+            return "API key not configured. Please add your API key to Config.plist."
         case .networkError(let error):
             return "Network error: \(error.localizedDescription)"
         case .invalidResponse:
