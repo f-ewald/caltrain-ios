@@ -37,13 +37,7 @@ struct DepartureService {
         var newDepartures: [TrainDeparture] = []
         newDepartures.append(contentsOf: transformToTrainDepartures(
             response,
-            gtfsStopId: station.gtfsStopIdNorth,
-            friendlyStationId: station.stationId
-        ))
-        newDepartures.append(contentsOf: transformToTrainDepartures(
-            response,
-            gtfsStopId: station.gtfsStopIdSouth,
-            friendlyStationId: station.stationId
+            station: station
         ))
 
         #if DEBUG
@@ -95,13 +89,12 @@ struct DepartureService {
     /// Transform GTFS response to TrainDeparture models
     private static func transformToTrainDepartures(
         _ response: GTFSRealtimeResponse,
-        gtfsStopId: String,
-        friendlyStationId: String
+        station: CaltrainStation,
     ) -> [TrainDeparture] {
         var departures: [TrainDeparture] = []
 
         #if DEBUG
-        print("🔄 Transforming departures for GTFS stop ID: \(gtfsStopId) (friendly ID: \(friendlyStationId))")
+        print("🔄 Transforming departures for GTFS stop IDs: \(station.gtfsStopIdNorth) \(station.gtfsStopIdSouth) (friendly ID: \(station.stationId))")
         print("📊 Total entities in response: \(response.entities.count)")
         #endif
 
@@ -112,12 +105,14 @@ struct DepartureService {
             for stopUpdate in tripUpdate.stopTimeUpdates {
                 #if DEBUG
                 // Check if this stop matches our station
-                if stopUpdate.stopId == gtfsStopId {
-                    print("✅ Found matching stop: \(gtfsStopId) for trip \(tripUpdate.trip.tripId)")
+                if stopUpdate.stopId == station.gtfsStopIdNorth {
+                    print("✅ Found matching NORTH stop: \(station.gtfsStopIdNorth) [\(station.name)] for trip \(tripUpdate.trip.tripId)")
+                } else if stopUpdate.stopId == station.gtfsStopIdSouth {
+                    print("✅ Found matching SOUTH stop: \(station.gtfsStopIdSouth) [\(station.name)] for trip \(tripUpdate.trip.tripId)")
                 }
                 #endif
 
-                guard stopUpdate.stopId == gtfsStopId,
+                guard station.stopIds.contains(stopUpdate.stopId!),
                       let departure = stopUpdate.departure,
                       let departureTime = departure.time else {
                     continue
@@ -130,9 +125,9 @@ struct DepartureService {
                 // so that SwiftData queries can find these departures
                 let trainDeparture = TrainDeparture(
                     departureId: "\(tripUpdate.trip.tripId)_\(stopUpdate.stopSequence ?? 0)",
-                    stationId: friendlyStationId,  // Use friendly ID for database queries
-                    direction: inferDirection(from: tripUpdate.trip.directionId),
-                    destinationName: inferDestinationName(from: tripUpdate.trip),
+                    stationId: station.stationId,  // Use friendly ID for database queries
+                    direction: (stopUpdate.stopId == station.gtfsStopIdNorth) ? .northbound : .southbound,
+                    destinationName: (stopUpdate.stopId == station.gtfsStopIdNorth) ? "San Francisco" : "San Jose",
                     scheduledTime: estimatedTime,  // Use same time as estimated (no scheduled data available)
                     estimatedTime: estimatedTime,
                     trainNumber: extractTrainNumber(from: tripUpdate.trip.tripId),
@@ -149,19 +144,12 @@ struct DepartureService {
         }
 
         #if DEBUG
-        print("✅ Transformed \(departures.count) departures for GTFS stop \(gtfsStopId)")
+        print("✅ Transformed \(departures.count) departures for GTFS stop \(station.gtfsStopIdNorth) and \(station.gtfsStopIdSouth)")
         #endif
         return departures
     }
 
     // MARK: - Helper Methods
-
-    /// Infer direction from GTFS direction_id
-    private static func inferDirection(from directionId: Int?) -> Direction {
-        // GTFS convention: 0 = one direction, 1 = opposite
-        // For Caltrain: 0 = southbound, 1 = northbound
-        return (directionId == 1) ? .northbound : .southbound
-    }
 
     /// Infer destination name from trip data
     private static func inferDestinationName(from trip: Trip) -> String {
@@ -193,7 +181,7 @@ struct DepartureService {
 
         let routeIdUpper = routeId.uppercased()
         if routeIdUpper.contains("EXPRESS") || routeIdUpper.contains("BULLET") {
-            return .babyBullet
+            return .express
         } else if routeIdUpper.contains("LIMITED") {
             return .limited
         }

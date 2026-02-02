@@ -78,7 +78,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 scheduledTime: now.addingTimeInterval(1800),
                 estimatedTime: now.addingTimeInterval(1920),
                 trainNumber: "127",
-                trainType: .babyBullet,
+                trainType: .express,
                 status: .delayed
             )
         ]
@@ -114,7 +114,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 scheduledTime: now.addingTimeInterval(1920),
                 estimatedTime: now.addingTimeInterval(1920),
                 trainNumber: "128",
-                trainType: .babyBullet,
+                trainType: .express,
                 status: .onTime
             )
         ]
@@ -150,7 +150,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 scheduledTime: now.addingTimeInterval(180),
                 estimatedTime: now.addingTimeInterval(180),
                 trainNumber: "101",
-                trainType: .babyBullet,
+                trainType: .express,
                 status: .onTime
             )
         ]

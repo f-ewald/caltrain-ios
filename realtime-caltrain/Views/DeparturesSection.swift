@@ -24,6 +24,11 @@ struct DeparturesSection: View {
                     departures: filteredDepartures,
                     isLoading: isLoading
                 )
+                #if DEBUG
+                // Show GTFS station ids in debug mode
+                Text("North: \(activeStation!.gtfsStopIdNorth)")
+                Text("South: \(activeStation!.gtfsStopIdSouth)")
+                #endif
             } else {
                 Section {
                     EmptyDeparturesView()
@@ -64,7 +69,7 @@ struct DeparturesSection: View {
             destinationName: "San Jose",
             scheduledTime: now.addingTimeInterval(420),
             trainNumber: "221",
-            trainType: .babyBullet,
+            trainType: .express,
             status: .onTime,
             platformNumber: "1"
         )

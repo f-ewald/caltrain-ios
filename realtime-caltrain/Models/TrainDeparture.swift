@@ -71,8 +71,10 @@ enum Direction: String, Codable {
 
     var displayName: String {
         switch self {
-        case .northbound: return "Northbound (San Francisco)"
-        case .southbound: return "Southbound (San Jose)"
+        case .northbound: 
+            return "Northbound"
+        case .southbound: 
+            return "Southbound"
         }
     }
 
@@ -80,6 +82,13 @@ enum Direction: String, Codable {
         switch self {
         case .northbound: return "arrow.up.circle.fill"
         case .southbound: return "arrow.down.circle.fill"
+        }
+    }
+    
+    var terminus: String {
+        switch self {
+        case .northbound: "San Francisco"
+        case .southbound: "San Jose/Gilroy"
         }
     }
 
@@ -96,21 +105,21 @@ enum Direction: String, Codable {
 enum TrainType: String, Codable {
     case local
     case limited
-    case babyBullet
+    case express
 
     var displayName: String {
         switch self {
         case .local: return "Local"
         case .limited: return "Limited"
-        case .babyBullet: return "Baby Bullet"
+        case .express: return "Express"
         }
     }
 
     var color: Color {
         switch self {
         case .local: return .gray
-        case .limited: return .orange
-        case .babyBullet: return .red
+        case .limited: return Color(red:153/255, green: 215/255, blue: 220/255)
+        case .express: return .red
         }
     }
 }

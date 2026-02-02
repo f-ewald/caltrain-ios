@@ -41,6 +41,8 @@ struct DeparturesByDirectionView: View {
                         }
                     } header: {
                         Label(Direction.northbound.displayName, systemImage: Direction.northbound.iconName)
+                    } footer: {
+                        Text("To \(Direction.northbound.terminus)")
                     }
                 }
 
@@ -51,7 +53,10 @@ struct DeparturesByDirectionView: View {
                             DepartureRow(departure: departure)
                         }
                     } header: {
-                        Label(Direction.southbound.displayName, systemImage: Direction.southbound.iconName)
+                        let displayName = Direction.southbound.displayName
+                        Label(displayName, systemImage: Direction.southbound.iconName)
+                    } footer: {
+                        Text("To \(Direction.southbound.terminus)")
                     }
                 }
             }
@@ -101,7 +106,7 @@ struct DeparturesByDirectionView: View {
             destinationName: "San Jose",
             scheduledTime: now.addingTimeInterval(420),
             trainNumber: "221",
-            trainType: .babyBullet,
+            trainType: .express,
             status: .onTime,
             platformNumber: "1"
         )

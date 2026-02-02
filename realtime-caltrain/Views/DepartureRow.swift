@@ -130,7 +130,7 @@ struct DepartureRow: View {
             destinationName: "San Jose",
             scheduledTime: Date().addingTimeInterval(900),
             trainNumber: "221",
-            trainType: .babyBullet,
+            trainType: .express,
             status: .onTime,
             platformNumber: "1"
         ))

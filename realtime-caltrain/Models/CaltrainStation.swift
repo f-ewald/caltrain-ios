@@ -39,6 +39,11 @@ final class CaltrainStation {
     var location: CLLocation {
         CLLocation(latitude: latitude, longitude: longitude)
     }
+    
+    /// A set containing both stop ids for easier comparison.
+    var stopIds: Set<String> {
+        Set([gtfsStopIdNorth, gtfsStopIdSouth])
+    }
 
     init(stationId: String, name: String, shortCode: String, gtfsStopIdSouth: String, gtfsStopIdNorth: String,
          latitude: Double, longitude: Double,
