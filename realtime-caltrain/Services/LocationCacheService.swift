@@ -1,6 +1,6 @@
 //
 //  LocationCacheService.swift
-//  realtime-caltrain
+//  caltrain
 //
 //  Shares location data between app and widget using App Group UserDefaults
 //
@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 struct LocationCacheService {
-    private static let defaults = UserDefaults(suiteName: "group.net.fewald.realtime-caltrain")
+    private static let defaults = UserDefaults(suiteName: "group.net.fewald.caltrain")
 
     private enum Keys {
         static let lastLatitude = "lastLatitude"

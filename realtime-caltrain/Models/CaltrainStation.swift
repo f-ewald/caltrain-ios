@@ -1,6 +1,6 @@
 //
 //  CaltrainStation.swift
-//  realtime-caltrain
+//  caltrain
 //
 //  Created by Claude Code on 1/27/26.
 //

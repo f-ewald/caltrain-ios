@@ -1,13 +1,13 @@
 //
 //  LocationCacheServiceTests.swift
-//  realtime-caltrainTests
+//  caltrainTests
 //
 //  Tests for LocationCacheService
 //
 
 import Testing
 import CoreLocation
-@testable import realtime_caltrain
+@testable import caltrain
 
 struct LocationCacheServiceTests {
 
@@ -18,11 +18,11 @@ struct LocationCacheServiceTests {
         let testStationId = "70262"
 
         // When
-        LocationCacheService.saveLocation(testLocation, nearestStationId: testStationId)
+        await LocationCacheService.saveLocation(testLocation, nearestStationId: testStationId)
 
         // Then
-        let cachedLocation = LocationCacheService.cachedLocation()
-        let cachedStationId = LocationCacheService.cachedNearestStationId()
+        let cachedLocation = await LocationCacheService.cachedLocation()
+        let cachedStationId = await LocationCacheService.cachedNearestStationId()
 
         #expect(cachedLocation != nil)
         #expect(cachedLocation?.coordinate.latitude == testLocation.coordinate.latitude)
@@ -37,7 +37,7 @@ struct LocationCacheServiceTests {
         let testStationId = "70262"
 
         // When
-        LocationCacheService.saveLocation(testLocation, nearestStationId: testStationId)
+        await LocationCacheService.saveLocation(testLocation, nearestStationId: testStationId)
 
         // Then
         #expect(LocationCacheService.isCacheFresh() == true)
@@ -46,7 +46,7 @@ struct LocationCacheServiceTests {
     @Test("Cache returns nil when no data saved")
     func testCacheReturnsNilWhenEmpty() async throws {
         // Given - clear any existing cache by setting to zero
-        let defaults = UserDefaults(suiteName: "group.net.fewald.realtime-caltrain")
+        let defaults = UserDefaults(suiteName: "group.net.fewald.caltrain")
         defaults?.set(0.0, forKey: "lastLatitude")
         defaults?.set(0.0, forKey: "lastLongitude")
         defaults?.removeObject(forKey: "nearestStationId")
@@ -65,10 +65,10 @@ struct LocationCacheServiceTests {
         let testStationId = "70012" // San Francisco
 
         // When
-        LocationCacheService.saveLocation(testLocation, nearestStationId: testStationId)
+        await LocationCacheService.saveLocation(testLocation, nearestStationId: testStationId)
 
         // Then
-        let retrievedStationId = LocationCacheService.cachedNearestStationId()
+        let retrievedStationId = await LocationCacheService.cachedNearestStationId()
         #expect(retrievedStationId == testStationId)
     }
 }

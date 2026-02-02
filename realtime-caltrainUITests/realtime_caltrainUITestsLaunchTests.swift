@@ -1,6 +1,6 @@
 //
 //  realtime_caltrainUITestsLaunchTests.swift
-//  realtime-caltrainUITests
+//  caltrainUITests
 //
 //  Created by Friedrich Ewald on 1/27/26.
 //

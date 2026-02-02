@@ -1,6 +1,6 @@
 //
 //  NearestStationServiceTests.swift
-//  realtime-caltrainTests
+//  caltrainTests
 //
 //  Created by Claude Code on 1/27/26.
 //

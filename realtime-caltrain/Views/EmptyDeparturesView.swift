@@ -1,6 +1,6 @@
 //
 //  EmptyDeparturesView.swift
-//  realtime-caltrain
+//  caltrain
 //
 //  Created by Friedrich Ewald on 1/27/26.
 //

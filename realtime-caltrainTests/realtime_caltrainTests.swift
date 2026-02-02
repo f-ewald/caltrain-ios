@@ -1,12 +1,12 @@
 //
 //  realtime_caltrainTests.swift
-//  realtime-caltrainTests
+//  caltrainTests
 //
 //  Created by Friedrich Ewald on 1/27/26.
 //
 
 import Testing
-@testable import realtime_caltrain
+@testable import caltrain
 
 struct realtime_caltrainTests {
 

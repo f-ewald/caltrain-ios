@@ -1,6 +1,6 @@
 //
 //  PulsingTrainLoadingView.swift
-//  realtime-caltrain
+//  caltrain
 //
 //  Created by Claude Code on 1/28/26.
 //

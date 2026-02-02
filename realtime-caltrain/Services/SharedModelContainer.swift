@@ -1,6 +1,6 @@
 //
 //  SharedModelContainer.swift
-//  realtime-caltrain
+//  caltrain
 //
 //  Shared SwiftData container for app and widget extension
 //

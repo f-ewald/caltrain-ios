@@ -30,7 +30,7 @@ A WidgetKit extension that displays real-time Caltrain departures for your neare
 
 1. **Main App** → Caches location and fetches departure data → **Shared SwiftData Container**
 2. **Widget** → Reads cached location → Fetches data from shared container → Updates timeline
-3. **App Group** (`group.net.fewald.realtime-caltrain`) enables data sharing
+3. **App Group** (`group.net.fewald.caltrain`) enables data sharing
 
 ### Key Components
 
@@ -101,7 +101,7 @@ The widget handles several error scenarios:
 
 ### App Groups
 Both main app and widget must be configured with:
-- **App Group ID**: `group.net.fewald.realtime-caltrain`
+- **App Group ID**: `group.net.fewald.caltrain`
 - Enabled in **Signing & Capabilities** for both targets
 
 ### Shared Files
