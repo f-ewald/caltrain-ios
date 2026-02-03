@@ -77,10 +77,10 @@ struct DeparturesByDirectionView: View {
     let now = Date()
     let mockDepartures = [
         TrainDeparture(
-            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
+            shortDestinationName: "SF",
             scheduledTime: now,
             trainNumber: "151",
             trainType: .local,
@@ -88,10 +88,10 @@ struct DeparturesByDirectionView: View {
             platformNumber: "2"
         ),
         TrainDeparture(
-            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
+            shortDestinationName: "SF",
             scheduledTime: now.addingTimeInterval(900),
             estimatedTime: now.addingTimeInterval(1080),
             trainNumber: "152",
@@ -100,10 +100,10 @@ struct DeparturesByDirectionView: View {
             platformNumber: "2"
         ),
         TrainDeparture(
-            
             stationId: "station1",
             direction: .southbound,
             destinationName: "San Jose",
+            shortDestinationName: "SJ",
             scheduledTime: now.addingTimeInterval(420),
             trainNumber: "221",
             trainType: .express,

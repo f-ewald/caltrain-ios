@@ -205,8 +205,8 @@ struct CompactDepartureRow: View {
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(.primary)
 
-                if minutesUntilDeparture <= 10 {
-                    Text("\(minutesUntilDeparture)m")
+                if minutesUntilDeparture <= 20 {
+                    Text("in \(minutesUntilDeparture)m")
                         .font(.system(size: 9, weight: .medium))
                         .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
                 }
@@ -217,7 +217,7 @@ struct CompactDepartureRow: View {
             TrainTypeIndicator(trainType: departure.trainType)
 
             // Destination (truncated)
-            Text(departure.destinationName)
+            Text(departure.shortDestinationName)
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
@@ -280,7 +280,7 @@ struct ExtendedDepartureRow: View {
                     .foregroundStyle(.primary)
 
                 if minutesUntilDeparture <= 10 {
-                    Text("\(minutesUntilDeparture) min")
+                    Text("in \(minutesUntilDeparture) min")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
                 }

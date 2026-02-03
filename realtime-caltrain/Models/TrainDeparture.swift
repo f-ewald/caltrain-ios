@@ -14,6 +14,7 @@ final class TrainDeparture {
     var stationId: String
     var direction: Direction
     var destinationName: String
+    var shortDestinationName: String
     var scheduledTime: Date
     var estimatedTime: Date?
     var trainNumber: String
@@ -25,6 +26,7 @@ final class TrainDeparture {
         stationId: String,
         direction: Direction,
         destinationName: String,
+        shortDestinationName: String,
         scheduledTime: Date,
         estimatedTime: Date? = nil,
         trainNumber: String,
@@ -35,6 +37,7 @@ final class TrainDeparture {
         self.stationId = stationId
         self.direction = direction
         self.destinationName = destinationName
+        self.shortDestinationName = shortDestinationName
         self.scheduledTime = scheduledTime
         self.estimatedTime = estimatedTime
         self.trainNumber = trainNumber

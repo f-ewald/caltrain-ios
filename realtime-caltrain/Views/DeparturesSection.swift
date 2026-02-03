@@ -47,10 +47,10 @@ struct DeparturesSection: View {
     )
     let mockDepartures = [
         TrainDeparture(
-            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
+            shortDestinationName: "SF",
             scheduledTime: now,
             trainNumber: "151",
             trainType: .local,
@@ -58,10 +58,10 @@ struct DeparturesSection: View {
             platformNumber: "2"
         ),
         TrainDeparture(
-            
             stationId: "station1",
             direction: .southbound,
             destinationName: "San Jose",
+            shortDestinationName: "SJ",
             scheduledTime: now.addingTimeInterval(420),
             trainNumber: "221",
             trainType: .express,

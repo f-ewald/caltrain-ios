@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import WidgetKit
 
 struct DepartureService {
     // MARK: - API Integration
@@ -83,6 +84,12 @@ struct DepartureService {
         #if DEBUG
         print("📦 Replaced all departures: \(newDepartures.count) total")
         #endif
+        
+        #if DEBUG
+        print("Updating widget now")
+        #endif
+        // Updating widget with newest data upon fetch.
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     /// Transform GTFS response to TrainDeparture models for ALL stations
@@ -126,6 +133,7 @@ struct DepartureService {
                     stationId: station.stationId,  // Use friendly ID for database queries
                     direction: (stopId == station.gtfsStopIdNorth) ? .northbound : .southbound,
                     destinationName: (stopId == station.gtfsStopIdNorth) ? "San Francisco" : "San Jose",
+                    shortDestinationName: (stopId == station.gtfsStopIdNorth) ? "SF" : "SJ",
                     scheduledTime: estimatedTime,  // Use same time as estimated (no scheduled data available)
                     estimatedTime: estimatedTime,
                     trainNumber: extractTrainNumber(from: tripUpdate.trip.tripId),
