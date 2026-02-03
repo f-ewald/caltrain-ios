@@ -30,7 +30,7 @@ struct CaltrainAPIClient {
         
         #if DEBUG
         // Log API url for debugging purposes
-        print(String(format: "Loading from URL: %@", url.absoluteString))
+        print(String(format: "🌎 Loading from URL: %@", url.absoluteString))
         #endif
 
         // Make request
@@ -62,6 +62,8 @@ struct CaltrainAPIClient {
         return components?.url
     }
 }
+
+// MARK: API Errors
 
 /// API-specific errors
 enum APIError: LocalizedError {

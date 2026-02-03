@@ -99,7 +99,7 @@ struct ContentView: View {
                     departures: departures,
                     isLoading: isLoadingDepartures
                 )
-                
+
                 #if DEBUG
                 // Debug info section (only in debug builds)
                 Section("Debug Info") {
@@ -123,7 +123,7 @@ struct ContentView: View {
                             TrainLogo(size: 40, color: Color(red: 0.9, green: 0.1, blue: 0.1))
                             Spacer()
                         }
-                        
+
                         HStack {
                             let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
                             Spacer()

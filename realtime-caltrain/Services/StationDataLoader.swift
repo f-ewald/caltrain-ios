@@ -1,6 +1,6 @@
 //
 //  StationDataLoader.swift
-//  realtime-caltrain
+//  caltrain
 //
 //  Created by Claude Code on 1/27/26.
 //
@@ -17,18 +17,16 @@ struct StationDataLoader {
         guard existingCount == 0 else {
             #if DEBUG
             print("✅ Stations already loaded: \(existingCount)")
-
-            // Verify first station has GTFS IDs (schema migration check)
-            if let firstStation = try? modelContext.fetch(descriptor).first {
-                if firstStation.gtfsStopIdNorth.isEmpty {
-                    print("⚠️ CRITICAL: Stations missing GTFS IDs - schema migration needed!")
-                    print("💡 Please reset simulator: xcrun simctl erase all")
-                } else {
-                    print("✅ Stations have GTFS IDs: \(firstStation.gtfsStopIdNorth)")
-                }
-            }
             #endif
             return
+        }
+        
+        // Delete all data (for debugging purposes)
+        do {
+            // Remove any existing stations
+            try modelContext.delete(model: CaltrainStation.self)
+        } catch {
+            print("❌ ERROR: Failed to delete existing stations")
         }
 
         #if DEBUG

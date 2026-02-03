@@ -8,6 +8,9 @@
 import XCTest
 
 final class Screenshot: XCTestCase {
+    override class var runsForEachTargetApplicationUIConfiguration: Bool {
+        false
+    }
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,12 +25,53 @@ final class Screenshot: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    @MainActor
     func testExample() throws {
-        // UI tests must launch the application that they test.
         let app = XCUIApplication()
+        setupSnapshot(app)
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Wait for app to load and show header
+        let headerText = app.staticTexts["CALTRAIN"]
+        XCTAssertTrue(headerText.waitForExistence(timeout: 5))
+
+        // Wait for departures to load from API (adjust timing as needed)
+        sleep(4)
+
+        // Screenshot 1: Main screen with departures
+        snapshot("01-MainScreen")
+
+        // Screenshot 2: Scroll to show more departure information
+        app.swipeUp()
+        sleep(1)
+        snapshot("02-DeparturesList")
+
+        // Screenshot 3: Navigate to all stations list
+        // Tap on any button/link that navigates to station selection
+        let buttons = app.buttons
+        for i in 0..<buttons.count {
+            let button = buttons.element(boundBy: i)
+            if button.label.contains("Station") || button.label.contains("station") {
+                button.tap()
+                sleep(1)
+                snapshot("03-AllStations")
+
+                // Screenshot 4: Scroll to show station amenities
+                app.swipeUp()
+                sleep(1)
+                snapshot("04-StationAmenities")
+
+                // Return to main screen
+                if app.navigationBars.buttons.count > 0 {
+                    app.navigationBars.buttons.firstMatch.tap()
+                    sleep(1)
+                }
+                break
+            }
+        }
+
+        // Screenshot 5: Alternative view (scroll position)
+        snapshot("05-AlternateView")
     }
 
     func testLaunchPerformance() throws {

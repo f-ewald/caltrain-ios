@@ -20,6 +20,9 @@ struct DepartureService {
     ) async throws {
         // 1. Check throttling (skip if <20s since last refresh)
         if !forceRefresh && !shouldRefresh(station) {
+            #if DEBUG
+            print("Data is too recent, skipping download")
+            #endif
             return  // Silently skip - data is recent
         }
 
