@@ -126,8 +126,9 @@ struct ContentView: View {
 
                         HStack {
                             let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+                            let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
                             Spacer()
-                            Text("v\(version)").font(.footnote)
+                            Text("v\(version) build \(build)").font(.footnote)
                             Spacer()
                         }
                     }
