@@ -49,7 +49,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
         let now = Date()
         let northbound = [
             TrainDeparture(
-                departureId: "NB123",
                 stationId: "70262",
                 direction: .northbound,
                 destinationName: "San Francisco",
@@ -60,7 +59,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 status: .onTime
             ),
             TrainDeparture(
-                departureId: "NB125",
                 stationId: "70262",
                 direction: .northbound,
                 destinationName: "San Francisco",
@@ -71,7 +69,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 status: .onTime
             ),
             TrainDeparture(
-                departureId: "NB127",
                 stationId: "70262",
                 direction: .northbound,
                 destinationName: "San Francisco",
@@ -85,7 +82,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
         let southbound = [
             TrainDeparture(
-                departureId: "SB124",
                 stationId: "70262",
                 direction: .southbound,
                 destinationName: "San Jose Diridon",
@@ -96,7 +92,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 status: .onTime
             ),
             TrainDeparture(
-                departureId: "SB126",
                 stationId: "70262",
                 direction: .southbound,
                 destinationName: "Tamien",
@@ -107,7 +102,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 status: .onTime
             ),
             TrainDeparture(
-                departureId: "SB128",
                 stationId: "70262",
                 direction: .southbound,
                 destinationName: "Gilroy",
@@ -143,7 +137,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
         let now = Date()
         let southbound = [
             TrainDeparture(
-                departureId: "SB101",
                 stationId: "70011",
                 direction: .southbound,
                 destinationName: "San Jose Diridon",
@@ -179,7 +172,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
         let now = Date()
         let northbound = [
             TrainDeparture(
-                departureId: "NB202",
                 stationId: "70081",
                 direction: .northbound,
                 destinationName: "San Francisco",
@@ -190,7 +182,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
                 status: .delayed
             ),
             TrainDeparture(
-                departureId: "NB204",
                 stationId: "70081",
                 direction: .northbound,
                 destinationName: "San Francisco",
@@ -204,7 +195,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
         let southbound = [
             TrainDeparture(
-                departureId: "SB203",
                 stationId: "70081",
                 direction: .southbound,
                 destinationName: "San Jose Diridon",

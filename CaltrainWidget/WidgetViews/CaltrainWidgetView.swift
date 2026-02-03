@@ -164,7 +164,7 @@ struct DirectionSection: View {
                 Spacer()
             } else {
                 VStack(spacing: isCompact ? 4 : 6) {
-                    ForEach(departures, id: \.departureId) { departure in
+                    ForEach(departures, id: \.trainNumber) { departure in
                         if isCompact {
                             CompactDepartureRow(departure: departure)
                         } else {

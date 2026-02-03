@@ -11,7 +11,6 @@ import SwiftUI
 
 @Model
 final class TrainDeparture {
-    var departureId: String
     var stationId: String
     var direction: Direction
     var destinationName: String
@@ -23,7 +22,6 @@ final class TrainDeparture {
     var platformNumber: String?
 
     init(
-        departureId: String,
         stationId: String,
         direction: Direction,
         destinationName: String,
@@ -34,7 +32,6 @@ final class TrainDeparture {
         status: DepartureStatus,
         platformNumber: String? = nil
     ) {
-        self.departureId = departureId
         self.stationId = stationId
         self.direction = direction
         self.destinationName = destinationName

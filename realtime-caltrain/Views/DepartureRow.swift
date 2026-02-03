@@ -97,7 +97,7 @@ struct DepartureRow: View {
     List {
         // On Time
         DepartureRow(departure: TrainDeparture(
-            departureId: "1",
+            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
@@ -110,7 +110,7 @@ struct DepartureRow: View {
 
         // Delayed
         DepartureRow(departure: TrainDeparture(
-            departureId: "2",
+            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
@@ -124,7 +124,7 @@ struct DepartureRow: View {
 
         // On Time (Baby Bullet)
         DepartureRow(departure: TrainDeparture(
-            departureId: "3",
+            
             stationId: "station1",
             direction: .southbound,
             destinationName: "San Jose",
@@ -137,7 +137,7 @@ struct DepartureRow: View {
 
         // Cancelled
         DepartureRow(departure: TrainDeparture(
-            departureId: "4",
+            
             stationId: "station1",
             direction: .southbound,
             destinationName: "Tamien",

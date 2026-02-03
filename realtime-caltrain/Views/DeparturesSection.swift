@@ -12,16 +12,11 @@ struct DeparturesSection: View {
     let departures: [TrainDeparture]
     let isLoading: Bool
 
-    private var filteredDepartures: [TrainDeparture] {
-        guard let station = activeStation else { return [] }
-        return departures.filter { $0.stationId == station.stationId }
-    }
-
     var body: some View {
         Group {
             if activeStation != nil {
                 DeparturesByDirectionView(
-                    departures: filteredDepartures,
+                    departures: departures,
                     isLoading: isLoading
                 )
                 #if DEBUG
@@ -52,7 +47,7 @@ struct DeparturesSection: View {
     )
     let mockDepartures = [
         TrainDeparture(
-            departureId: "1",
+            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
@@ -63,7 +58,7 @@ struct DeparturesSection: View {
             platformNumber: "2"
         ),
         TrainDeparture(
-            departureId: "2",
+            
             stationId: "station1",
             direction: .southbound,
             destinationName: "San Jose",

@@ -33,7 +33,9 @@ final class CaltrainStation {
 
     var isFavorite: Bool         // User's favorite status
     var isSelected: Bool         // User's selected station status
-    var lastRefreshed: Date?     // Timestamp of last API refresh (for throttling)
+
+    @available(*, deprecated, message: "lastRefreshed is no longer used. Global refresh state is managed by DepartureRefreshState.")
+    var lastRefreshed: Date?     // Timestamp of last API refresh (DEPRECATED - use DepartureRefreshState instead)
 
     // Computed property for CLLocation
     var location: CLLocation {

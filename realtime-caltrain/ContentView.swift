@@ -107,7 +107,7 @@ struct ContentView: View {
                     Text("Location: \(locationManager.location != nil ? "Available" : "Waiting...")")
                     Text("Active station: \(activeStation?.name ?? "None")")
                     Text("Departures: \(departures.count)")
-                    if let lastRefresh = activeStation?.lastRefreshed {
+                    if let lastRefresh = DepartureRefreshState.lastRefresh {
                         Text("Last loaded: \(lastRefresh.formatted(date: .omitted, time: .standard))")
                     } else {
                         Text("Last loaded: Never")
@@ -194,14 +194,14 @@ struct ContentView: View {
     }
 
     private func refreshDepartures() async {
-        guard let station = activeStation else { return }
+        guard !stations.isEmpty else { return }
 
         isLoadingDepartures = true
         defer { isLoadingDepartures = false }
 
         do {
-            try await DepartureService.refreshDepartures(
-                for: station,
+            try await DepartureService.refreshAllDepartures(
+                allStations: stations,
                 modelContext: modelContext
             )
             // Success - SwiftData @Query will auto-update UI
@@ -216,15 +216,19 @@ struct ContentView: View {
     }
 
     private func loadInitialDepartures() async {
-        guard let station = activeStation else {
+        guard !stations.isEmpty else {
             #if DEBUG
-            print("⚠️ No active station - waiting for location or station selection")
+            print("⚠️ No stations loaded yet - waiting for station data")
             #endif
             return
         }
 
         #if DEBUG
-        print("🚂 Loading departures for: \(station.name)")
+        if let station = activeStation {
+            print("🚂 Loading departures (active station: \(station.name))")
+        } else {
+            print("🚂 Loading departures for all stations")
+        }
         #endif
 
         isLoadingDepartures = true
@@ -234,8 +238,8 @@ struct ContentView: View {
             #if DEBUG
             print("🌐 Fetching from API...")
             #endif
-            try await DepartureService.refreshDepartures(
-                for: station,
+            try await DepartureService.refreshAllDepartures(
+                allStations: stations,
                 modelContext: modelContext,
                 forceRefresh: true
             )

@@ -75,6 +75,7 @@
 				Models/CaltrainStation.swift,
 				Models/TrainDeparture.swift,
 				Services/CaltrainAPIClient.swift,
+				Services/DepartureRefreshState.swift,
 				Services/DepartureService.swift,
 				Services/LocationCacheService.swift,
 				Services/NearestStationService.swift,

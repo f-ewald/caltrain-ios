@@ -36,7 +36,7 @@ struct DeparturesByDirectionView: View {
                 // Northbound Section
                 if !northboundDepartures.isEmpty {
                     Section {
-                        ForEach(northboundDepartures, id: \.departureId) { departure in
+                        ForEach(northboundDepartures, id: \.trainNumber) { departure in
                             DepartureRow(departure: departure)
                         }
                     } header: {
@@ -49,7 +49,7 @@ struct DeparturesByDirectionView: View {
                 // Southbound Section
                 if !southboundDepartures.isEmpty {
                     Section {
-                        ForEach(southboundDepartures, id: \.departureId) { departure in
+                        ForEach(southboundDepartures, id: \.trainNumber) { departure in
                             DepartureRow(departure: departure)
                         }
                     } header: {
@@ -77,7 +77,7 @@ struct DeparturesByDirectionView: View {
     let now = Date()
     let mockDepartures = [
         TrainDeparture(
-            departureId: "1",
+            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
@@ -88,7 +88,7 @@ struct DeparturesByDirectionView: View {
             platformNumber: "2"
         ),
         TrainDeparture(
-            departureId: "2",
+            
             stationId: "station1",
             direction: .northbound,
             destinationName: "San Francisco",
@@ -100,7 +100,7 @@ struct DeparturesByDirectionView: View {
             platformNumber: "2"
         ),
         TrainDeparture(
-            departureId: "3",
+            
             stationId: "station1",
             direction: .southbound,
             destinationName: "San Jose",

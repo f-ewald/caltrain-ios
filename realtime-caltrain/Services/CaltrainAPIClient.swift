@@ -21,8 +21,8 @@ struct CaltrainAPIClient {
         return agencyID
     }
 
-    /// Fetch trip updates for specific station (or all if stationId is nil)
-    static func fetchTripUpdates(for stationId: String? = nil) async throws -> GTFSRealtimeResponse {
+    /// Fetch trip updates for ALL Caltrain stations
+    static func fetchTripUpdates() async throws -> GTFSRealtimeResponse {
         // Build URL
         guard let url = buildURL(agencyID: loadAgencyID()) else {
             throw APIError.invalidResponse

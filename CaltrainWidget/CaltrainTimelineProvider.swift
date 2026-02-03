@@ -67,13 +67,10 @@ struct CaltrainTimelineProvider: TimelineProvider {
         // Note: We no longer check if cache is stale - we'll attempt to fetch fresh data
         // and fall back to cached data if the fetch fails
 
-        // Fetch station from SwiftData
-        let stationDescriptor = FetchDescriptor<CaltrainStation>(
-            predicate: #Predicate { $0.stationId == cachedStationId }
-        )
-
-        guard let stations = try? modelContext.fetch(stationDescriptor),
-              let station = stations.first else {
+        // Fetch ALL stations from SwiftData
+        let allStationsDescriptor = FetchDescriptor<CaltrainStation>()
+        guard let allStations = try? modelContext.fetch(allStationsDescriptor),
+              !allStations.isEmpty else {
             return CaltrainWidgetEntry(
                 date: Date(),
                 station: nil,
@@ -83,10 +80,22 @@ struct CaltrainTimelineProvider: TimelineProvider {
             )
         }
 
-        // Try to refresh departures from API (respects throttling)
+        // Find the cached station for display
+        let station = allStations.first { $0.stationId == cachedStationId }
+        guard station != nil else {
+            return CaltrainWidgetEntry(
+                date: Date(),
+                station: nil,
+                northboundDepartures: [],
+                southboundDepartures: [],
+                error: .noStation
+            )
+        }
+
+        // Try to refresh departures from API for ALL stations (respects global throttling)
         do {
-            try await DepartureService.refreshDepartures(
-                for: station,
+            try await DepartureService.refreshAllDepartures(
+                allStations: allStations,
                 modelContext: modelContext
             )
         } catch {

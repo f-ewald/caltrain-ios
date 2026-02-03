@@ -12,110 +12,106 @@ struct DepartureService {
     // MARK: - API Integration
 
     /// Main refresh method called by UI
-    /// Fetches real-time departures from API and updates SwiftData
-    static func refreshDepartures(
-        for station: CaltrainStation,
+    /// Fetches real-time departures from API and updates SwiftData for ALL stations
+    static func refreshAllDepartures(
+        allStations: [CaltrainStation],
         modelContext: ModelContext,
         forceRefresh: Bool = false
     ) async throws {
-        // 1. Check throttling (skip if <20s since last refresh)
-        if !forceRefresh && !shouldRefresh(station) {
+        // 1. Check global throttling (skip if <20s since last refresh)
+        if !DepartureRefreshState.shouldRefresh(forceRefresh: forceRefresh) {
             #if DEBUG
-            print("Data is too recent, skipping download")
+            print("🕐 Departures refreshed recently, skipping")
             #endif
             return  // Silently skip - data is recent
         }
 
         #if DEBUG
-        print("🔄 Refreshing departures for station: \(station.name) (ID: \(station.stationId))")
-        print("   North GTFS ID: \(station.gtfsStopIdNorth)")
-        print("   South GTFS ID: \(station.gtfsStopIdSouth)")
+        print("🔄 Refreshing departures for ALL stations (\(allStations.count) total)")
         #endif
 
-        // 2. Fetch from API (gets all trips, we'll filter by station)
+        // 2. Fetch from API (gets all trips for all stations)
         let response = try await CaltrainAPIClient.fetchTripUpdates()
 
-        // 3. Transform API response to TrainDeparture models
-        // Fetch departures for both northbound and southbound platforms
-        var newDepartures: [TrainDeparture] = []
-        newDepartures.append(contentsOf: transformToTrainDepartures(
+        // 3. Transform API response to TrainDeparture models for ALL stations
+        let newDepartures = transformToTrainDepartures(
             response,
-            station: station
-        ))
+            allStations: allStations
+        )
 
         #if DEBUG
-        print("📦 Total departures collected: \(newDepartures.count)")
+        print("📦 Total departures collected: \(newDepartures.count) across \(allStations.count) stations")
         #endif
 
-        // 4. Replace old departures in database (use stationId, not GTFS IDs)
-        try replaceDepartures(for: station.stationId, with: newDepartures, modelContext: modelContext)
-
-        // 5. Update last refresh timestamp
-        station.lastRefreshed = Date()
-        try modelContext.save()
-
-        #if DEBUG
-        print("✅ Refresh complete for \(station.name)")
-        #endif
-    }
-
-    /// Check if refresh is allowed (>20s since last)
-    private static func shouldRefresh(_ station: CaltrainStation) -> Bool {
-        guard let lastRefresh = station.lastRefreshed else {
-            return true  // Never refreshed
+        var existingDepartures = Set<String>()
+        for departure in newDepartures {
+            let departureString = String(format: "%@_%@", departure.stationId, departure.trainNumber)
+            if !existingDepartures.contains(departureString) {
+                existingDepartures.insert(departureString)
+//                print(String(format: "No duplicate detected: %@", departureString))
+            } else {
+                print(String(format: "Duplicate detected: %@", departureString))
+            }
         }
-        return Date().timeIntervalSince(lastRefresh) >= 20
+
+        // 4. Replace ALL old departures with new ones (atomic operation)
+        try replaceAllDepartures(with: newDepartures, modelContext: modelContext)
+
+        // 5. Update global refresh timestamp
+        DepartureRefreshState.markRefreshed()
+
+        #if DEBUG
+        print("✅ Refresh complete for all stations")
+        #endif
     }
 
-    /// Delete old departures, insert new ones
-    private static func replaceDepartures(
-        for stationId: String,
+    /// Delete ALL old departures, insert ALL new ones (atomic replacement)
+    private static func replaceAllDepartures(
         with newDepartures: [TrainDeparture],
         modelContext: ModelContext
     ) throws {
-        // Delete existing departures for this station
-        let stationIdValue = stationId
-        let descriptor = FetchDescriptor<TrainDeparture>(
-            predicate: #Predicate { $0.stationId == stationIdValue }
-        )
-        let existing = try modelContext.fetch(descriptor)
-        for departure in existing {
-            modelContext.delete(departure)
-        }
+        // Delete ALL existing departures
+        try modelContext.delete(model: TrainDeparture.self)
 
-        // Insert new departures
-        for departure in newDepartures {
-            modelContext.insert(departure)
-        }
+
+        // Insert ALL new departures
+       for departure in newDepartures {
+           modelContext.insert(departure)
+       }
+       try modelContext.save()
+
+        #if DEBUG
+        print("📦 Replaced all departures: \(newDepartures.count) total")
+        #endif
     }
 
-    /// Transform GTFS response to TrainDeparture models
+    /// Transform GTFS response to TrainDeparture models for ALL stations
     private static func transformToTrainDepartures(
         _ response: GTFSRealtimeResponse,
-        station: CaltrainStation,
+        allStations: [CaltrainStation]
     ) -> [TrainDeparture] {
         var departures: [TrainDeparture] = []
 
+        // Create a lookup map: GTFS stop ID -> CaltrainStation
+        var stopIdToStation: [String: CaltrainStation] = [:]
+        for station in allStations {
+            stopIdToStation[station.gtfsStopIdNorth] = station
+            stopIdToStation[station.gtfsStopIdSouth] = station
+        }
+
         #if DEBUG
-        print("🔄 Transforming departures for GTFS stop IDs: \(station.gtfsStopIdNorth) \(station.gtfsStopIdSouth) (friendly ID: \(station.stationId))")
         print("📊 Total entities in response: \(response.entities.count)")
+        print("🗺️ Station lookup map created with \(stopIdToStation.count) GTFS stop IDs")
         #endif
 
+        // Process all trip updates
         for entity in response.entities {
             guard let tripUpdate = entity.tripUpdate else { continue }
 
-            // Filter to departures from this station only
+            // Process all stop updates for this trip
             for stopUpdate in tripUpdate.stopTimeUpdates {
-                #if DEBUG
-                // Check if this stop matches our station
-                if stopUpdate.stopId == station.gtfsStopIdNorth {
-                    print("✅ Found matching NORTH stop: \(station.gtfsStopIdNorth) [\(station.name)] for trip \(tripUpdate.trip.tripId)")
-                } else if stopUpdate.stopId == station.gtfsStopIdSouth {
-                    print("✅ Found matching SOUTH stop: \(station.gtfsStopIdSouth) [\(station.name)] for trip \(tripUpdate.trip.tripId)")
-                }
-                #endif
-
-                guard station.stopIds.contains(stopUpdate.stopId!),
+                guard let stopId = stopUpdate.stopId,
+                      let station = stopIdToStation[stopId],
                       let departure = stopUpdate.departure,
                       let departureTime = departure.time else {
                     continue
@@ -127,10 +123,9 @@ struct DepartureService {
                 // IMPORTANT: Use friendly station ID (e.g., "lawrence") not GTFS ID (e.g., "70231")
                 // so that SwiftData queries can find these departures
                 let trainDeparture = TrainDeparture(
-                    departureId: "\(tripUpdate.trip.tripId)_\(stopUpdate.stopSequence ?? 0)",
                     stationId: station.stationId,  // Use friendly ID for database queries
-                    direction: (stopUpdate.stopId == station.gtfsStopIdNorth) ? .northbound : .southbound,
-                    destinationName: (stopUpdate.stopId == station.gtfsStopIdNorth) ? "San Francisco" : "San Jose",
+                    direction: (stopId == station.gtfsStopIdNorth) ? .northbound : .southbound,
+                    destinationName: (stopId == station.gtfsStopIdNorth) ? "San Francisco" : "San Jose",
                     scheduledTime: estimatedTime,  // Use same time as estimated (no scheduled data available)
                     estimatedTime: estimatedTime,
                     trainNumber: extractTrainNumber(from: tripUpdate.trip.tripId),
@@ -139,16 +134,19 @@ struct DepartureService {
                     platformNumber: nil  // Not provided in API response
                 )
 
-                #if DEBUG
-                print("🚂 Created departure: Train \(trainDeparture.trainNumber) to \(trainDeparture.destinationName) at \(estimatedTime)")
-                #endif
                 departures.append(trainDeparture)
             }
         }
 
         #if DEBUG
-        print("✅ Transformed \(departures.count) departures for GTFS stop \(station.gtfsStopIdNorth) and \(station.gtfsStopIdSouth)")
+        print("✅ Transformed \(departures.count) departures for \(allStations.count) stations")
+        // Print breakdown by station for debugging
+        let departuresByStation = Dictionary(grouping: departures, by: { $0.stationId })
+        for (stationId, stationDepartures) in departuresByStation.sorted(by: { $0.key < $1.key }) {
+            print("   \(stationId): \(stationDepartures.count) departures")
+        }
         #endif
+
         return departures
     }
 
