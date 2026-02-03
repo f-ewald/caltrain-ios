@@ -51,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B5123482F32544B00E7EDD8 /* caltrain-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "caltrain-Info.plist"; sourceTree = "<group>"; };
 		6BA3EC352F29E57600FC18EE /* caltrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = caltrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC442F29E57700FC18EE /* caltrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC4E2F29E57700FC18EE /* caltrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +153,7 @@
 		6BA3EC2C2F29E57600FC18EE = {
 			isa = PBXGroup;
 			children = (
+				6B5123482F32544B00E7EDD8 /* caltrain-Info.plist */,
 				6BA3EC372F29E57600FC18EE /* realtime-caltrain */,
 				6BA3EC472F29E57700FC18EE /* realtime-caltrainTests */,
 				6BA3EC512F29E57700FC18EE /* realtime-caltrainUITests */,
@@ -534,10 +536,11 @@
 				CODE_SIGN_ENTITLEMENTS = "realtime-caltrain/realtime-caltrain.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H93944JUWW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "caltrain-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Caltrain;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to show nearby Caltrain stations and real-time train arrivals.";
@@ -574,10 +577,11 @@
 				CODE_SIGN_ENTITLEMENTS = "realtime-caltrain/realtime-caltrain.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H93944JUWW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "caltrain-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Caltrain;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to show nearby Caltrain stations and real-time train arrivals.";
@@ -697,7 +701,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CaltrainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CaltrainWidget/Info.plist;
@@ -728,7 +732,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = CaltrainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CaltrainWidget/Info.plist;
