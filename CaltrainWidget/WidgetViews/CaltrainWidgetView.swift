@@ -147,7 +147,7 @@ struct DirectionSection: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
 
-                Text(direction == .northbound ? "North (San Francisco)" : "South (San Jose)")
+                Text(direction == .northbound ? "Northbound" : "Southbound")
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.secondary)
             }
@@ -218,7 +218,7 @@ struct CompactDepartureRow: View {
 
             // Destination (truncated)
             Text(departure.shortDestinationName)
-                .font(.system(size: 10))
+                .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -230,6 +230,10 @@ struct CompactDepartureRow: View {
                 Image(systemName: "exclamationmark.circle.fill")
                     .font(.system(size: 10))
                     .foregroundStyle(.red)
+            } else if departure.status == .onTime {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 10))
+                    .foregroundStyle(.green)
             }
         }
         .padding(.horizontal, 12)
@@ -279,7 +283,7 @@ struct ExtendedDepartureRow: View {
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundStyle(.primary)
 
-                if minutesUntilDeparture <= 10 {
+                if minutesUntilDeparture <= 20 {
                     Text("in \(minutesUntilDeparture) min")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
