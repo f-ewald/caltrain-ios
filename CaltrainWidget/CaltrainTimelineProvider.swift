@@ -9,41 +9,36 @@ import WidgetKit
 import SwiftData
 import CoreLocation
 
-struct CaltrainTimelineProvider: TimelineProvider {
+struct CaltrainTimelineProvider: AppIntentTimelineProvider {
+    func snapshot(for configuration: CaltrainConfigurationIntent, in context: Context) async -> CaltrainWidgetEntry {
+        CaltrainWidgetEntry.sample
+    }
+    
+    func timeline(for configuration: CaltrainConfigurationIntent, in context: Context) async -> Timeline<CaltrainWidgetEntry> {
+        let entry = await fetchAndCreateEntry(for: configuration)
+
+        // Update every 2 minutes
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 1, to: Date())!
+        let timeline = Timeline(
+            entries: [entry],
+            policy: .after(nextUpdate))
+        return timeline
+    }
+    
+    typealias Intent = CaltrainConfigurationIntent
+    
     typealias Entry = CaltrainWidgetEntry
 
     func placeholder(in context: Context) -> CaltrainWidgetEntry {
         CaltrainWidgetEntry.placeholder
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (CaltrainWidgetEntry) -> Void) {
-        if context.isPreview {
-            completion(CaltrainWidgetEntry.sample)
-        } else {
-            Task {
-                let entry = await fetchAndCreateEntry()
-                completion(entry)
-            }
-        }
-    }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<CaltrainWidgetEntry>) -> Void) {
-        Task {
-            let entry = await fetchAndCreateEntry()
-
-            // Update every 2 minutes
-            let nextUpdate = Calendar.current.date(byAdding: .minute, value: 2, to: Date())!
-            let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-
-            completion(timeline)
-        }
-    }
-
-    private func fetchAndCreateEntry() async -> CaltrainWidgetEntry {
+    private func fetchAndCreateEntry(for configuration: CaltrainConfigurationIntent) async -> CaltrainWidgetEntry {
         // Get shared model container
         guard let container = try? SharedModelContainer.create() else {
             return CaltrainWidgetEntry(
                 date: Date(),
+                configuration: CaltrainConfigurationIntent(),
                 station: nil,
                 northboundDepartures: [],
                 southboundDepartures: [],
@@ -53,15 +48,25 @@ struct CaltrainTimelineProvider: TimelineProvider {
 
         let modelContext = ModelContext(container)
 
-        // Get cached nearest station ID
-        guard let cachedStationId = LocationCacheService.cachedNearestStationId() else {
-            return CaltrainWidgetEntry(
-                date: Date(),
-                station: nil,
-                northboundDepartures: [],
-                southboundDepartures: [],
-                error: .noLocation
-            )
+        // Determine which station to display
+        let selectedStationId: String
+        if let configuredStation = configuration.station,
+           configuredStation.id != "_my_location_" {
+            // User selected a specific station
+            selectedStationId = configuredStation.id
+        } else {
+            // Use "My Location" (nil or sentinel) - get cached nearest station
+            guard let cachedStationId = LocationCacheService.cachedNearestStationId() else {
+                return CaltrainWidgetEntry(
+                    date: Date(),
+                    configuration: configuration,
+                    station: nil,
+                    northboundDepartures: [],
+                    southboundDepartures: [],
+                    error: .noLocation
+                )
+            }
+            selectedStationId = cachedStationId
         }
 
         // Note: We no longer check if cache is stale - we'll attempt to fetch fresh data
@@ -73,6 +78,7 @@ struct CaltrainTimelineProvider: TimelineProvider {
               !allStations.isEmpty else {
             return CaltrainWidgetEntry(
                 date: Date(),
+                configuration: configuration,
                 station: nil,
                 northboundDepartures: [],
                 southboundDepartures: [],
@@ -80,11 +86,12 @@ struct CaltrainTimelineProvider: TimelineProvider {
             )
         }
 
-        // Find the cached station for display
-        let station = allStations.first { $0.stationId == cachedStationId }
+        // Find the selected station
+        let station = allStations.first { $0.stationId == selectedStationId }
         guard station != nil else {
             return CaltrainWidgetEntry(
                 date: Date(),
+                configuration: configuration,
                 station: nil,
                 northboundDepartures: [],
                 southboundDepartures: [],
@@ -108,7 +115,7 @@ struct CaltrainTimelineProvider: TimelineProvider {
         // Fetch departures from SwiftData
         let departureDescriptor = FetchDescriptor<TrainDeparture>(
             predicate: #Predicate {
-                $0.stationId == cachedStationId
+                $0.stationId == selectedStationId
             },
             sortBy: [SortDescriptor(\TrainDeparture.scheduledTime)]
         )
@@ -116,6 +123,7 @@ struct CaltrainTimelineProvider: TimelineProvider {
         guard let departures = try? modelContext.fetch(departureDescriptor) else {
             return CaltrainWidgetEntry(
                 date: Date(),
+                configuration: configuration,
                 station: station,
                 northboundDepartures: [],
                 southboundDepartures: [],
@@ -144,6 +152,7 @@ struct CaltrainTimelineProvider: TimelineProvider {
 
         return CaltrainWidgetEntry(
             date: now,
+            configuration: configuration,
             station: station,
             northboundDepartures: Array(northbound),
             southboundDepartures: Array(southbound),

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CaltrainWidgetEntry: TimelineEntry {
     let date: Date
+    let configuration: CaltrainConfigurationIntent
     let station: CaltrainStation?
     let northboundDepartures: [TrainDeparture]
     let southboundDepartures: [TrainDeparture]
@@ -27,6 +28,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
     static var placeholder: CaltrainWidgetEntry {
         CaltrainWidgetEntry(
             date: Date(),
+            configuration: CaltrainConfigurationIntent(),
             station: nil,
             northboundDepartures: [],
             southboundDepartures: [],
@@ -45,6 +47,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
             latitude: 37.4438,
             longitude: -122.1643
         )
+        
 
         let now = Date()
         let northbound = [
@@ -121,11 +124,24 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
         return CaltrainWidgetEntry(
             date: now,
+            configuration: CaltrainConfigurationIntent(),
             station: station,
             northboundDepartures: northbound,
             southboundDepartures: southbound,
             error: nil
         )
+    }
+    
+    static var sampleNorthbound: CaltrainWidgetEntry {
+        var x = sample
+        x.configuration.direction = .north
+        let specificStation = StationEntity(
+            id: "70262",
+            name: "Palo Alto",
+            shortCode: "PA"
+        )
+        x.configuration.station = specificStation
+        return x
     }
 
     // Sample with minimal departures
@@ -157,6 +173,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
         return CaltrainWidgetEntry(
             date: now,
+            configuration: CaltrainConfigurationIntent(),
             station: station,
             northboundDepartures: [],
             southboundDepartures: southbound,
@@ -218,6 +235,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
         return CaltrainWidgetEntry(
             date: now,
+            configuration: CaltrainConfigurationIntent(),
             station: station,
             northboundDepartures: northbound,
             southboundDepartures: southbound,
@@ -257,6 +275,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
 } timeline: {
     CaltrainWidgetEntry(
         date: Date(),
+        configuration: CaltrainConfigurationIntent(),
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
@@ -279,6 +298,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
     CaltrainWidgetEntry(
         date: Date(),
+        configuration: CaltrainConfigurationIntent(),
         station: station,
         northboundDepartures: [],
         southboundDepartures: [],
@@ -291,6 +311,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
 } timeline: {
     CaltrainWidgetEntry(
         date: Date(),
+        configuration: CaltrainConfigurationIntent(),
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],

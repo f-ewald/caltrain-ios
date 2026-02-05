@@ -36,7 +36,7 @@ struct MediumWidgetView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Header
-            WidgetHeaderView(station: entry.station)
+            WidgetHeaderView(entry: entry)
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
@@ -45,21 +45,41 @@ struct MediumWidgetView: View {
 
             // Departures in two columns
             HStack(spacing: 0) {
-                // Northbound
-                DirectionSection(
-                    direction: .northbound,
-                    departures: entry.northboundDepartures,
-                    isCompact: true
-                )
-
-                Divider()
-
-                // Southbound
-                DirectionSection(
-                    direction: .southbound,
-                    departures: entry.southboundDepartures,
-                    isCompact: true
-                )
+                if entry.configuration.direction == .both {
+                    // Northbound
+                    DirectionSection(
+                        direction: .northbound,
+                        departures: entry.northboundDepartures,
+                        isCompact: true,
+                        shortStationCode: true
+                    )
+                    
+                    Divider()
+                    
+                    // Southbound
+                    DirectionSection(
+                        direction: .southbound,
+                        departures: entry.southboundDepartures,
+                        isCompact: true,
+                        shortStationCode: true
+                    )
+                } else if entry.configuration.direction == .north {
+                    // Only northbound connections
+                    DirectionSection(
+                        direction: .northbound,
+                        departures: entry.northboundDepartures,
+                        isCompact: true,
+                        shortStationCode: false
+                    )
+                } else if entry.configuration.direction == .south {
+                    // Only southbound connections
+                    DirectionSection(
+                        direction: .southbound,
+                        departures: entry.southboundDepartures,
+                        isCompact: true,
+                        shortStationCode: false
+                    )
+                }
             }
             .padding(.vertical, 8)
         }
@@ -74,7 +94,7 @@ struct LargeWidgetView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Header
-            WidgetHeaderView(station: entry.station)
+            WidgetHeaderView(entry: entry)
                 .padding(.horizontal, 16)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
@@ -85,7 +105,8 @@ struct LargeWidgetView: View {
             DirectionSection(
                 direction: .northbound,
                 departures: entry.northboundDepartures,
-                isCompact: false
+                isCompact: false,
+                shortStationCode: false
             )
             .padding(.vertical, 8)
 
@@ -95,7 +116,8 @@ struct LargeWidgetView: View {
             DirectionSection(
                 direction: .southbound,
                 departures: entry.southboundDepartures,
-                isCompact: false
+                isCompact: false,
+                shortStationCode: false
             )
             .padding(.vertical, 8)
         }
@@ -105,7 +127,7 @@ struct LargeWidgetView: View {
 // MARK: - Widget Header
 
 struct WidgetHeaderView: View {
-    let station: CaltrainStation?
+    let entry: CaltrainWidgetEntry?
 
     var body: some View {
         HStack {
@@ -123,8 +145,12 @@ struct WidgetHeaderView: View {
             Spacer()
 
             // Station name
-            if let station = station {
-                Text(station.name)
+            if let station = entry?.station {
+                // Show location icon only when using "My Location" option
+                let isUsingMyLocation = entry?.configuration.station?.id == "_my_location_"
+                    || entry?.configuration.station == nil  // Backward compatibility
+                let systemImage = isUsingMyLocation ? "location.fill" : ""
+                Label(station.name, systemImage: systemImage)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(.primary)
             }
@@ -138,6 +164,7 @@ struct DirectionSection: View {
     let direction: Direction
     let departures: [TrainDeparture]
     let isCompact: Bool
+    let shortStationCode: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -166,7 +193,7 @@ struct DirectionSection: View {
                 VStack(spacing: isCompact ? 4 : 6) {
                     ForEach(departures, id: \.trainNumber) { departure in
                         if isCompact {
-                            CompactDepartureRow(departure: departure)
+                            CompactDepartureRow(departure: departure, shortStationCode: shortStationCode)
                         } else {
                             ExtendedDepartureRow(departure: departure)
                         }
@@ -182,6 +209,7 @@ struct DirectionSection: View {
 
 struct CompactDepartureRow: View {
     let departure: TrainDeparture
+    let shortStationCode: Bool
 
     private var departureTime: Date {
         departure.estimatedTime ?? departure.scheduledTime
@@ -217,7 +245,7 @@ struct CompactDepartureRow: View {
             TrainTypeIndicator(trainType: departure.trainType)
 
             // Destination (truncated)
-            Text(departure.shortDestinationName)
+            Text(shortStationCode ? departure.shortDestinationName : departure.destinationName)
                 .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
@@ -387,10 +415,16 @@ struct ErrorView: View {
 
 // MARK: - Previews
 
-#Preview("Medium - Sample", as: .systemMedium) {
+#Preview("Medium - Both", as: .systemMedium) {
     CaltrainWidget()
 } timeline: {
     CaltrainWidgetEntry.sample
+}
+
+#Preview("Medium - Northbound", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry.sampleNorthbound
 }
 
 #Preview("Large - Sample", as: .systemLarge) {
@@ -404,6 +438,7 @@ struct ErrorView: View {
 } timeline: {
     CaltrainWidgetEntry(
         date: Date(),
+        configuration: CaltrainConfigurationIntent(),
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],

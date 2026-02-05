@@ -9,18 +9,13 @@ import WidgetKit
 import SwiftUI
 
 struct CaltrainWidget: Widget {
+    /// Kind of the widget
     let kind: String = "CaltrainWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(
-            kind: kind,
-            provider: CaltrainTimelineProvider()
-        ) { entry in
-            CaltrainWidgetView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
-        }
+        AppIntentConfiguration(kind: kind, intent: CaltrainConfigurationIntent.self, provider: CaltrainTimelineProvider()) { entry in CaltrainWidgetView(entry: entry).containerBackground(.fill.tertiary, for: .widget) }
         .configurationDisplayName("Caltrain Departures")
-        .description("View upcoming train departures at your nearest station")
+        .description("View upcoming train departures")
         .supportedFamilies([.systemMedium, .systemLarge])
         .contentMarginsDisabled()
     }
@@ -45,6 +40,7 @@ struct CaltrainWidget: Widget {
 } timeline: {
     CaltrainWidgetEntry(
         date: Date(),
+        configuration: CaltrainConfigurationIntent(),
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
@@ -57,6 +53,7 @@ struct CaltrainWidget: Widget {
 } timeline: {
     CaltrainWidgetEntry(
         date: Date(),
+        configuration: CaltrainConfigurationIntent(),
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],

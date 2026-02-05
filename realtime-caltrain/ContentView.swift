@@ -69,7 +69,7 @@ struct ContentView: View {
                 // Caltrain Header
                 Section {
                     VStack(spacing: 8) {
-                        Text("CALTRAIN")
+                        Text("Baby Bullet")
                             .font(.system(size: 48, weight: .bold, design: .rounded))
                             .foregroundStyle(
                                 LinearGradient(
@@ -78,7 +78,7 @@ struct ContentView: View {
                                     endPoint: .trailing
                                 )
                             )
-                        Text("Real-time Departures")
+                        Text("Real-time Caltrain Departures")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
