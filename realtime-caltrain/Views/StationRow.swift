@@ -27,44 +27,17 @@ struct StationRow: View {
                         .background(Color.gray.opacity(0.15))
                         .cornerRadius(3)
                 }
-
-                HStack(spacing: 8) {
-                    if let zone = station.zoneNumber {
-                        Text("Zone \(zone)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-
-                    if let parkingSpaces = station.parkingSpaces, parkingSpaces > 0 {
-                        HStack(spacing: 2) {
-                            Image(systemName: "parkingsign.circle.fill")
-                            Text("\(parkingSpaces)")
-                        }
+                
+                if let zone = station.zoneNumber {
+                    Text("Zone \(zone)")
                         .font(.caption)
-                        .foregroundStyle(.blue)
-                    }
-
-                    if let bikeRacks = station.bikeRacks, bikeRacks > 0 {
-                        HStack(spacing: 2) {
-                            Image(systemName: "bicycle.circle.fill")
-                            Text("\(bikeRacks)")
-                        }
-                        .font(.caption)
-                        .foregroundStyle(.green)
-                    }
-
-                    if station.hasRestrooms {
-                        Image(systemName: "toilet.circle.fill")
-                            .font(.caption)
-                            .foregroundStyle(.purple)
-                    }
-
-                    if station.hasElevator {
-                        Image(systemName: "arrow.up.arrow.down.circle.fill")
-                            .font(.caption)
-                            .foregroundStyle(.orange)
-                    }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.blue.opacity(0.1))
+                        .cornerRadius(4)
                 }
+                
+                Amenities(parkingSpaces: station.parkingSpaces ??  0, bikeRacks: station.bikeRacks ?? 0, hasRestrooms: station.hasRestrooms, hasElevator: station.hasElevator)
             }
 
             Spacer()

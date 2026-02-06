@@ -2,8 +2,6 @@
 //  ActiveStationSection.swift
 //  caltrain
 //
-//  Created by Claude Code on 1/27/26.
-//
 
 import SwiftUI
 import CoreLocation
@@ -63,20 +61,20 @@ struct ActiveStationSection: View {
                                 .padding(.vertical, 2)
                                 .background(Color.gray.opacity(0.15))
                                 .cornerRadius(4)
-                        }
-                        
-                        if let zone = station.zoneNumber {
-                            Text("Zone \(zone)")
-                                .font(.caption)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(4)
+                            if let zone = station.zoneNumber {
+                                Text("Zone \(zone)")
+                                    .font(.caption)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.blue.opacity(0.1))
+                                    .cornerRadius(4)
+                            }
                         }
                     }
                     .padding(.vertical, 8)
                 }
-
+                Amenities(parkingSpaces: station.parkingSpaces ?? 0, bikeRacks: station.bikeRacks ?? 0, hasRestrooms: station.hasElevator, hasElevator: station.hasElevator)
+                
             case .nearest(let station, let distance):
                 // Nearest station - navigation link to all stations
                 NavigationLink {
@@ -95,27 +93,28 @@ struct ActiveStationSection: View {
                                 .padding(.vertical, 2)
                                 .background(Color.gray.opacity(0.15))
                                 .cornerRadius(4)
+                            if let zone = station.zoneNumber {
+                                Text("Zone \(zone)")
+                                    .font(.caption)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 4)
+                                    .background(Color.blue.opacity(0.1))
+                                    .cornerRadius(4)
+                            }
                         }
 
                         HStack {
                             Image(systemName: "location.fill")
-                                .foregroundStyle(.blue)
+                                .font(.system(size: 12))
+                                .foregroundStyle(.secondary)
+                                
                             Text(NearestStationService.formatDistance(distance))
                                 .foregroundStyle(.secondary)
-                        }
-
-                        if let zone = station.zoneNumber {
-                            Text("Zone \(zone)")
-                                .font(.caption)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(4)
                         }
                     }
                     .padding(.vertical, 8)
                 }
-
+                Amenities(parkingSpaces: station.parkingSpaces ?? 0, bikeRacks: station.bikeRacks ?? 0, hasRestrooms: station.hasElevator, hasElevator: station.hasElevator)
             case .loading:
                 // No location yet
                 HStack {
@@ -161,7 +160,7 @@ struct ActiveStationSection: View {
     }
 }
 
-#Preview {
+#Preview("Nearest Station") {
     let previewStation1 = CaltrainStation(
         stationId: "sf",
         name: "San Francisco",
@@ -170,9 +169,24 @@ struct ActiveStationSection: View {
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
         longitude: -122.3943,
-        zoneNumber: 1
+        zoneNumber: 1,
+        parkingSpaces: 100,
+        bikeRacks: 178,
+        hasRestrooms: true,
+        hasElevator: true,
     )
+    NavigationStack {
+        List {
+            ActiveStationSection(
+                userLocation: CLLocation(latitude: 37.7749, longitude: -122.4194),
+                stations: [previewStation1]
+            )
+            
+        }
+    }
+}
 
+#Preview("Selected Station") {
     let previewStation2 = CaltrainStation(
         stationId: "mountain_view",
         name: "Mountain View",
@@ -182,15 +196,15 @@ struct ActiveStationSection: View {
         latitude: 37.3945,
         longitude: -122.0760,
         zoneNumber: 3,
-        isSelected: true
+        parkingSpaces: 100,
+        bikeRacks: 178,
+        hasRestrooms: true,
+        hasElevator: true,
+        isSelected: true,
     )
-
+    
     NavigationStack {
         List {
-            ActiveStationSection(
-                userLocation: CLLocation(latitude: 37.7749, longitude: -122.4194),
-                stations: [previewStation1]
-            )
             ActiveStationSection(
                 userLocation: CLLocation(latitude: 37.7749, longitude: -122.4194),
                 stations: [previewStation2]
