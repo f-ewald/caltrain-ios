@@ -43,6 +43,19 @@ struct realtime_caltrainApp: App {
                     #if DEBUG
                     print("🗺️ Loading station data...")
                     #endif
+                    // TODO: Load station data from API instead of shipping with the app
+//                    Task {
+//                        do {
+//                            try await StationService(apiClient: CaltrainAPIClient()).refreshStations(modelContext: sharedModelContainer.mainContext)
+//                        } catch APIError.invalidResponse {
+//
+//                        } catch {
+//                            #if DEBUG
+//                            print(String(format: "Failed to load station data: %@", error as CVarArg))
+//                            #endif
+//                        }
+//                    }
+                    
                     StationDataLoader.loadStationsIfNeeded(
                         modelContext: sharedModelContainer.mainContext
                     )

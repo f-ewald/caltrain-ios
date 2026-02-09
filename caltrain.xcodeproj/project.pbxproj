@@ -82,6 +82,7 @@
 				Services/NearestStationService.swift,
 				Services/SharedModelContainer.swift,
 				Services/StationDataLoader.swift,
+				Services/StationService.swift,
 			);
 			target = 6BA3ECAF2F2BF44500FC18EE /* CaltrainWidgetExtension */;
 		};

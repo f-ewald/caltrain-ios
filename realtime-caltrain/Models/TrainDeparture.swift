@@ -47,6 +47,11 @@ final class TrainDeparture {
     }
 
     // MARK: - Computed Properties
+    
+    /// The actual departure time of the train. Either the estimated time or the scheduled time, if the estimated time is unavailable.
+    var departureTime: Date {
+        estimatedTime ?? scheduledTime
+    }
 
     var displayTime: Date {
         estimatedTime ?? scheduledTime
@@ -68,6 +73,7 @@ final class TrainDeparture {
 enum Direction: String, Codable {
     case northbound
     case southbound
+    case combined
 
     var displayName: String {
         switch self {
@@ -75,13 +81,16 @@ enum Direction: String, Codable {
             return "Northbound"
         case .southbound: 
             return "Southbound"
+        case .combined:
+            return "Combined"
         }
     }
 
     var iconName: String {
         switch self {
-        case .northbound: return "arrow.up.circle.fill"
-        case .southbound: return "arrow.down.circle.fill"
+        case .northbound: "arrow.up.circle.fill"
+        case .southbound: "arrow.down.circle.fill"
+        case .combined: "arrow.right.circle.fill"
         }
     }
     
@@ -89,13 +98,7 @@ enum Direction: String, Codable {
         switch self {
         case .northbound: "San Francisco"
         case .southbound: "San Jose/Gilroy"
-        }
-    }
-
-    var color: Color {
-        switch self {
-        case .northbound: return .blue
-        case .southbound: return .green
+        case .combined: "SF/SJ"
         }
     }
 }

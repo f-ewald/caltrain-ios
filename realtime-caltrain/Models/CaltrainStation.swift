@@ -11,14 +11,15 @@ import CoreLocation
 
 @Model
 final class CaltrainStation {
-    var stationId: String        // e.g., "sf", "millbrae"
+    /// stationId is the unique identifier for a station
+    @Attribute(.unique) var stationId: String        // e.g., "sf", "millbrae"
     var name: String             // e.g., "San Francisco"
     var shortCode: String        // e.g., "SF", "MTV"
     var gtfsStopIdSouth: String  // GTFS stop ID for southbound platform
     var gtfsStopIdNorth: String  // GTFS stop ID for northbound platform
     var latitude: Double
     var longitude: Double
-    var zoneNumber: Int?         // Fare zone (1-6)
+    var zoneNumber: Int         // Fare zone (1-6)
     var address: String?
     var hasParking: Bool
     var hasBikeParking: Bool
@@ -49,7 +50,7 @@ final class CaltrainStation {
 
     init(stationId: String, name: String, shortCode: String, gtfsStopIdSouth: String, gtfsStopIdNorth: String,
          latitude: Double, longitude: Double,
-         zoneNumber: Int? = nil, address: String? = nil,
+         zoneNumber: Int, address: String? = nil,
          hasParking: Bool = false, hasBikeParking: Bool = false,
          parkingSpaces: Int? = nil, bikeRacks: Int? = nil,
          hasBikeLockers: Bool = false, hasRestrooms: Bool = false,

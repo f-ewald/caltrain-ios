@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StationRow: View {
     @Bindable var station: CaltrainStation
+    @State private var stationDetailShowing = false
 
     var body: some View {
         HStack(spacing: 12) {
@@ -28,14 +29,7 @@ struct StationRow: View {
                         .cornerRadius(3)
                 }
                 
-                if let zone = station.zoneNumber {
-                    Text("Zone \(zone)")
-                        .font(.caption)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(Color.blue.opacity(0.1))
-                        .cornerRadius(4)
-                }
+                ZoneTextView(zone: station.zoneNumber)
                 
                 Amenities(parkingSpaces: station.parkingSpaces ??  0, bikeRacks: station.bikeRacks ?? 0, hasRestrooms: station.hasRestrooms, hasElevator: station.hasElevator)
             }
@@ -60,6 +54,17 @@ struct StationRow: View {
                     .foregroundStyle(station.isFavorite ? .yellow : .gray)
             }
             .buttonStyle(.plain)
+            Button(action: {
+                stationDetailShowing.toggle()
+            }) {
+                Image(systemName: "info.circle")
+                    .font(.title3)
+                    .foregroundStyle(.gray)
+            }
+            .buttonStyle(.plain)
+            .sheet(isPresented: $stationDetailShowing) {
+                StationDetail(station: station)
+            }
         }
         .padding(.vertical, 4)
     }

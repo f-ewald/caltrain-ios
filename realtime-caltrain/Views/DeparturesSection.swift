@@ -43,7 +43,8 @@ struct DeparturesSection: View {
         gtfsStopIdNorth: "70172",
         latitude: 37.4439,
         longitude: -122.1641,
-        address: "95 University Ave"
+        zoneNumber: 3,
+        address: "95 University Ave., Palo Alto 94301"
     )
     let mockDepartures = [
         TrainDeparture(
@@ -70,7 +71,7 @@ struct DeparturesSection: View {
         )
     ]
 
-    return List {
+    List {
         DeparturesSection(
             activeStation: mockStation,
             departures: mockDepartures,
