@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import Contacts
 
 struct IdentifiablePlace: Identifiable {
     let id = UUID()
@@ -43,6 +44,19 @@ struct StationDetail: View {
         }
     }
     
+    func formattedAddress(for station: CaltrainStation) -> String {
+        let address = CNMutablePostalAddress()
+        address.street = String(format: "%@ %@", station.addressNumber ?? "", station.addressStreet ?? "")
+        address.city = station.addressCity ?? ""
+        address.postalCode = station.addressPostalCode ?? ""
+        address.city = station.addressCity ?? ""
+        address.state = station.addressState ?? ""
+        
+        let formatter = CNPostalAddressFormatter()
+        formatter.style = .mailingAddress
+        return formatter.string(from: address)
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -55,13 +69,12 @@ struct StationDetail: View {
                                 MapCompass()
                     }
                     .frame(height: 200)
-                    if let address = station.address {
-                        HStack {
-                            Button(action: openMap) {
-                                Label(address, systemImage: "map")
-                            }
+                    HStack {
+                        Button(action: openMap) {
+                            Label(formattedAddress(for: station), systemImage: "map")
                         }
                     }
+                    
                     HStack {
                         Text("Elevator")
                         Spacer()
@@ -114,6 +127,5 @@ struct StationDetail: View {
 }
 
 #Preview {
-    let station = CaltrainStation(stationId: "sf", name: "San Francisco", shortCode: "sf", gtfsStopIdSouth: "1", gtfsStopIdNorth: "2", latitude: 37.776439, longitude: -122.394434, zoneNumber: 1, address: "700 4th St., San Francisco 94107", hasParking: true, hasBikeParking: false, parkingSpaces: 20, bikeRacks: 10, hasBikeLockers: true, hasRestrooms: false, ticketMachines: 6, hasElevator: false, isFavorite: false, isSelected: false)
-    StationDetail(station: station)
+    StationDetail(station: CaltrainStation.exampleStation)
 }

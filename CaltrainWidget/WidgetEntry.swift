@@ -38,17 +38,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
     // Sample entry for preview
     static var sample: CaltrainWidgetEntry {
-        let station = CaltrainStation(
-            stationId: "70262",
-            name: "Palo Alto",
-            shortCode: "PA",
-            gtfsStopIdSouth: "70262",
-            gtfsStopIdNorth: "70261",
-            latitude: 37.4438,
-            longitude: -122.1643
-        )
-        
-
         let now = Date()
         let northbound = [
             TrainDeparture(
@@ -125,7 +114,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
         return CaltrainWidgetEntry(
             date: now,
             configuration: CaltrainConfigurationIntent(),
-            station: station,
+            station: CaltrainStation.exampleStation,
             northboundDepartures: northbound,
             southboundDepartures: southbound,
             error: nil
@@ -183,16 +172,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
     // Sample with delays
     static var sampleWithDelays: CaltrainWidgetEntry {
-        let station = CaltrainStation(
-            stationId: "70081",
-            name: "Millbrae",
-            shortCode: "MB",
-            gtfsStopIdSouth: "70081",
-            gtfsStopIdNorth: "70082",
-            latitude: 37.5997,
-            longitude: -122.3867
-        )
-
         let now = Date()
         let northbound = [
             TrainDeparture(
@@ -236,7 +215,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
         return CaltrainWidgetEntry(
             date: now,
             configuration: CaltrainConfigurationIntent(),
-            station: station,
+            station: CaltrainStation.exampleStation,
             northboundDepartures: northbound,
             southboundDepartures: southbound,
             error: nil
@@ -286,20 +265,10 @@ struct CaltrainWidgetEntry: TimelineEntry {
 #Preview("Medium - No Data Error", as: .systemMedium) {
     CaltrainWidget()
 } timeline: {
-    let station = CaltrainStation(
-        stationId: "70262",
-        name: "Palo Alto",
-        shortCode: "PA",
-        gtfsStopIdSouth: "70262",
-        gtfsStopIdNorth: "70261",
-        latitude: 37.4438,
-        longitude: -122.1643
-    )
-
     CaltrainWidgetEntry(
         date: Date(),
         configuration: CaltrainConfigurationIntent(),
-        station: station,
+        station: CaltrainStation.exampleStation,
         northboundDepartures: [],
         southboundDepartures: [],
         error: .noData

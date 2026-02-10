@@ -132,7 +132,9 @@ struct WidgetHeaderView: View {
     var body: some View {
         HStack {
             // Caltrain logo/text
-            Text("CALTRAIN DEPARTURES")
+            let header: String = "CALTRAIN DEPARTURES"
+
+            Text(header)
                 .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundStyle(
                     LinearGradient(
@@ -141,7 +143,16 @@ struct WidgetHeaderView: View {
                         endPoint: .trailing
                     )
                 )
-
+                .lineLimit(1)
+                .truncationMode(.tail)
+            
+            #if DEBUG
+            // Show the last update date if debug is enabled
+            Text(entry!.date, style: .time)
+                .font(.system(size: 10))
+                .foregroundStyle(.secondary)
+            #endif
+            
             Spacer()
 
             // Station name
@@ -153,6 +164,8 @@ struct WidgetHeaderView: View {
                 Label(station.name, systemImage: systemImage)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(.primary)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
             }
         }
     }
@@ -198,6 +211,7 @@ struct DirectionSection: View {
                             ExtendedDepartureRow(departure: departure)
                         }
                     }
+                    Spacer()
                 }
             }
         }

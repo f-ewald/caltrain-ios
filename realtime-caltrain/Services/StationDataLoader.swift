@@ -69,6 +69,12 @@ struct StationDataLoader {
                     longitude: station.longitude,
                     zoneNumber: station.zone,
                     address: station.address,
+                    addressNumber: station.addressNumber,
+                    addressStreet: station.addressStreet,
+                    addressCity: station.addressCity,
+                    addressPostalCode: station.addressPostalCode,
+                    addressState: station.addressState,
+                    addressCountry: station.addressCountry,
                     hasParking: station.hasParking,
                     hasBikeParking: station.hasBikeParking,
                     parkingSpaces: station.parkingSpaces,
@@ -126,6 +132,12 @@ struct StationJSON: Decodable {
     let longitude: Double
     let zone: Int?
     let address: String?
+    let addressNumber: String?
+    let addressStreet: String?
+    let addressCity: String?
+    let addressPostalCode: String?
+    let addressState: String?
+    let addressCountry: String?
     let hasParking: Bool
     let hasBikeParking: Bool
     let parkingSpaces: Int?
