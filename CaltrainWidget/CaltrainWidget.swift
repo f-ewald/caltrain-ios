@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CaltrainWidget: Widget {
     /// Kind of the widget
-    let kind: String = "CaltrainWidget"
+    let kind: String = "net.fewald.caltrain.widget"
 
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: CaltrainConfigurationIntent.self, provider: CaltrainTimelineProvider()) { entry in CaltrainWidgetView(entry: entry).containerBackground(.fill.tertiary, for: .widget) }
@@ -44,7 +44,8 @@ struct CaltrainWidget: Widget {
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
-        error: .noLocation
+        error: .noLocation,
+        debugMessage: nil,
     )
 }
 
@@ -57,6 +58,7 @@ struct CaltrainWidget: Widget {
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
-        error: .apiError
+        error: .apiError,
+        debugMessage: nil,
     )
 }

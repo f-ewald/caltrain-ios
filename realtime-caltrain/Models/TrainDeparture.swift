@@ -99,8 +99,8 @@ final class TrainDeparture {
 // MARK: - Direction Enum
 
 enum Direction: String, Codable {
-    case northbound
-    case southbound
+    case northbound = "N "
+    case southbound = "S "
     case combined
 
     var displayName: String {
@@ -137,12 +137,14 @@ enum TrainType: String, Codable {
     case local
     case limited
     case express
+    case unknown
 
     var displayName: String {
         switch self {
         case .local: return "Local"
         case .limited: return "Limited"
         case .express: return "Express"
+        case .unknown: return "Unkown"
         }
     }
 
@@ -151,6 +153,23 @@ enum TrainType: String, Codable {
         case .local: return .gray
         case .limited: return Color(red:153/255, green: 215/255, blue: 220/255)
         case .express: return .red
+        case .unknown: return .gray
+        }
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawString = try container.decode(String.self).lowercased().trimmingCharacters(in: .whitespaces)
+        
+        switch rawString {
+        case "local", "local weekday", "local weekend", "south county":
+            self = .local
+        case "limited":
+            self = .limited
+        case "express":
+            self = .express
+        default:
+            self = .unknown
         }
     }
 }
@@ -173,7 +192,7 @@ enum DepartureStatus: String, Codable {
     var color: Color {
         switch self {
         case .onTime: return .green
-        case .delayed: return .orange
+        case .delayed: return .yellow
         case .cancelled: return .red
         }
     }

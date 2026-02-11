@@ -178,6 +178,11 @@ struct DirectionSection: View {
     let departures: [TrainDeparture]
     let isCompact: Bool
     let shortStationCode: Bool
+    
+    /// Filter maximum number of departures depending on display size
+    var displayedDepartures: [TrainDeparture] {
+        Array(departures.prefix(3))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -204,7 +209,7 @@ struct DirectionSection: View {
                 Spacer()
             } else {
                 VStack(spacing: isCompact ? 4 : 6) {
-                    ForEach(departures, id: \.trainNumber) { departure in
+                    ForEach(displayedDepartures, id: \.trainNumber) { departure in
                         if isCompact {
                             CompactDepartureRow(departure: departure, shortStationCode: shortStationCode)
                         } else {
@@ -248,9 +253,16 @@ struct CompactDepartureRow: View {
                     .foregroundStyle(.primary)
 
                 if minutesUntilDeparture <= 20 {
-                    Text("in \(minutesUntilDeparture)m")
-                        .font(.system(size: 9, weight: .medium))
-                        .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
+                    // This updates automatically, no need to use a timeline entry
+                    HStack(spacing: 4) {
+                        Text("in")
+                        if minutesUntilDeparture < 2 {
+                            Text(departureTime, style: .relative)
+                        } else {
+                            Text("\(minutesUntilDeparture) min")
+                        }
+                    }
+                    .font(.system(size: 9, weight: .medium))
                 }
             }
             .frame(width: 60, alignment: .leading)
@@ -404,7 +416,7 @@ struct ErrorView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
 
-            if error == .noLocation || error == .cacheStale {
+            if error == .noLocation || error == .cacheStale || error == .noData {
                 Text("Open the app to update")
                     .font(.system(size: 11))
                     .foregroundStyle(.tertiary)
@@ -447,6 +459,20 @@ struct ErrorView: View {
     CaltrainWidgetEntry.sample
 }
 
+#Preview("Medium - No departures", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry(
+        date: Date(),
+        configuration: CaltrainConfigurationIntent(),
+        station: nil,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: nil,
+        debugMessage: nil,
+    )
+}
+
 #Preview("Medium - No Location", as: .systemMedium) {
     CaltrainWidget()
 } timeline: {
@@ -456,6 +482,21 @@ struct ErrorView: View {
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
-        error: .noLocation
+        error: .noLocation,
+        debugMessage: nil,
+    )
+}
+
+#Preview("Medium - No Data", as: .systemMedium) {
+    CaltrainWidget()
+} timeline: {
+    CaltrainWidgetEntry(
+        date: Date(),
+        configuration: CaltrainConfigurationIntent(),
+        station: nil,
+        northboundDepartures: [],
+        southboundDepartures: [],
+        error: .noData,
+        debugMessage: nil,
     )
 }

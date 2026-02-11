@@ -10,12 +10,71 @@ import SwiftData
 import WidgetKit
 
 struct DepartureService {
+    static func upcomingDepartures(modelContext: ModelContext, for station: CaltrainStation, at date: Date) -> [TrainDeparture] {
+        // Extract Ids because they cannot be referenced in #Predicate
+        let stationId = station.stationId
+        let northId = station.gtfsStopIdNorth
+        let southId = station.gtfsStopIdSouth
+        
+        
+        // Fetch planned departures
+        let plannedDescriptor = FetchDescriptor<PlannedDeparture>(
+            predicate: #Predicate { $0.stationId == northId || $0.stationId == southId }
+        )
+        let plannedDepartures = (try? modelContext.fetch(plannedDescriptor)) ?? []
+        
+        // Fetch real-time departures
+        let realtimeDescriptor = FetchDescriptor<TrainDeparture>(
+            predicate: #Predicate { $0.stationId == stationId }
+        )
+        let realtimeDepartures = (try? modelContext.fetch(realtimeDescriptor)) ?? []
+
+        // Create a set of train numbers from real-time departures for quick lookup
+        let realtimeTrainNumbers = Set(realtimeDepartures.map { $0.trainNumber })
+
+        // Convert planned departures to TrainDeparture, excluding duplicates
+        let convertedPlanned = plannedDepartures.compactMap { planned -> TrainDeparture? in
+            // Skip if we already have real-time data for this train
+            guard !realtimeTrainNumbers.contains(planned.trainNumber) else { return nil }
+            return planned.toTrainDeparture()
+        }
+        
+        // Merge and sort by scheduled time
+        let merged = realtimeDepartures + convertedPlanned
+        
+        let filtered = merged.filter {
+            $0.departureTime >= date
+        }
+        
+        let sorted = filtered.sorted { $0.scheduledTime < $1.scheduledTime }
+        return sorted
+    }
+    
+    
     // MARK: - API Integration
+
+    /// Refresh all planned departures and store them to the database
+    /// This method only needs to be called on first start and then infrequently because
+    /// departures rarely change
+    static func refreshPlannedDepartures(modelContext: ModelContext) async throws {
+        let timetable = try await CaltrainAPIClient().fetchTimetable()
+        
+        for (stationId, departures) in timetable {
+            for departure in departures {
+                modelContext.insert(
+                    PlannedDeparture(stationId: stationId,
+                                     trainType: departure.trainType,
+                                     trainNumber: departure.trainNumber,
+                                     scheduledTime: departure.departureTime,
+                                     destination: departure.destination)
+                    )
+            }
+        }
+    }
 
     /// Main refresh method called by UI
     /// Fetches real-time departures from API and updates SwiftData for ALL stations
     static func refreshAllDepartures(
-        allStations: [CaltrainStation],
         modelContext: ModelContext,
         forceRefresh: Bool = false
     ) async throws {
@@ -28,21 +87,17 @@ struct DepartureService {
         }
 
         #if DEBUG
-        print("🔄 Refreshing departures for ALL stations (\(allStations.count) total)")
+        print("🔄 Refreshing departures for ALL stations")
         #endif
 
         // 2. Fetch from API (gets all trips for all stations)
-        let response = try await CaltrainAPIClient.fetchTripUpdates()
+        let response = try await CaltrainAPIClient().fetchTripUpdates()
 
         // 3. Transform API response to TrainDeparture models for ALL stations
         let newDepartures = transformToTrainDepartures(
             response,
-            allStations: allStations
+            modelContext: modelContext
         )
-
-        #if DEBUG
-        print("📦 Total departures collected: \(newDepartures.count) across \(allStations.count) stations")
-        #endif
 
         var existingDepartures = Set<String>()
         for departure in newDepartures {
@@ -95,8 +150,9 @@ struct DepartureService {
     /// Transform GTFS response to TrainDeparture models for ALL stations
     private static func transformToTrainDepartures(
         _ response: GTFSRealtimeResponse,
-        allStations: [CaltrainStation]
+        modelContext: ModelContext
     ) -> [TrainDeparture] {
+        let allStations = StationService().allStations(modelContext: modelContext)
         var departures: [TrainDeparture] = []
 
         // Create a lookup map: GTFS stop ID -> CaltrainStation

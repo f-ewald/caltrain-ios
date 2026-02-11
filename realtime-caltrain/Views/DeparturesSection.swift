@@ -35,17 +35,6 @@ struct DeparturesSection: View {
 
 #Preview {
     let now = Date()
-    let mockStation = CaltrainStation(
-        stationId: "palo_alto",
-        name: "Palo Alto",
-        shortCode: "PA",
-        gtfsStopIdSouth: "70171",
-        gtfsStopIdNorth: "70172",
-        latitude: 37.4439,
-        longitude: -122.1641,
-        zoneNumber: 3,
-        address: "95 University Ave., Palo Alto 94301"
-    )
     let mockDepartures = [
         TrainDeparture.exampleDeparture1,
         TrainDeparture.exampleDeparture2
@@ -53,14 +42,14 @@ struct DeparturesSection: View {
 
     List {
         DeparturesSection(
-            activeStation: mockStation,
+            activeStation: CaltrainStation.exampleStation,
             departures: mockDepartures,
             isLoading: false
         )
 
         // Loading state preview
         DeparturesSection(
-            activeStation: mockStation,
+            activeStation: CaltrainStation.exampleStation,
             departures: [],
             isLoading: true
         )

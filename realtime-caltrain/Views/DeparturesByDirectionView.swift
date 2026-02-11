@@ -12,15 +12,17 @@ struct DeparturesByDirectionView: View {
     let isLoading: Bool
 
     private var northboundDepartures: [TrainDeparture] {
-        departures
+        Array(departures
             .filter { $0.direction == .northbound }
             .sorted { $0.displayTime < $1.displayTime }
+            .prefix(10))
     }
 
     private var southboundDepartures: [TrainDeparture] {
-        departures
+        Array(departures
             .filter { $0.direction == .southbound }
             .sorted { $0.displayTime < $1.displayTime }
+            .prefix(10))
     }
 
     var body: some View {

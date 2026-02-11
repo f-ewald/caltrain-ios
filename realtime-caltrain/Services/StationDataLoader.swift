@@ -14,12 +14,12 @@ struct StationDataLoader {
         let descriptor = FetchDescriptor<CaltrainStation>()
         let existingCount = (try? modelContext.fetchCount(descriptor)) ?? 0
 
-        guard existingCount == 0 else {
-            #if DEBUG
-            print("✅ Stations already loaded: \(existingCount)")
-            #endif
-            return
-        }
+//        guard existingCount == 0 else {
+//            #if DEBUG
+//            print("✅ Stations already loaded: \(existingCount)")
+//            #endif
+//            return
+//        }
         
         // Delete all data (for debugging purposes)
         do {
@@ -130,7 +130,7 @@ struct StationJSON: Decodable {
     let gtfsStopIdNorth: String
     let latitude: Double
     let longitude: Double
-    let zone: Int?
+    let zone: Int
     let address: String?
     let addressNumber: String?
     let addressStreet: String?

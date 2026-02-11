@@ -15,6 +15,7 @@ struct CaltrainWidgetEntry: TimelineEntry {
     let northboundDepartures: [TrainDeparture]
     let southboundDepartures: [TrainDeparture]
     let error: WidgetError?
+    let debugMessage: String?
 
     enum WidgetError: String {
         case noLocation = "Location not available"
@@ -32,7 +33,8 @@ struct CaltrainWidgetEntry: TimelineEntry {
             station: nil,
             northboundDepartures: [],
             southboundDepartures: [],
-            error: nil
+            error: nil,
+            debugMessage: nil,
         )
     }
 
@@ -117,12 +119,13 @@ struct CaltrainWidgetEntry: TimelineEntry {
             station: CaltrainStation.exampleStation,
             northboundDepartures: northbound,
             southboundDepartures: southbound,
-            error: nil
+            error: nil,
+            debugMessage: nil,
         )
     }
     
     static var sampleNorthbound: CaltrainWidgetEntry {
-        var x = sample
+        let x = sample
         x.configuration.direction = .north
         let specificStation = StationEntity(
             id: "70262",
@@ -135,16 +138,6 @@ struct CaltrainWidgetEntry: TimelineEntry {
 
     // Sample with minimal departures
     static var sampleMinimal: CaltrainWidgetEntry {
-        let station = CaltrainStation(
-            stationId: "70011",
-            name: "San Francisco",
-            shortCode: "SF",
-            gtfsStopIdSouth: "70011",
-            gtfsStopIdNorth: "70012",
-            latitude: 37.7764,
-            longitude: -122.3943
-        )
-
         let now = Date()
         let southbound = [
             TrainDeparture(
@@ -163,10 +156,11 @@ struct CaltrainWidgetEntry: TimelineEntry {
         return CaltrainWidgetEntry(
             date: now,
             configuration: CaltrainConfigurationIntent(),
-            station: station,
+            station: CaltrainStation.exampleStation,
             northboundDepartures: [],
             southboundDepartures: southbound,
-            error: nil
+            error: nil,
+            debugMessage: nil,
         )
     }
 
@@ -218,7 +212,8 @@ struct CaltrainWidgetEntry: TimelineEntry {
             station: CaltrainStation.exampleStation,
             northboundDepartures: northbound,
             southboundDepartures: southbound,
-            error: nil
+            error: nil,
+            debugMessage: nil,
         )
     }
 }
@@ -258,7 +253,8 @@ struct CaltrainWidgetEntry: TimelineEntry {
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
-        error: .noLocation
+        error: .noLocation,
+        debugMessage: nil,
     )
 }
 
@@ -271,7 +267,8 @@ struct CaltrainWidgetEntry: TimelineEntry {
         station: CaltrainStation.exampleStation,
         northboundDepartures: [],
         southboundDepartures: [],
-        error: .noData
+        error: .noData,
+        debugMessage: nil,
     )
 }
 
@@ -284,7 +281,8 @@ struct CaltrainWidgetEntry: TimelineEntry {
         station: nil,
         northboundDepartures: [],
         southboundDepartures: [],
-        error: .apiError
+        error: .apiError,
+        debugMessage: nil,
     )
 }
 

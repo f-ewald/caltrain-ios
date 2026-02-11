@@ -43,6 +43,15 @@ struct realtime_caltrainApp: App {
                     #if DEBUG
                     print("🗺️ Loading station data...")
                     #endif
+                    
+                    Task {
+                        do {
+                            try await CaltrainAPIClient().fetchTimetable()
+                        } catch {
+                            print(error)
+                        }
+                    }
+                    
                     // TODO: Load station data from API instead of shipping with the app
 //                    Task {
 //                        do {

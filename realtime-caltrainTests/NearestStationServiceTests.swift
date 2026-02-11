@@ -12,19 +12,10 @@ import CoreLocation
 @Test("Find nearest station from single option")
 func testSingleStation() async throws {
     let userLocation = CLLocation(latitude: 37.7749, longitude: -122.4194)
-    let sfStation = CaltrainStation(
-        stationId: "sf",
-        name: "San Francisco",
-        shortCode: "SF",
-        gtfsStopIdSouth: "70011",
-        gtfsStopIdNorth: "70012",
-        latitude: 37.7764,
-        longitude: -122.3943
-    )
 
     let result = await NearestStationService.findNearestStation(
         to: userLocation,
-        from: [sfStation]
+        from: [CaltrainStation.exampleStation]
     )
 
     #expect(result?.station.name == "San Francisco")
@@ -34,15 +25,7 @@ func testSingleStation() async throws {
 @Test("Find nearest from multiple stations")
 func testMultipleStations() async throws {
     let userLocation = CLLocation(latitude: 37.7749, longitude: -122.4194) // Near SF
-    let sfStation = CaltrainStation(
-        stationId: "sf",
-        name: "San Francisco",
-        shortCode: "SF",
-        gtfsStopIdSouth: "70011",
-        gtfsStopIdNorth: "70012",
-        latitude: 37.7764,
-        longitude: -122.3943
-    )
+    let sfStation = CaltrainStation.exampleStation
     let sjStation = CaltrainStation(
         stationId: "sj",
         name: "San Jose",
@@ -50,7 +33,8 @@ func testMultipleStations() async throws {
         gtfsStopIdSouth: "70261",
         gtfsStopIdNorth: "70262",
         latitude: 37.3297,
-        longitude: -121.9027
+        longitude: -121.9027,
+        zoneNumber: 3,
     )
 
     let result = await NearestStationService.findNearestStation(

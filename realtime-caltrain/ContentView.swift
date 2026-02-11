@@ -44,23 +44,12 @@ struct ContentView: View {
         StationSelectionService.selectedStation(from: stations) != nil
     }
 
-    // Fetch departures only for the active station to avoid accessing deleted objects
+    // Fetch planned and real-time departures for the active station
     private var departures: [TrainDeparture] {
-        guard let stationId = activeStationId else { return [] }
-
-        let descriptor = FetchDescriptor<TrainDeparture>(
-            predicate: #Predicate { $0.stationId == stationId },
-            sortBy: [SortDescriptor(\TrainDeparture.scheduledTime)]
-        )
-
-        do {
-            return try modelContext.fetch(descriptor)
-        } catch {
-            #if DEBUG
-            print("Error fetching departures: \(error)")
-            #endif
-            return []
-        }
+        // Load station and return empty list if this fails
+        guard let station = activeStation else { return [] }
+        
+        return DepartureService.upcomingDepartures(modelContext: modelContext, for: station, at: Date())
     }
 
     var body: some View {
@@ -202,9 +191,10 @@ struct ContentView: View {
 
         do {
             try await DepartureService.refreshAllDepartures(
-                allStations: stations,
                 modelContext: modelContext
             )
+
+            try await DepartureService.refreshPlannedDepartures(modelContext: modelContext)
             // Success - SwiftData @Query will auto-update UI
 
             // Trigger widget reload
@@ -240,7 +230,6 @@ struct ContentView: View {
             print("🌐 Fetching from API...")
             #endif
             try await DepartureService.refreshAllDepartures(
-                allStations: stations,
                 modelContext: modelContext,
                 forceRefresh: true
             )

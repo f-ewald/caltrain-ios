@@ -15,6 +15,7 @@ struct SharedModelContainer {
         let schema = Schema([
             TrainDeparture.self,
             CaltrainStation.self,
+            PlannedDeparture.self,
         ])
 
         guard let appGroupURL = FileManager.default.containerURL(
