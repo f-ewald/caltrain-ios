@@ -47,28 +47,8 @@ struct DeparturesSection: View {
         address: "95 University Ave., Palo Alto 94301"
     )
     let mockDepartures = [
-        TrainDeparture(
-            stationId: "station1",
-            direction: .northbound,
-            destinationName: "San Francisco",
-            shortDestinationName: "SF",
-            scheduledTime: now,
-            trainNumber: "151",
-            trainType: .local,
-            status: .onTime,
-            platformNumber: "2"
-        ),
-        TrainDeparture(
-            stationId: "station1",
-            direction: .southbound,
-            destinationName: "San Jose",
-            shortDestinationName: "SJ",
-            scheduledTime: now.addingTimeInterval(420),
-            trainNumber: "221",
-            trainType: .express,
-            status: .onTime,
-            platformNumber: "1"
-        )
+        TrainDeparture.exampleDeparture1,
+        TrainDeparture.exampleDeparture2
     ]
 
     List {

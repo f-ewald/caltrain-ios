@@ -66,6 +66,34 @@ final class TrainDeparture {
         guard let estimated = estimatedTime else { return 0 }
         return Int(estimated.timeIntervalSince(scheduledTime) / 60)
     }
+    
+    static var exampleDeparture1: TrainDeparture {
+        TrainDeparture(
+            stationId: "station1",
+            direction: .northbound,
+            destinationName: "San Francisco",
+            shortDestinationName: "SF",
+            scheduledTime: Date(),
+            trainNumber: "151",
+            trainType: .local,
+            status: .onTime,
+            platformNumber: "2"
+        )
+    }
+    
+    static var exampleDeparture2: TrainDeparture {
+        TrainDeparture(
+            stationId: "station1",
+            direction: .southbound,
+            destinationName: "San Jose",
+            shortDestinationName: "SJ",
+            scheduledTime: Date().addingTimeInterval(420),
+            trainNumber: "221",
+            trainType: .express,
+            status: .onTime,
+            platformNumber: "1"
+        )
+    }
 }
 
 // MARK: - Direction Enum
