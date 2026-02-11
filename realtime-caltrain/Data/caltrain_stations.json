@@ -1,7 +1,7 @@
 {
   "stations": [
     {
-      "id": "sf",
+      "id": "san_francisco",
       "name": "San Francisco",
       "shortCode": "SF",
       "gtfsStopIdSouth": "70012",
@@ -26,7 +26,7 @@
       "hasElevator": false
     },
     {
-      "id": "22nd",
+      "id": "22nd_street",
       "name": "22nd Street",
       "shortCode": "22ND",
       "gtfsStopIdSouth": "70022",
@@ -76,7 +76,7 @@
       "hasElevator": true
     },
     {
-      "id": "so_sf",
+      "id": "south_sf",
       "name": "South San Francisco",
       "shortCode": "SO SF",
       "gtfsStopIdSouth": "70042",
@@ -126,7 +126,7 @@
       "hasElevator": true
     },
     {
-      "id": "millbrae",
+      "id": "place_MLBR",
       "name": "Millbrae",
       "shortCode": "MLBR",
       "gtfsStopIdSouth": "70062",
@@ -576,7 +576,7 @@
       "hasElevator": false
     },
     {
-      "id": "san_jose",
+      "id": "sj_diridon",
       "name": "San Jose Diridon",
       "shortCode": "SJ",
       "gtfsStopIdSouth": "70262",
