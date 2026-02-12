@@ -103,6 +103,9 @@ struct ActiveStationSection: View {
                     }
                     .padding(.vertical, 8)
                 }
+                // For UI Test
+                .accessibilityIdentifier("station.nearest")
+                
                 Amenities(parkingSpaces: station.parkingSpaces ?? 0, bikeRacks: station.bikeRacks ?? 0, hasRestrooms: station.hasElevator, hasElevator: station.hasElevator)
             case .loading:
                 // No location yet

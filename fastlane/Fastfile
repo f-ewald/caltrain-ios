@@ -16,25 +16,30 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Generate new localized screenshots"
+  desc "Generate screenshots"
   lane :screenshots do
-    capture_screenshots(scheme: "caltrain")
+    capture_screenshots(
+      stop_after_first_error: true,
+      number_of_retries: 1,
+      scheme: "caltrain",
+      only_testing: ["caltrainUITests/Screenshot"]
+    )
 
-    # Resize screenshots to App Store requirements based on device type
-    screenshot_dir = File.expand_path("./fastlane/screenshots")
-    Dir.glob("#{screenshot_dir}/**/*.png").each do |file|
-      filename = File.basename(file)
+    # # Resize screenshots to App Store requirements based on device type
+    # screenshot_dir = File.expand_path("./fastlane/screenshots")
+    # Dir.glob("#{screenshot_dir}/**/*.png").each do |file|
+    #   filename = File.basename(file)
 
-      if filename.include?("iPhone")
-        # iPhone screenshots: resize to 1284 × 2778 (6.5" display requirement)
-        system("sips", "-z", "2778", "1284", file)
-        puts "📱 Resized iPhone screenshot: #{filename} → 1284×2778"
-      elsif filename.include?("iPad")
-        # iPad screenshots: resize to 2048 × 2732 (12.9" iPad Pro requirement)
-        system("sips", "-z", "2732", "2048", file)
-        puts "📱 Resized iPad screenshot: #{filename} → 2048×2732"
-      end
-    end
+    #   if filename.include?("iPhone")
+    #     # iPhone screenshots: resize to 1284 × 2778 (6.5" display requirement)
+    #     system("sips", "-z", "2778", "1284", file)
+    #     puts "📱 Resized iPhone screenshot: #{filename} → 1284×2778"
+    #   elsif filename.include?("iPad")
+    #     # iPad screenshots: resize to 2048 × 2732 (12.9" iPad Pro requirement)
+    #     system("sips", "-z", "2732", "2048", file)
+    #     puts "📱 Resized iPad screenshot: #{filename} → 2048×2732"
+    #   end
+    # end
 
     puts "✅ All screenshots resized to App Store requirements"
   end

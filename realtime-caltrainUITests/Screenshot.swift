@@ -26,20 +26,26 @@ final class Screenshot: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
+    func testMainScreen() throws {
         let app = XCUIApplication()
         setupSnapshot(app)
         app.launch()
 
         // Wait for app to load and show header
-        let headerText = app.staticTexts["CALTRAIN"]
-        XCTAssertTrue(headerText.waitForExistence(timeout: 5))
+        let headerText = app.staticTexts["Baby Bullet"]
+        XCTAssertTrue(headerText.waitForExistence(timeout: 20))
 
         // Wait for departures to load from API (adjust timing as needed)
-        sleep(4)
+        sleep(10)
 
         // Screenshot 1: Main screen with departures
         snapshot("01-MainScreen")
+        
+        let nearestStationButton = app.buttons["station.nearest"]
+        print(app.debugDescription)
+        XCTAssert(nearestStationButton.waitForExistence(timeout: 5))
+        nearestStationButton.tap()
+//        app.descendants(matching: .any)["station.nearest"].tap()
 
         // Screenshot 2: Scroll to show more departure information
         app.swipeUp()

@@ -1,9 +1,9 @@
 # App Store required device sizes
-# iPhone 17 Pro Max for 6.9" phone screenshots
+# iPhone 17 Pro for 6.9" phone screenshots
 # iPad Pro 13-inch (M5) for tablet screenshots
 devices([
-  "iPhone 17 Pro Max",           # Will be resized to 1284x2778 (App Store 6.5" requirement)
-  "iPad Pro 13-inch (M5)"        # Will be resized to 2048x2732 (App Store iPad Pro 12.9" requirement)
+  "iPhone 17 Pro",           # Will be resized to 1284x2778 (App Store 6.5" requirement)
+  # "iPad Pro 13-inch (M5)"        # Will be resized to 2048x2732 (App Store iPad Pro 12.9" requirement)
 ])
 
 # Start with English only
@@ -11,7 +11,7 @@ languages([
   "en-US"
 ])
 
-# Must match the MAIN app scheme
+# Must match the main app scheme (which includes UI tests)
 scheme("caltrain")
 
 # Output directory

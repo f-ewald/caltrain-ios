@@ -55,6 +55,7 @@ func testRefreshStationsUpdatesExisting() async throws {
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
         longitude: -122.3943,
+        zoneNumber: 1,
         isFavorite: true,  // User preference
         isSelected: true   // User preference
     )
@@ -75,6 +76,12 @@ func testRefreshStationsUpdatesExisting() async throws {
                 longitude: -122.394434,  // Updated longitude
                 zone: 1,
                 address: "700 4th Street",
+                addressNumber: "700",
+                addressStreet: "4th Street",
+                addressCity: "San Francisco",
+                addressPostalCode: "12345",
+                addressState: "CA",
+                addressCountry: "USA",
                 hasParking: false,
                 hasBikeParking: true,
                 parkingSpaces: nil,
@@ -131,7 +138,8 @@ func testRefreshStationsAddsNew() async throws {
         gtfsStopIdSouth: "70011",
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
-        longitude: -122.3943
+        longitude: -122.3943,
+        zoneNumber: 1
     )
     context.insert(existingStation)
     try context.save()
@@ -150,6 +158,12 @@ func testRefreshStationsAddsNew() async throws {
                 longitude: -122.394434,
                 zone: 1,
                 address: "700 4th Street",
+                addressNumber: "700",
+                addressStreet: "4th Street",
+                addressCity: "San Francisco",
+                addressPostalCode: "12345",
+                addressState: "CA",
+                addressCountry: "USA",
                 hasParking: false,
                 hasBikeParking: true,
                 parkingSpaces: nil,
@@ -169,6 +183,12 @@ func testRefreshStationsAddsNew() async throws {
                 longitude: -122.392733,
                 zone: 1,
                 address: "1450 Pennsylvania Avenue",
+                addressNumber: "1450",
+                addressStreet: "Pennsylvania Avenue",
+                addressCity: "San Francisco",
+                addressPostalCode: "12345",
+                addressState: "CA",
+                addressCountry: "USA",
                 hasParking: false,
                 hasBikeParking: true,
                 parkingSpaces: nil,
@@ -213,7 +233,8 @@ func testRefreshStationsRemovesDeleted() async throws {
         gtfsStopIdSouth: "70011",
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
-        longitude: -122.3943
+        longitude: -122.3943,
+        zoneNumber: 1,
     )
     let oldStation = CaltrainStation(
         stationId: "old",
@@ -222,7 +243,8 @@ func testRefreshStationsRemovesDeleted() async throws {
         gtfsStopIdSouth: "99999",
         gtfsStopIdNorth: "99998",
         latitude: 37.5,
-        longitude: -122.5
+        longitude: -122.5,
+        zoneNumber: 1,
     )
     context.insert(sfStation)
     context.insert(oldStation)
@@ -242,6 +264,12 @@ func testRefreshStationsRemovesDeleted() async throws {
                 longitude: -122.394434,
                 zone: 1,
                 address: "700 4th Street",
+                addressNumber: "700",
+                addressStreet: "4th Street",
+                addressCity: "San Francisco",
+                addressPostalCode: "12345",
+                addressState: "CA",
+                addressCountry: "USA",
                 hasParking: false,
                 hasBikeParking: true,
                 parkingSpaces: nil,
@@ -288,6 +316,7 @@ func testRefreshStationsCombinedOperations() async throws {
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
         longitude: -122.3943,
+        zoneNumber: 1,
         isFavorite: true
     )
     let oldStation = CaltrainStation(
@@ -297,7 +326,8 @@ func testRefreshStationsCombinedOperations() async throws {
         gtfsStopIdSouth: "88888",
         gtfsStopIdNorth: "88887",
         latitude: 37.4,
-        longitude: -122.4
+        longitude: -122.4,
+        zoneNumber: 1,
     )
     context.insert(sfStation)
     context.insert(oldStation)
@@ -317,6 +347,12 @@ func testRefreshStationsCombinedOperations() async throws {
                 longitude: -122.394434,
                 zone: 1,
                 address: "700 4th Street",
+                addressNumber: "700",
+                addressStreet: "4th Street",
+                addressCity: "San Francisco",
+                addressPostalCode: "12345",
+                addressState: "CA",
+                addressCountry: "USA",
                 hasParking: false,
                 hasBikeParking: true,
                 parkingSpaces: nil,
@@ -336,6 +372,12 @@ func testRefreshStationsCombinedOperations() async throws {
                 longitude: -122.38666,
                 zone: 3,
                 address: "200 North Rollins Road",
+                addressNumber: "700",
+                addressStreet: "4th Street",
+                addressCity: "San Francisco",
+                addressPostalCode: "12345",
+                addressState: "CA",
+                addressCountry: "USA",
                 hasParking: true,
                 hasBikeParking: true,
                 parkingSpaces: 2400,
@@ -393,7 +435,8 @@ func testRefreshStationsAPIError() async throws {
         gtfsStopIdSouth: "70011",
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
-        longitude: -122.3943
+        longitude: -122.3943,
+        zoneNumber: 1,
     )
     context.insert(station)
     try context.save()
@@ -436,7 +479,8 @@ func testRefreshStationsEmptyResponse() async throws {
         gtfsStopIdSouth: "70011",
         gtfsStopIdNorth: "70012",
         latitude: 37.7764,
-        longitude: -122.3943
+        longitude: -122.3943,
+        zoneNumber: 1,
     )
     let station2 = CaltrainStation(
         stationId: "sj",
@@ -445,7 +489,8 @@ func testRefreshStationsEmptyResponse() async throws {
         gtfsStopIdSouth: "70261",
         gtfsStopIdNorth: "70262",
         latitude: 37.3297,
-        longitude: -121.9027
+        longitude: -121.9027,
+        zoneNumber: 1,
     )
     context.insert(station1)
     context.insert(station2)
