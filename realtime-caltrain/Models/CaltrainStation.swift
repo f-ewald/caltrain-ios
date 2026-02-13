@@ -120,7 +120,35 @@ final class CaltrainStation {
         hasRestrooms: false,
         ticketMachines: 6,
         hasElevator: false,
-        isFavorite: false,
+        isFavorite: true,
+        isSelected: false
+    )
+    
+    static var exampleStation2 = CaltrainStation(
+        stationId: "sj",
+        name: "San Jose",
+        shortCode: "sj",
+        gtfsStopIdSouth: "1",
+        gtfsStopIdNorth: "2",
+        latitude: 37.776439,
+        longitude: -122.394434,
+        zoneNumber: 3,
+        address: "700 4th St., San Francisco 94107",
+        addressNumber: "700",
+        addressStreet: "4th St.",
+        addressCity: "San Francisco",
+        addressPostalCode: "94107",
+        addressState: "CA",
+        addressCountry: "USA",
+        hasParking: true,
+        hasBikeParking: false,
+        parkingSpaces: 20,
+        bikeRacks: 10,
+        hasBikeLockers: true,
+        hasRestrooms: false,
+        ticketMachines: 6,
+        hasElevator: false,
+        isFavorite: true,
         isSelected: false
     )
 }

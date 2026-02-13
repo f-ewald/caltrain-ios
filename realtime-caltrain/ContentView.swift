@@ -13,6 +13,10 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(LocationManager.self) private var locationManager
     @Query private var stations: [CaltrainStation]
+    
+    private var favoriteStations: [CaltrainStation] { stations.filter { $0.isFavorite}
+        
+    }
 
     @State private var refreshError: Error?
     @State private var showErrorAlert = false
@@ -76,6 +80,13 @@ struct ContentView: View {
                     .listRowBackground(Color.clear)
                 }
 
+                if !favoriteStations.isEmpty {
+                    Section {
+                        FavoriteScrollView()
+                    }
+                    header: { Text("Quick Access") }
+                }
+                
                 // Active Station Section (selected or nearest)
                 ActiveStationSection(
                     userLocation: locationManager.location,
