@@ -53,18 +53,8 @@ struct ActiveStationSection: View {
                             Text(station.name)
                                 .font(.title2)
                                 .fontWeight(.bold)
-                            Text(station.shortCode)
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(Color.gray.opacity(0.15))
-                                .cornerRadius(4)
-                            
-                            ZoneTextView(zone: station.zoneNumber)
-                        
                         }
+                        ZoneTextView(zone: station.zoneNumber)
                     }
                     .padding(.vertical, 8)
                 }
@@ -80,18 +70,9 @@ struct ActiveStationSection: View {
                             Text(station.name)
                                 .font(.title2)
                                 .fontWeight(.bold)
-                            Text(station.shortCode)
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(Color.gray.opacity(0.15))
-                                .cornerRadius(4)
-                            
-                            ZoneTextView(zone: station.zoneNumber)
                         }
-
+                        // Zone should be on new line because some station names are long.
+                        ZoneTextView(zone: station.zoneNumber)
                         HStack {
                             Image(systemName: "location.fill")
                                 .font(.system(size: 12))
