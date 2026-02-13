@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct realtime_caltrainApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+
     var sharedModelContainer: ModelContainer = {
         do {
             return try SharedModelContainer.create()
@@ -74,5 +76,28 @@ struct realtime_caltrainApp: App {
                 }
         }
         .modelContainer(sharedModelContainer)
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            switch newPhase {
+            case .active:
+                // Resume location updates when app becomes active
+                if locationManager.isAuthorized {
+                    #if DEBUG
+                    print("📍 App active - resuming location updates")
+                    #endif
+                    locationManager.startUpdating()
+                }
+            case .background:
+                // Stop location updates to save battery when app enters background
+                #if DEBUG
+                print("📍 App background - stopping location updates")
+                #endif
+                locationManager.stopUpdating()
+            case .inactive:
+                // Don't stop updates during temporary inactive state (e.g., during app switching)
+                break
+            @unknown default:
+                break
+            }
+        }
     }
 }

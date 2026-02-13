@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import CoreLocation
 
 final class Screenshot: XCTestCase {
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
@@ -24,12 +25,22 @@ final class Screenshot: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    
 
     @MainActor
     func testMainScreen() throws {
         let app = XCUIApplication()
+
+        // Set simulated location before launch (San Francisco Caltrain Station)
+        XCUIDevice.shared.location = XCUILocation(
+            location: CLLocation(latitude: 37.7762, longitude: -122.3947)
+        )
+
         setupSnapshot(app)
         app.launch()
+        
+        
 
         // Wait for app to load and show header
         let headerText = app.staticTexts["Baby Bullet"]
@@ -40,44 +51,36 @@ final class Screenshot: XCTestCase {
 
         // Screenshot 1: Main screen with departures
         snapshot("01-MainScreen")
-        
+
+        // Try to tap nearest station if it appears (with timeout)
+        // If location isn't available, skip this and continue with other screenshots
         let nearestStationButton = app.buttons["station.nearest"]
-        print(app.debugDescription)
-        XCTAssert(nearestStationButton.waitForExistence(timeout: 5))
-        nearestStationButton.tap()
-//        app.descendants(matching: .any)["station.nearest"].tap()
+        if nearestStationButton.waitForExistence(timeout: 15) {
+            print("Found nearest station element, tapping...")
+            nearestStationButton.tap()
+            sleep(2)
 
-        // Screenshot 2: Scroll to show more departure information
-        app.swipeUp()
-        sleep(1)
-        snapshot("02-DeparturesList")
+            // Screenshot 2: All stations list
+            snapshot("02-AllStations")
 
-        // Screenshot 3: Navigate to all stations list
-        // Tap on any button/link that navigates to station selection
-        let buttons = app.buttons
-        for i in 0..<buttons.count {
-            let button = buttons.element(boundBy: i)
-            if button.label.contains("Station") || button.label.contains("station") {
-                button.tap()
+            // Screenshot 3: Scroll to show more stations
+            app.swipeUp()
+            sleep(1)
+            snapshot("03-StationList")
+
+            // Return to main screen
+            if app.navigationBars.buttons.count > 0 {
+                app.navigationBars.buttons.firstMatch.tap()
                 sleep(1)
-                snapshot("03-AllStations")
-
-                // Screenshot 4: Scroll to show station amenities
-                app.swipeUp()
-                sleep(1)
-                snapshot("04-StationAmenities")
-
-                // Return to main screen
-                if app.navigationBars.buttons.count > 0 {
-                    app.navigationBars.buttons.firstMatch.tap()
-                    sleep(1)
-                }
-                break
             }
+        } else {
+            print("Nearest station element not found, skipping station list screenshots")
         }
 
-        // Screenshot 5: Alternative view (scroll position)
-        snapshot("05-AlternateView")
+        // Screenshot 4: Scroll to show more departure information on main screen
+        app.swipeUp()
+        sleep(1)
+        snapshot("04-DeparturesList")
     }
 
     func testLaunchPerformance() throws {

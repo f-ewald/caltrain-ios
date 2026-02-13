@@ -18,29 +18,26 @@ default_platform(:ios)
 platform :ios do
   desc "Generate screenshots"
   lane :screenshots do
+    # Don't reset simulator to preserve location settings
+    # Instead, just ensure simulator is booted and grant permissions
+    sh("xcrun simctl boot 'iPhone 17 Pro' || true")  # Ensure simulator is booted
+    sh("sleep 3")  # Wait for simulator to fully boot
+
+    sh("xcrun simctl privacy 'iPhone 17 Pro' grant location net.fewald.caltrain")
+    # Set location to San Francisco Caltrain Station as backup
+    # Primary location is set via XCUIDevice.shared.location in the test itself
+    sh("xcrun simctl location 'iPhone 17 Pro' set '37.7762,-122.3947'" )
+    sh("sleep 2")  # Give location time to be set
+
     capture_screenshots(
       stop_after_first_error: true,
       number_of_retries: 1,
       scheme: "caltrain",
-      only_testing: ["caltrainUITests/Screenshot"]
+      configuration: "Release",
+      xcargs: "ENABLE_TESTABILITY=YES",
+      only_testing: ["caltrainUITests/Screenshot/testMainScreen"],
+      erase_simulator: false,
+      skip_open_summary: true
     )
-
-    # # Resize screenshots to App Store requirements based on device type
-    # screenshot_dir = File.expand_path("./fastlane/screenshots")
-    # Dir.glob("#{screenshot_dir}/**/*.png").each do |file|
-    #   filename = File.basename(file)
-
-    #   if filename.include?("iPhone")
-    #     # iPhone screenshots: resize to 1284 × 2778 (6.5" display requirement)
-    #     system("sips", "-z", "2778", "1284", file)
-    #     puts "📱 Resized iPhone screenshot: #{filename} → 1284×2778"
-    #   elsif filename.include?("iPad")
-    #     # iPad screenshots: resize to 2048 × 2732 (12.9" iPad Pro requirement)
-    #     system("sips", "-z", "2732", "2048", file)
-    #     puts "📱 Resized iPad screenshot: #{filename} → 2048×2732"
-    #   end
-    # end
-
-    puts "✅ All screenshots resized to App Store requirements"
   end
 end

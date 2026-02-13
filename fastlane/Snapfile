@@ -21,9 +21,12 @@ output_directory("./fastlane/screenshots")
 clear_previous_screenshots(true)
 
 # Show clean status bar (9:41, full battery/signal)
-override_status_bar(true)
+# override_status_bar(true)
 
 # Launch arguments for test detection
 launch_arguments([
   "-FASTLANE_SNAPSHOT YES"
 ])
+
+# Disable concurrent simulators so location settings persist
+concurrent_simulators(false)
