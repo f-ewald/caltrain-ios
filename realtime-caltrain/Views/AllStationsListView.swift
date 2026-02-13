@@ -12,6 +12,14 @@ struct AllStationsListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \CaltrainStation.name) private var stations: [CaltrainStation]
+    
+    // Group stations by zone number
+    var groupedStations: [Int: [CaltrainStation]] {
+        Dictionary(grouping: stations, by: { $0.zoneNumber })
+    }
+    var sortedZones: [Int] {
+        groupedStations.keys.sorted()
+    }
 
     var body: some View {
         List {
@@ -31,25 +39,22 @@ struct AllStationsListView: View {
             }
 
             // All stations section (alphabetically)
-            Section {
-                ForEach(stations) { station in
-                    StationRow(station: station)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            handleStationSelection(station)
-                        }
+            ForEach(sortedZones, id: \.self) { zone in
+                Section {
+                    ForEach(groupedStations[zone] ?? []) { station in
+                        StationRow(station: station)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                handleStationSelection(station)
+                            }
+                    }
                 }
-            } header: {
-                Text("All Stations")
+                header: { Text("Zone \(zone)")}
             }
 
             // Legend section
             Section {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Amenities Legend")
-                        .font(.headline)
-                        .padding(.bottom, 4)
-
                     HStack(spacing: 12) {
                         HStack(spacing: 4) {
                             Image(systemName: "parkingsign.circle.fill")
@@ -92,6 +97,7 @@ struct AllStationsListView: View {
                 }
                 .padding(.vertical, 8)
             }
+            header: { Text("Legend") }
         }
         .navigationTitle("Stations")
         .navigationBarTitleDisplayMode(.inline)
@@ -109,9 +115,26 @@ struct AllStationsListView: View {
     }
 }
 
+@MainActor
+struct SampleData {
+    static let container: ModelContainer = {
+        let schema = Schema([CaltrainStation.self])
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: schema, configurations: [config])
+        
+        let sampleStations = [
+            CaltrainStation.exampleStation,
+            CaltrainStation.exampleStation2,
+        ]
+        
+        sampleStations.forEach { container.mainContext.insert($0) }
+        return container
+    }()
+}
+
 #Preview {
     NavigationStack {
         AllStationsListView()
-            .modelContainer(for: CaltrainStation.self, inMemory: true)
+            .modelContainer(SampleData.container)
     }
 }
