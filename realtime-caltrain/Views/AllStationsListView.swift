@@ -11,7 +11,7 @@ import SwiftData
 struct AllStationsListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    @Query(sort: \CaltrainStation.name) private var stations: [CaltrainStation]
+    @Query(sort: \CaltrainStation.gtfsStopIdSouth) private var stations: [CaltrainStation]
     
     // Group stations by zone number
     var groupedStations: [Int: [CaltrainStation]] {
