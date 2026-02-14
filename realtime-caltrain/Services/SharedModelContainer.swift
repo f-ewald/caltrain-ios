@@ -27,7 +27,7 @@ struct SharedModelContainer {
         let storeURL = appGroupURL.appendingPathComponent("CaltrainData.sqlite")
         let config = ModelConfiguration(url: storeURL)
 
-        return try ModelContainer(for: schema, configurations: [config])
+        return try ModelContainer(for: schema, migrationPlan: AppMigrationPlan.self, configurations: [config])
     }
 }
 
