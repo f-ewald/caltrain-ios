@@ -120,6 +120,7 @@ struct StationDetail: View {
                     } label: {
                         Image(systemName: "xmark")
                     }
+                    .accessibilityIdentifier("station.detail.close")
                 }
             }
         }

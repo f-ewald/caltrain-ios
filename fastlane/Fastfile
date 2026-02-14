@@ -15,29 +15,50 @@
 
 default_platform(:ios)
 
+# All devices for App Store screenshots
+SCREENSHOT_DEVICES = [
+  "iPhone 17 Pro Max",
+  "iPhone 11 Pro Max",
+  "iPhone 17 Pro",
+  "iPhone 17",
+  "iPhone SE (3rd generation)",
+  "iPad Pro 13-inch (M5)",
+  "iPad Pro (12.9-inch) (6th generation)",
+  "iPad Pro 11-inch (M5)",
+  "iPad Air (3rd generation)",
+]
+
 platform :ios do
   desc "Generate screenshots"
   lane :screenshots do
-    # Don't reset simulator to preserve location settings
-    # Instead, just ensure simulator is booted and grant permissions
-    sh("xcrun simctl boot 'iPhone 17 Pro' || true")  # Ensure simulator is booted
-    sh("sleep 3")  # Wait for simulator to fully boot
+    # Clear previous screenshots before starting
+    sh("rm -rf './fastlane/screenshots/en-US'")
 
-    sh("xcrun simctl privacy 'iPhone 17 Pro' grant location net.fewald.caltrain")
-    # Set location to San Francisco Caltrain Station as backup
-    # Primary location is set via XCUIDevice.shared.location in the test itself
-    sh("xcrun simctl location 'iPhone 17 Pro' set '37.7762,-122.3947'" )
-    sh("sleep 2")  # Give location time to be set
+    # Run each device sequentially: boot, grant permissions, capture, then move on
+    SCREENSHOT_DEVICES.each do |device|
+      sh("xcrun simctl boot '#{device}' || true")
+      sh("sleep 3")
+      sh("xcrun simctl privacy '#{device}' grant location net.fewald.caltrain")
+      # Set location to San Francisco Caltrain Station as backup
+      # Primary location is set via XCUIDevice.shared.location in the test itself
+      sh("xcrun simctl location '#{device}' set '37.7762,-122.3947'")
+      sh("sleep 2")
 
-    capture_screenshots(
-      stop_after_first_error: true,
-      number_of_retries: 1,
-      scheme: "caltrain",
-      configuration: "Release",
-      xcargs: "ENABLE_TESTABILITY=YES",
-      only_testing: ["caltrainUITests/Screenshot/testMainScreen"],
-      erase_simulator: false,
-      skip_open_summary: true
-    )
+      capture_screenshots(
+        stop_after_first_error: false,
+        number_of_retries: 1,
+        scheme: "caltrain",
+        configuration: "Release",
+        xcargs: "ENABLE_TESTABILITY=YES",
+        only_testing: [
+            "caltrainUITests/Screenshot/testFavoriteView",
+            "caltrainUITests/Screenshot/testMainScreen",
+        ],
+        devices: [device],
+        erase_simulator: false,
+        skip_open_summary: true,
+        clear_previous_screenshots: false
+      )
+    end
   end
 end

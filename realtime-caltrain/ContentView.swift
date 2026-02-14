@@ -84,7 +84,7 @@ struct ContentView: View {
                     Section {
                         FavoriteScrollView()
                     }
-                    header: { Text("Quick Access") }
+                    header: { Text("Favorite Stations") }
                 }
                 
                 // Active Station Section (selected or nearest)

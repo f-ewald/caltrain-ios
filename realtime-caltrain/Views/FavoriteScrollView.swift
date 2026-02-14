@@ -13,7 +13,7 @@ struct FavoriteScrollView: View {
     @Query
     private var allStations: [CaltrainStation]
     
-    @Query(filter: #Predicate<CaltrainStation> { station in station.isFavorite })
+    @Query(filter: #Predicate<CaltrainStation> { station in station.isFavorite }, sort: \CaltrainStation.shortCode)
     private var favoriteStations: [CaltrainStation]
     
     var body: some View {
@@ -24,7 +24,9 @@ struct FavoriteScrollView: View {
                         #if DEBUG
                         print("Station \(station.name) selected")
                         #endif
-                        StationSelectionService.selectStation(station, from: allStations)
+                        withAnimation {
+                            StationSelectionService.selectStation(station, from: allStations)
+                        }
                     }
                     label: {
                         Text(station.shortCode.uppercased())
@@ -36,6 +38,7 @@ struct FavoriteScrollView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("favorite.station.\(station.shortCode)")
                 }
             }
         }

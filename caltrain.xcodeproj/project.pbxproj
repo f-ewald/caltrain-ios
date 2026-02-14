@@ -52,6 +52,49 @@
 
 /* Begin PBXFileReference section */
 		6B5123482F32544B00E7EDD8 /* caltrain-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "caltrain-Info.plist"; sourceTree = "<group>"; };
+		6B8352F82F40288A0083B3F7 /* iPad Air (3rd generation)-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Air (3rd generation)-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8352F92F40288A0083B3F7 /* iPad Air (3rd generation)-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Air (3rd generation)-02-AllStations.png"; sourceTree = "<group>"; };
+		6B8352FA2F40288A0083B3F7 /* iPad Air (3rd generation)-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Air (3rd generation)-03-StationList.png"; sourceTree = "<group>"; };
+		6B8352FB2F40288A0083B3F7 /* iPad Air (3rd generation)-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Air (3rd generation)-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8352FC2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro (12.9-inch) (6th generation)-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8352FD2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro (12.9-inch) (6th generation)-02-AllStations.png"; sourceTree = "<group>"; };
+		6B8352FE2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro (12.9-inch) (6th generation)-03-StationList.png"; sourceTree = "<group>"; };
+		6B8352FF2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro (12.9-inch) (6th generation)-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8353002F40288A0083B3F7 /* iPad Pro 11-inch (M5)-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 11-inch (M5)-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8353012F40288A0083B3F7 /* iPad Pro 11-inch (M5)-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 11-inch (M5)-02-AllStations.png"; sourceTree = "<group>"; };
+		6B8353022F40288A0083B3F7 /* iPad Pro 11-inch (M5)-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 11-inch (M5)-03-StationList.png"; sourceTree = "<group>"; };
+		6B8353032F40288A0083B3F7 /* iPad Pro 11-inch (M5)-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 11-inch (M5)-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8353042F40288A0083B3F7 /* iPad Pro 13-inch (M5)-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 13-inch (M5)-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8353052F40288A0083B3F7 /* iPad Pro 13-inch (M5)-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 13-inch (M5)-02-AllStations.png"; sourceTree = "<group>"; };
+		6B8353062F40288A0083B3F7 /* iPad Pro 13-inch (M5)-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 13-inch (M5)-03-StationList.png"; sourceTree = "<group>"; };
+		6B8353072F40288A0083B3F7 /* iPad Pro 13-inch (M5)-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad Pro 13-inch (M5)-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8353082F40288A0083B3F7 /* iPhone 11 Pro Max-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 11 Pro Max-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8353092F40288A0083B3F7 /* iPhone 11 Pro Max-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 11 Pro Max-02-AllStations.png"; sourceTree = "<group>"; };
+		6B83530A2F40288A0083B3F7 /* iPhone 11 Pro Max-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 11 Pro Max-03-StationList.png"; sourceTree = "<group>"; };
+		6B83530B2F40288A0083B3F7 /* iPhone 11 Pro Max-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 11 Pro Max-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B83530C2F40288A0083B3F7 /* iPhone 17 Pro Max-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro Max-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B83530D2F40288A0083B3F7 /* iPhone 17 Pro Max-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro Max-02-AllStations.png"; sourceTree = "<group>"; };
+		6B83530E2F40288A0083B3F7 /* iPhone 17 Pro Max-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro Max-03-StationList.png"; sourceTree = "<group>"; };
+		6B83530F2F40288A0083B3F7 /* iPhone 17 Pro Max-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro Max-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8353102F40288A0083B3F7 /* iPhone 17 Pro-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8353112F40288A0083B3F7 /* iPhone 17 Pro-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro-02-AllStations.png"; sourceTree = "<group>"; };
+		6B8353122F40288A0083B3F7 /* iPhone 17 Pro-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro-03-StationList.png"; sourceTree = "<group>"; };
+		6B8353132F40288A0083B3F7 /* iPhone 17 Pro-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17 Pro-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8353142F40288A0083B3F7 /* iPhone 17-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8353152F40288A0083B3F7 /* iPhone 17-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17-02-AllStations.png"; sourceTree = "<group>"; };
+		6B8353162F40288A0083B3F7 /* iPhone 17-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17-03-StationList.png"; sourceTree = "<group>"; };
+		6B8353172F40288A0083B3F7 /* iPhone 17-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone 17-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B8353182F40288A0083B3F7 /* iPhone SE (3rd generation)-01-MainScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone SE (3rd generation)-01-MainScreen.png"; sourceTree = "<group>"; };
+		6B8353192F40288A0083B3F7 /* iPhone SE (3rd generation)-02-AllStations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone SE (3rd generation)-02-AllStations.png"; sourceTree = "<group>"; };
+		6B83531A2F40288A0083B3F7 /* iPhone SE (3rd generation)-03-StationList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone SE (3rd generation)-03-StationList.png"; sourceTree = "<group>"; };
+		6B83531B2F40288A0083B3F7 /* iPhone SE (3rd generation)-04-DeparturesList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone SE (3rd generation)-04-DeparturesList.png"; sourceTree = "<group>"; };
+		6B83531D2F40288A0083B3F7 /* screenshots.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = screenshots.html; sourceTree = "<group>"; };
+		6B83531F2F40288A0083B3F7 /* Appfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
+		6B8353202F40288A0083B3F7 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
+		6B8353212F40288A0083B3F7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6B8353222F40288A0083B3F7 /* report.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = report.xml; sourceTree = "<group>"; };
+		6B8353232F40288A0083B3F7 /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
+		6B8353242F40288A0083B3F7 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		6BA3EC352F29E57600FC18EE /* caltrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = caltrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC442F29E57700FC18EE /* caltrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC4E2F29E57700FC18EE /* caltrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +199,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B83531C2F40288A0083B3F7 /* en-US */ = {
+			isa = PBXGroup;
+			children = (
+				6B8352F82F40288A0083B3F7 /* iPad Air (3rd generation)-01-MainScreen.png */,
+				6B8352F92F40288A0083B3F7 /* iPad Air (3rd generation)-02-AllStations.png */,
+				6B8352FA2F40288A0083B3F7 /* iPad Air (3rd generation)-03-StationList.png */,
+				6B8352FB2F40288A0083B3F7 /* iPad Air (3rd generation)-04-DeparturesList.png */,
+				6B8352FC2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-01-MainScreen.png */,
+				6B8352FD2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-02-AllStations.png */,
+				6B8352FE2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-03-StationList.png */,
+				6B8352FF2F40288A0083B3F7 /* iPad Pro (12.9-inch) (6th generation)-04-DeparturesList.png */,
+				6B8353002F40288A0083B3F7 /* iPad Pro 11-inch (M5)-01-MainScreen.png */,
+				6B8353012F40288A0083B3F7 /* iPad Pro 11-inch (M5)-02-AllStations.png */,
+				6B8353022F40288A0083B3F7 /* iPad Pro 11-inch (M5)-03-StationList.png */,
+				6B8353032F40288A0083B3F7 /* iPad Pro 11-inch (M5)-04-DeparturesList.png */,
+				6B8353042F40288A0083B3F7 /* iPad Pro 13-inch (M5)-01-MainScreen.png */,
+				6B8353052F40288A0083B3F7 /* iPad Pro 13-inch (M5)-02-AllStations.png */,
+				6B8353062F40288A0083B3F7 /* iPad Pro 13-inch (M5)-03-StationList.png */,
+				6B8353072F40288A0083B3F7 /* iPad Pro 13-inch (M5)-04-DeparturesList.png */,
+				6B8353082F40288A0083B3F7 /* iPhone 11 Pro Max-01-MainScreen.png */,
+				6B8353092F40288A0083B3F7 /* iPhone 11 Pro Max-02-AllStations.png */,
+				6B83530A2F40288A0083B3F7 /* iPhone 11 Pro Max-03-StationList.png */,
+				6B83530B2F40288A0083B3F7 /* iPhone 11 Pro Max-04-DeparturesList.png */,
+				6B83530C2F40288A0083B3F7 /* iPhone 17 Pro Max-01-MainScreen.png */,
+				6B83530D2F40288A0083B3F7 /* iPhone 17 Pro Max-02-AllStations.png */,
+				6B83530E2F40288A0083B3F7 /* iPhone 17 Pro Max-03-StationList.png */,
+				6B83530F2F40288A0083B3F7 /* iPhone 17 Pro Max-04-DeparturesList.png */,
+				6B8353102F40288A0083B3F7 /* iPhone 17 Pro-01-MainScreen.png */,
+				6B8353112F40288A0083B3F7 /* iPhone 17 Pro-02-AllStations.png */,
+				6B8353122F40288A0083B3F7 /* iPhone 17 Pro-03-StationList.png */,
+				6B8353132F40288A0083B3F7 /* iPhone 17 Pro-04-DeparturesList.png */,
+				6B8353142F40288A0083B3F7 /* iPhone 17-01-MainScreen.png */,
+				6B8353152F40288A0083B3F7 /* iPhone 17-02-AllStations.png */,
+				6B8353162F40288A0083B3F7 /* iPhone 17-03-StationList.png */,
+				6B8353172F40288A0083B3F7 /* iPhone 17-04-DeparturesList.png */,
+				6B8353182F40288A0083B3F7 /* iPhone SE (3rd generation)-01-MainScreen.png */,
+				6B8353192F40288A0083B3F7 /* iPhone SE (3rd generation)-02-AllStations.png */,
+				6B83531A2F40288A0083B3F7 /* iPhone SE (3rd generation)-03-StationList.png */,
+				6B83531B2F40288A0083B3F7 /* iPhone SE (3rd generation)-04-DeparturesList.png */,
+			);
+			path = "en-US";
+			sourceTree = "<group>";
+		};
+		6B83531E2F40288A0083B3F7 /* screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				6B83531C2F40288A0083B3F7 /* en-US */,
+				6B83531D2F40288A0083B3F7 /* screenshots.html */,
+			);
+			path = screenshots;
+			sourceTree = "<group>";
+		};
+		6B8353252F40288A0083B3F7 /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				6B83531E2F40288A0083B3F7 /* screenshots */,
+				6B83531F2F40288A0083B3F7 /* Appfile */,
+				6B8353202F40288A0083B3F7 /* Fastfile */,
+				6B8353212F40288A0083B3F7 /* README.md */,
+				6B8353222F40288A0083B3F7 /* report.xml */,
+				6B8353232F40288A0083B3F7 /* Snapfile */,
+				6B8353242F40288A0083B3F7 /* SnapshotHelper.swift */,
+			);
+			path = fastlane;
+			sourceTree = "<group>";
+		};
 		6BA3EC2C2F29E57600FC18EE = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +276,7 @@
 				6BA3ECB12F2BF44500FC18EE /* Frameworks */,
 				6BA3EC362F29E57600FC18EE /* Products */,
 				6BA3ECD32F2BF4C700FC18EE /* CaltrainWidgetExtension.entitlements */,
+				6B8353252F40288A0083B3F7 /* fastlane */,
 			);
 			sourceTree = "<group>";
 		};

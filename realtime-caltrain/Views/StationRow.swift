@@ -54,6 +54,8 @@ struct StationRow: View {
                     .foregroundStyle(station.isFavorite ? .yellow : .gray)
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("station.favorite.\(station.shortCode)")
+            
             Button(action: {
                 stationDetailShowing.toggle()
             }) {
@@ -65,6 +67,7 @@ struct StationRow: View {
             .sheet(isPresented: $stationDetailShowing) {
                 StationDetail(station: station)
             }
+            .accessibilityIdentifier("station.info.\(station.shortCode)")
         }
         .padding(.vertical, 4)
     }

@@ -1,9 +1,15 @@
-# App Store required device sizes
-# iPhone 17 Pro for 6.9" phone screenshots
-# iPad Pro 13-inch (M5) for tablet screenshots
+# App Store screenshot devices - all sizes
+# 5 iPhone sizes + 4 iPad sizes
 devices([
-  "iPhone 17 Pro",           # Will be resized to 1284x2778 (App Store 6.5" requirement)
-  # "iPad Pro 13-inch (M5)"        # Will be resized to 2048x2732 (App Store iPad Pro 12.9" requirement)
+  "iPhone 17 Pro Max",                         # 6.9" (1320x2868)
+  "iPhone 11 Pro Max",                          # 6.5" (1242x2688)
+  "iPhone 17 Pro",                              # 6.3" (1206x2622)
+  "iPhone 17",                                  # 6.1" (1179x2556)
+  "iPhone SE (3rd generation)",                 # 4.7" (750x1334)
+  "iPad Pro 13-inch (M5)",                      # 13"  (2064x2752)
+  "iPad Pro (12.9-inch) (6th generation)",      # 12.9" (2048x2732)
+  "iPad Pro 11-inch (M5)",                      # 11"  (1668x2388)
+  "iPad Air (3rd generation)",                  # 10.5" (1668x2224)
 ])
 
 # Start with English only
@@ -19,9 +25,6 @@ output_directory("./fastlane/screenshots")
 
 # Clear previous screenshots
 clear_previous_screenshots(true)
-
-# Show clean status bar (9:41, full battery/signal)
-# override_status_bar(true)
 
 # Launch arguments for test detection
 launch_arguments([
