@@ -17,13 +17,17 @@ extension AppSchemaV1 {
         var trainNumber: String
         var scheduledTime: String
         var destination: String
+        var onWeekdays: Bool
+        var onWeekends: Bool
         
-        init(stationId: String, trainType: TrainType, trainNumber: String, scheduledTime: String, destination: String) {
+        init(stationId: String, trainType: TrainType, trainNumber: String, scheduledTime: String, destination: String, onWeekdays: Bool, onWeekends: Bool) {
             self.stationId = stationId
             self.trainType = trainType
             self.trainNumber = trainNumber
             self.scheduledTime = scheduledTime
             self.destination = destination
+            self.onWeekdays = onWeekdays
+            self.onWeekends = onWeekends
         }
         
         /// This converts the string to a real Date for "today"

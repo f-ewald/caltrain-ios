@@ -15,11 +15,23 @@ struct DepartureService {
         let stationId = station.stationId
         let northId = station.gtfsStopIdNorth
         let southId = station.gtfsStopIdSouth
+        let stationIds = [northId, southId]
+        
+        // Define weekend and weekday
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let isWeekend = weekday == 1 || weekday == 7
+        let isWeekday = !isWeekend
         
         
         // Fetch planned departures
         let plannedDescriptor = FetchDescriptor<PlannedDeparture>(
-            predicate: #Predicate { $0.stationId == northId || $0.stationId == southId }
+            predicate: #Predicate { departure in
+                stationIds.contains(departure.stationId) && (
+                    (isWeekday && departure.onWeekdays) ||
+                    (isWeekend && departure.onWeekends)
+                )
+                
+            }
         )
         let plannedDepartures = (try? modelContext.fetch(plannedDescriptor)) ?? []
         
@@ -66,7 +78,10 @@ struct DepartureService {
                                      trainType: departure.trainType,
                                      trainNumber: departure.trainNumber,
                                      scheduledTime: departure.departureTime,
-                                     destination: departure.destination)
+                                     destination: departure.destination,
+                                     onWeekdays: departure.onWeekdays,
+                                     onWeekends: departure.onWeekends,
+                                    )
                     )
             }
         }

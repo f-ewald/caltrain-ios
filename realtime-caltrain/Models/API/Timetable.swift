@@ -15,6 +15,8 @@ struct Departure: Codable {
     let departureTime: String
     let destination: String
     let daysOffset: String
+    let onWeekdays: Bool
+    let onWeekends: Bool
     
     enum CodingKeys: String, CodingKey {
         case trainNumber = "trainId"
@@ -24,6 +26,8 @@ struct Departure: Codable {
         case departureTime = "departureTime"
         case destination = "destination"
         case daysOffset = "daysOffset"
+        case onWeekdays = "onWeekdays"
+        case onWeekends = "onWeekends"
     }
 }
 
