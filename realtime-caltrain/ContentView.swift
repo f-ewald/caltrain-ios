@@ -14,8 +14,10 @@ struct ContentView: View {
     @Environment(LocationManager.self) private var locationManager
     @Query private var stations: [CaltrainStation]
     
-    private var favoriteStations: [CaltrainStation] { stations.filter { $0.isFavorite}
-        
+    private var favoriteStations: [CaltrainStation] { stations.filter { $0.isFavorite} }
+    private var isWeekend: Bool {
+        let currentDay = Calendar.current.component(.weekday, from: Date())
+        return currentDay == 1 || currentDay == 7
     }
 
     @State private var refreshError: Error?
@@ -93,7 +95,7 @@ struct ContentView: View {
                     stations: stations
                 )
 
-                // Departures Section (replaces Items)
+                // Departures Section
                 DeparturesSection(
                     activeStation: activeStation,
                     departures: departures,
@@ -103,14 +105,53 @@ struct ContentView: View {
                 #if DEBUG
                 // Debug info section (only in debug builds)
                 Section("Debug Info") {
-                    Text("Stations loaded: \(stations.count)")
-                    Text("Location: \(locationManager.location != nil ? "Available" : "Waiting...")")
-                    Text("Active station: \(activeStation?.name ?? "None")")
-                    Text("Departures: \(departures.count)")
+                    HStack {
+                        Text("Schedules")
+                        Spacer()
+                        Text("\(isWeekend ? "Weekend" : "Weekday")")
+                            .foregroundStyle(.gray)
+                    }
+                    HStack {
+                        Text("Stations loaded")
+                        Spacer()
+                        Text("\(stations.count)")
+                            .foregroundStyle(.gray)
+                    }
+                    
+                    HStack {
+                        Text("Location")
+                        Spacer()
+                        Text("\(locationManager.location != nil ? "Available" : "Waiting...")")
+                            .foregroundStyle(.gray)
+                    }
+                    
+                    HStack {
+                        Text("Active station")
+                        Spacer()
+                        Text("\(activeStation?.name ?? "None")")
+                            .foregroundStyle(.gray)
+                    }
+                    
+                    HStack {
+                        Text("Departures")
+                        Spacer()
+                        Text("\(departures.count)")
+                            .foregroundStyle(.gray)
+                    }
+                    
                     if let lastRefresh = DepartureRefreshState.lastRefresh {
-                        Text("Last loaded: \(lastRefresh.formatted(date: .omitted, time: .standard))")
+                        Text("Last loaded")
+                        Spacer()
+                        Text("\(lastRefresh.formatted(date: .omitted, time: .standard))")
+                            .foregroundStyle(.gray)
                     } else {
-                        Text("Last loaded: Never")
+                        HStack {
+                            Text("Last loaded")
+                            Spacer()
+                            Text("Never")
+                                .foregroundStyle(.gray)
+                        }
+                        
                     }
                 }
                 #endif
