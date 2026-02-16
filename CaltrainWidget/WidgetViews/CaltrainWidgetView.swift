@@ -326,6 +326,8 @@ struct ExtendedDepartureRow: View {
             return "Delayed"
         case .cancelled:
             return "Cancelled"
+        case .live:
+            return "Live"
         }
     }
 

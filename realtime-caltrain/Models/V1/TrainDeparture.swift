@@ -63,6 +63,10 @@ extension AppSchemaV1 {
             return estimated > scheduledTime
         }
         
+        var isLive: Bool {
+            estimatedTime != nil
+        }
+        
         var delayMinutes: Int {
             guard let estimated = estimatedTime else { return 0 }
             return Int(estimated.timeIntervalSince(scheduledTime) / 60)
@@ -181,12 +185,14 @@ extension AppSchemaV1 {
         case onTime
         case delayed
         case cancelled
+        case live
         
         var displayName: String {
             switch self {
             case .onTime: return "On Time"
             case .delayed: return "Delayed"
             case .cancelled: return "Cancelled"
+            case .live: return "Live"
             }
         }
         
@@ -195,6 +201,7 @@ extension AppSchemaV1 {
             case .onTime: return .green
             case .delayed: return .yellow
             case .cancelled: return .red
+            case .live: return .blue
             }
         }
         
@@ -203,6 +210,7 @@ extension AppSchemaV1 {
             case .onTime: return "checkmark.circle.fill"
             case .delayed: return "clock.fill"
             case .cancelled: return "xmark.circle.fill"
+            case .live: return "antenna.radiowaves.left.and.right.circle.fill"
             }
         }
     }

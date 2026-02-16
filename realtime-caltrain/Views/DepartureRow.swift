@@ -17,7 +17,21 @@ struct DepartureRow: View {
                 Text(departure.displayTime, format: .dateTime.hour().minute())
                     .font(.title3)
                     .fontWeight(.semibold)
-                    
+                
+                if departure.isLive {
+                    HStack(spacing: 4) {
+                        Image(systemName: DepartureStatus.live.iconName)
+                            .font(.caption2)
+                        Text(DepartureStatus.live.displayName)
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                    }
+                    .foregroundStyle(DepartureStatus.live.color)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 3)
+                    .background(DepartureStatus.live.color.opacity(0.15))
+                    .clipShape(Capsule())
+                }
 
                 if departure.isDelayed {
                     // Status badge with icon
@@ -33,23 +47,25 @@ struct DepartureRow: View {
                     .padding(.vertical, 3)
                     .background(departure.status.color.opacity(0.15))
                     .clipShape(Capsule())
-                } else {
-                    // Status badge with icon
-                    HStack(spacing: 4) {
-                        Image(systemName: departure.status.iconName)
-                            .font(.caption2)
-                        Text(departure.status.displayName)
-                            .font(.caption2)
-                            .fontWeight(.medium)
-                    }
-                    .foregroundStyle(departure.status.color)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-                    .background(departure.status.color.opacity(0.15))
-                    .clipShape(Capsule())
                 }
+//                else {
+//                    // Status badge with icon
+//                    HStack(spacing: 4) {
+//                        Image(systemName: departure.status.iconName)
+//                            .font(.caption2)
+//                        Text(departure.status.displayName)
+//                            .font(.caption2)
+//                            .fontWeight(.medium)
+//                    }
+//                    .foregroundStyle(departure.status.color)
+//                    .padding(.horizontal, 6)
+//                    .padding(.vertical, 3)
+//                    .background(departure.status.color.opacity(0.15))
+//                    .clipShape(Capsule())
+//                }
+                Spacer()
             }
-            .frame(width: 110, alignment: .leading)
+            .frame(width: 110, alignment: .topLeading)
 
             // Middle: Train info
             VStack(alignment: .leading, spacing: 4) {
@@ -71,6 +87,7 @@ struct DepartureRow: View {
                         .foregroundStyle(departure.trainType.color)
                         .clipShape(Capsule())
                 }
+                Spacer()
             }
 
             Spacer()
