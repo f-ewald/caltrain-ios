@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B938D0C2F4233C300AB1896 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6B938D0B2F4233C300AB1896 /* Config.xcconfig */; };
+		6B938D0E2F42886200AB1896 /* version.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6B938D0D2F42885C00AB1896 /* version.sh */; };
 		6BA3ECB32F2BF44500FC18EE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3ECB22F2BF44500FC18EE /* WidgetKit.framework */; };
 		6BA3ECB52F2BF44500FC18EE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3ECB42F2BF44500FC18EE /* SwiftUI.framework */; };
 		6BA3ECC42F2BF44600FC18EE /* CaltrainWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -95,6 +97,8 @@
 		6B8353222F40288A0083B3F7 /* report.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = report.xml; sourceTree = "<group>"; };
 		6B8353232F40288A0083B3F7 /* Snapfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snapfile; sourceTree = "<group>"; };
 		6B8353242F40288A0083B3F7 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		6B938D0B2F4233C300AB1896 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		6B938D0D2F42885C00AB1896 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
 		6BA3EC352F29E57600FC18EE /* caltrain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = caltrain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC442F29E57700FC18EE /* caltrainTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3EC4E2F29E57700FC18EE /* caltrainUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = caltrainUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,6 +272,8 @@
 		6BA3EC2C2F29E57600FC18EE = {
 			isa = PBXGroup;
 			children = (
+				6B938D0D2F42885C00AB1896 /* version.sh */,
+				6B938D0B2F4233C300AB1896 /* Config.xcconfig */,
 				6B5123482F32544B00E7EDD8 /* caltrain-Info.plist */,
 				6BA3EC372F29E57600FC18EE /* realtime-caltrain */,
 				6BA3EC472F29E57700FC18EE /* realtime-caltrainTests */,
@@ -469,6 +475,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B938D0E2F42886200AB1896 /* version.sh in Resources */,
+				6B938D0C2F4233C300AB1896 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +534,7 @@
 /* Begin XCBuildConfiguration section */
 		6BA3EC562F29E57700FC18EE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B938D0B2F4233C300AB1896 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -589,6 +598,7 @@
 		};
 		6BA3EC572F29E57700FC18EE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B938D0B2F4233C300AB1896 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -649,10 +659,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				BUILD_NUMBER = "$(BUILD_NUMBER)";
 				CODE_SIGN_ENTITLEMENTS = "realtime-caltrain/realtime-caltrain.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = H93944JUWW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -669,7 +680,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -681,6 +692,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION = "$(VERSION)";
 			};
 			name = Debug;
 		};
@@ -690,10 +702,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				BUILD_NUMBER = "$(BUILD_NUMBER)";
 				CODE_SIGN_ENTITLEMENTS = "realtime-caltrain/realtime-caltrain.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = H93944JUWW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -710,7 +723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -721,6 +734,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION = "$(VERSION)";
 			};
 			name = Release;
 		};
@@ -815,9 +829,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				BUILD_NUMBER = "$(BUILD_NUMBER)";
 				CODE_SIGN_ENTITLEMENTS = CaltrainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CaltrainWidget/Info.plist;
@@ -828,7 +843,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain.CaltrainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -846,9 +861,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				BUILD_NUMBER = "$(BUILD_NUMBER)";
 				CODE_SIGN_ENTITLEMENTS = CaltrainWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = H93944JUWW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CaltrainWidget/Info.plist;
@@ -859,7 +875,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fewald.caltrain.CaltrainWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
