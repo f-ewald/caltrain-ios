@@ -140,10 +140,12 @@ struct ContentView: View {
                     }
                     
                     if let lastRefresh = DepartureRefreshState.lastRefresh {
-                        Text("Last loaded")
-                        Spacer()
-                        Text("\(lastRefresh.formatted(date: .omitted, time: .standard))")
-                            .foregroundStyle(.gray)
+                        HStack {
+                            Text("Last loaded")
+                            Spacer()
+                            Text("\(lastRefresh.formatted(date: .omitted, time: .standard))")
+                                .foregroundStyle(.gray)
+                        }
                     } else {
                         HStack {
                             Text("Last loaded")
