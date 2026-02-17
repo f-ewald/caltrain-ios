@@ -45,9 +45,12 @@ struct DepartureService {
         let realtimeTrainNumbers = Set(realtimeDepartures.map { $0.trainNumber })
 
         // Convert planned departures to TrainDeparture, excluding duplicates
+        var seenPlannedTrains = Set<String>()
         let convertedPlanned = plannedDepartures.compactMap { planned -> TrainDeparture? in
             // Skip if we already have real-time data for this train
             guard !realtimeTrainNumbers.contains(planned.trainNumber) else { return nil }
+            // Skip duplicate planned entries for the same train
+            guard seenPlannedTrains.insert(planned.trainNumber).inserted else { return nil }
             return planned.toTrainDeparture()
         }
         
@@ -70,7 +73,10 @@ struct DepartureService {
     /// departures rarely change
     static func refreshPlannedDepartures(modelContext: ModelContext) async throws {
         let timetable = try await CaltrainAPIClient().fetchTimetable()
-        
+
+        // Delete old planned departures before inserting new ones
+        try modelContext.delete(model: PlannedDeparture.self)
+
         for (stationId, departures) in timetable {
             for departure in departures {
                 modelContext.insert(
@@ -114,21 +120,17 @@ struct DepartureService {
             modelContext: modelContext
         )
 
-        var existingDepartures = Set<String>()
-        for departure in newDepartures {
-            let departureString = String(format: "%@_%@", departure.stationId, departure.trainNumber)
-            if !existingDepartures.contains(departureString) {
-                existingDepartures.insert(departureString)
-//                print(String(format: "No duplicate detected: %@", departureString))
-            } else {
-                print(String(format: "Duplicate detected: %@", departureString))
-            }
+        // 4. Deduplicate by station + train number, keeping first occurrence
+        var seen = Set<String>()
+        let deduplicated = newDepartures.filter { departure in
+            let key = "\(departure.stationId)_\(departure.trainNumber)"
+            return seen.insert(key).inserted
         }
 
-        // 4. Replace ALL old departures with new ones (atomic operation)
-        try replaceAllDepartures(with: newDepartures, modelContext: modelContext)
+        // 5. Replace ALL old departures with new ones (atomic operation)
+        try replaceAllDepartures(with: deduplicated, modelContext: modelContext)
 
-        // 5. Update global refresh timestamp
+        // 6. Update global refresh timestamp
         DepartureRefreshState.markRefreshed()
 
         #if DEBUG
