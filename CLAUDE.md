@@ -200,6 +200,10 @@ fastlane/                       # CI/CD automation
 └── screenshots/                # Generated screenshots
 ```
 
+## Development Workflow
+
+- **Always write tests for new code.** When implementing new features, fixing bugs, or adding/modifying services and models, corresponding unit tests must be written in the `realtime-caltrainTests/` directory using the Swift Testing framework (`@Test`, `#expect`). Follow existing test patterns in the codebase.
+
 ## Important Notes
 
 - The Xcode project is `caltrain.xcodeproj` with scheme `caltrain`
