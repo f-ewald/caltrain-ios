@@ -15,17 +15,9 @@
 
 default_platform(:ios)
 
-# All devices for App Store screenshots
 SCREENSHOT_DEVICES = [
-  "iPhone 17 Pro Max",
-  "iPhone 11 Pro Max",
-  "iPhone 17 Pro",
-  "iPhone 17",
-  "iPhone SE (3rd generation)",
-  "iPad Pro 13-inch (M5)",
-  "iPad Pro (12.9-inch) (6th generation)",
-  "iPad Pro 11-inch (M5)",
-  "iPad Air (3rd generation)",
+  "iPhone 11 Pro Max",          # 6.5"
+  "iPad Pro 13-inch (M5)",      # 13"
 ]
 
 platform :ios do
@@ -49,10 +41,9 @@ platform :ios do
         number_of_retries: 1,
         scheme: "caltrain",
         configuration: "Release",
-        xcargs: "ENABLE_TESTABILITY=YES",
+        xcargs: "ENABLE_TESTABILITY=YES -disable-concurrent-testing",
         only_testing: [
-            "caltrainUITests/Screenshot/testFavoriteView",
-            "caltrainUITests/Screenshot/testMainScreen",
+            "caltrainUITests/Screenshot/testScreenshots",
         ],
         devices: [device],
         erase_simulator: false,
