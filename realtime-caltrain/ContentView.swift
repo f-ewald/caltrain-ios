@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import WidgetKit
+internal import Combine
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
@@ -24,6 +25,11 @@ struct ContentView: View {
     @State private var showErrorAlert = false
     @State private var isLoadingDepartures = false
     @State private var activeStationId: String?
+    
+    // Auto-refresh timer
+    static let refreshIntervalSeconds = 60
+    @State private var secondsUntilRefresh = ContentView.refreshIntervalSeconds
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     private var nearestStation: CaltrainStation? {
         guard let userLocation = locationManager.location else { return nil }
@@ -155,6 +161,13 @@ struct ContentView: View {
                         }
                         
                     }
+                    HStack {
+                        Text("Next refresh")
+                        Spacer()
+                        Text("\(secondsUntilRefresh)s")
+                            .monospacedDigit()
+                            .foregroundStyle(.gray)
+                    }
                 }
                 #endif
 
@@ -201,6 +214,15 @@ struct ContentView: View {
                 activeStationId = newStation?.stationId
                 Task {
                     await loadInitialDepartures()
+                }
+            }
+            .onReceive(timer) { _ in
+                secondsUntilRefresh -= 1
+                if secondsUntilRefresh <= 0 {
+                    secondsUntilRefresh = Self.refreshIntervalSeconds
+                    Task {
+                        await refreshRealtimeOnly()
+                    }
                 }
             }
             .toolbar {
@@ -251,12 +273,36 @@ struct ContentView: View {
             try await DepartureService.refreshPlannedDepartures(modelContext: modelContext)
             // Success - SwiftData @Query will auto-update UI
 
+            // Reset auto-refresh countdown
+            secondsUntilRefresh = Self.refreshIntervalSeconds
+
             // Trigger widget reload
             WidgetCenter.shared.reloadAllTimelines()
         } catch {
             // Show error but keep old data visible
             refreshError = error
             showErrorAlert = true
+        }
+    }
+
+    private func refreshRealtimeOnly() async {
+        guard !stations.isEmpty, !isLoadingDepartures else { return }
+
+        do {
+            try await DepartureService.refreshAllDepartures(
+                modelContext: modelContext,
+                forceRefresh: true
+            )
+            withAnimation(.easeInOut(duration: 0.3)) {
+                // Trigger SwiftData @Query update with animation
+                // The departures computed property will re-evaluate automatically
+            }
+            // Trigger widget reload
+            WidgetCenter.shared.reloadAllTimelines()
+        } catch {
+            #if DEBUG
+            print("⏱️ Auto-refresh failed: \(error.localizedDescription)")
+            #endif
         }
     }
 
@@ -287,6 +333,8 @@ struct ContentView: View {
                 modelContext: modelContext,
                 forceRefresh: true
             )
+            // Reset auto-refresh countdown
+            secondsUntilRefresh = Self.refreshIntervalSeconds
             #if DEBUG
             print("✅ API fetch successful")
             #endif

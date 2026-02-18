@@ -40,6 +40,7 @@ struct DeparturesByDirectionView: View {
                     Section {
                         ForEach(northboundDepartures, id: \.trainNumber) { departure in
                             DepartureRow(departure: departure)
+                                .transition(.opacity)
                         }
                     } header: {
                         Label(Direction.northbound.displayName, systemImage: Direction.northbound.iconName)
@@ -53,6 +54,7 @@ struct DeparturesByDirectionView: View {
                     Section {
                         ForEach(southboundDepartures, id: \.trainNumber) { departure in
                             DepartureRow(departure: departure)
+                                .transition(.opacity)
                         }
                     } header: {
                         let displayName = Direction.southbound.displayName
@@ -72,6 +74,8 @@ struct DeparturesByDirectionView: View {
                 }
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: northboundDepartures.map(\.trainNumber))
+        .animation(.easeInOut(duration: 0.3), value: southboundDepartures.map(\.trainNumber))
     }
 }
 
