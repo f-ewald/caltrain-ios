@@ -262,10 +262,14 @@ struct ContentView: View {
                                 await refreshDepartures()
                             }
                         } label: {
-                            Image(systemName: "arrow.clockwise")
-                                .frame(width: 20, height: 20)
-                                .rotationEffect(.degrees(isLoadingDepartures ? 360 : 0))
-                                .animation(isLoadingDepartures ? .linear(duration: 1).repeatForever(autoreverses: false) : .default, value: isLoadingDepartures)
+                            if isLoadingDepartures {
+                                ProgressView()
+                                    .frame(width: 20, height: 20)
+                                    .tint(.gray)
+                            } else {
+                                Image(systemName: "arrow.clockwise")
+                                    .frame(width: 20, height: 20)
+                            }
                         }
                         .disabled(isLoadingDepartures)
                     }
