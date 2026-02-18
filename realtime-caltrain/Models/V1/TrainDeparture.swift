@@ -143,7 +143,7 @@ extension AppSchemaV1 {
         case limited
         case express
         case unknown
-        
+
         var displayName: String {
             switch self {
             case .local: return "Local"
@@ -152,7 +152,7 @@ extension AppSchemaV1 {
             case .unknown: return "Unkown"
             }
         }
-        
+
         var color: Color {
             switch self {
             case .local: return .gray
@@ -161,20 +161,19 @@ extension AppSchemaV1 {
             case .unknown: return .gray
             }
         }
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawString = try container.decode(String.self).lowercased().trimmingCharacters(in: .whitespaces)
-            
-            switch rawString {
+
+        /// Parse a train type string from the API (e.g. "Local", "Express", "Local Weekday")
+        static func from(apiString: String) -> TrainType {
+            let normalized = apiString.lowercased().trimmingCharacters(in: .whitespaces)
+            switch normalized {
             case "local", "local weekday", "local weekend", "south county":
-                self = .local
+                return .local
             case "limited":
-                self = .limited
+                return .limited
             case "express":
-                self = .express
+                return .express
             default:
-                self = .unknown
+                return .unknown
             }
         }
     }

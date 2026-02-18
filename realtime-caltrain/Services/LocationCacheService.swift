@@ -9,7 +9,12 @@ import Foundation
 import CoreLocation
 
 struct LocationCacheService {
+    #if DEBUG
+    /// Settable in DEBUG builds to allow test injection
+    static var defaults: UserDefaults? = UserDefaults(suiteName: "group.net.fewald.caltrain")
+    #else
     private static let defaults = UserDefaults(suiteName: "group.net.fewald.caltrain")
+    #endif
 
     private enum Keys {
         static let lastLatitude = "lastLatitude"
