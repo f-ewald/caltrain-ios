@@ -35,6 +35,10 @@ class MockCaltrainAPIClient: CaltrainAPIClientProtocol {
 
         return data
     }
+
+    func healthcheck() async -> Bool {
+        return true
+    }
 }
 
 // MARK: - Tests

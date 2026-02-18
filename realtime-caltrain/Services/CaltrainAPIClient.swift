@@ -11,6 +11,7 @@ import Foundation
 protocol CaltrainAPIClientProtocol {
     func fetchTripUpdates() async throws -> GTFSRealtimeResponse
     func fetchStations() async throws -> StationData
+    func healthcheck() async -> Bool
 }
 
 /// API client for fetching real-time Caltrain data from 511.org
@@ -86,6 +87,26 @@ struct CaltrainAPIClient: CaltrainAPIClientProtocol {
             return stationData
         } catch {
             throw APIError.parsingError(error)
+        }
+    }
+    
+    /// Perform healthcheck and return true if healthy
+    func healthcheck() async -> Bool {
+        let url = "https://caltrain-gateway.fewald.net/up"
+        
+        guard let healthUrl = URL(string: url) else {
+            return false
+        }
+        
+        do {
+            let (_, response) = try await URLSession.shared.data(from: healthUrl)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return false
+            }
+            return httpResponse.statusCode == 200
+        }
+        catch {
+            return false
         }
     }
 

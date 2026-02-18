@@ -29,6 +29,7 @@ struct ContentView: View {
     // Auto-refresh timer
     static let refreshIntervalSeconds = 60
     @State private var secondsUntilRefresh = ContentView.refreshIntervalSeconds
+    @State private var apiHealthy: Bool?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     private var nearestStation: CaltrainStation? {
@@ -168,6 +169,12 @@ struct ContentView: View {
                             .monospacedDigit()
                             .foregroundStyle(.gray)
                     }
+                    HStack {
+                        Text("API Health")
+                        Spacer()
+                        Text(apiHealthy == true ? "Healthy" : apiHealthy == false ? "Unhealthy" : "Unknown")
+                            .foregroundStyle(apiHealthy == true ? .green : apiHealthy == false ? .red : .gray)
+                    }
                 }
                 #endif
 
@@ -208,6 +215,11 @@ struct ContentView: View {
                 Task {
                     await loadInitialDepartures()
                 }
+                #if DEBUG
+                Task {
+                    apiHealthy = await CaltrainAPIClient().healthcheck()
+                }
+                #endif
             }
             .onChange(of: activeStation) { _, newStation in
                 // Update active station ID first (this updates the departures query)
@@ -223,6 +235,11 @@ struct ContentView: View {
                     Task {
                         await refreshRealtimeOnly()
                     }
+                    #if DEBUG
+                    Task {
+                        apiHealthy = await CaltrainAPIClient().healthcheck()
+                    }
+                    #endif
                 }
             }
             .toolbar {
