@@ -10,27 +10,8 @@ import SwiftData
 
 struct StationDataLoader {
     static func loadStationsIfNeeded(modelContext: ModelContext) {
-        // Check if stations already loaded
-        let descriptor = FetchDescriptor<CaltrainStation>()
-        let existingCount = (try? modelContext.fetchCount(descriptor)) ?? 0
-
-//        guard existingCount == 0 else {
-//            #if DEBUG
-//            print("✅ Stations already loaded: \(existingCount)")
-//            #endif
-//            return
-//        }
-        
-        // Delete all data (for debugging purposes)
-        do {
-            // Remove any existing stations
-            try modelContext.delete(model: CaltrainStation.self)
-        } catch {
-            print("❌ ERROR: Failed to delete existing stations")
-        }
-
         #if DEBUG
-        print("📥 Loading stations from JSON...")
+        print("📥 Syncing stations from bundled JSON...")
         #endif
 
         // Load from JSON
@@ -42,54 +23,18 @@ struct StationDataLoader {
             return
         }
 
-        #if DEBUG
-        print("✅ Found caltrain_stations.json at: \(url.path)")
-        #endif
-
         do {
             let data = try Data(contentsOf: url)
-            #if DEBUG
-            print("📄 JSON file size: \(data.count) bytes")
-            #endif
-
             let stationData = try JSONDecoder().decode(StationData.self, from: data)
+
             #if DEBUG
             print("🗺️ Decoded \(stationData.stations.count) stations from JSON")
             #endif
 
-            // Import stations into SwiftData
-            for station in stationData.stations {
-                let newStation = CaltrainStation(
-                    stationId: station.id,
-                    name: station.name,
-                    shortCode: station.shortCode,
-                    gtfsStopIdSouth: station.gtfsStopIdSouth,
-                    gtfsStopIdNorth: station.gtfsStopIdNorth,
-                    latitude: station.latitude,
-                    longitude: station.longitude,
-                    zoneNumber: station.zone,
-                    address: station.address,
-                    addressNumber: station.addressNumber,
-                    addressStreet: station.addressStreet,
-                    addressCity: station.addressCity,
-                    addressPostalCode: station.addressPostalCode,
-                    addressState: station.addressState,
-                    addressCountry: station.addressCountry,
-                    hasParking: station.hasParking,
-                    hasBikeParking: station.hasBikeParking,
-                    parkingSpaces: station.parkingSpaces,
-                    bikeRacks: station.bikeRacks,
-                    hasBikeLockers: station.hasBikeLockers,
-                    hasRestrooms: station.hasRestrooms,
-                    ticketMachines: station.ticketMachines,
-                    hasElevator: station.hasElevator
-                )
-                modelContext.insert(newStation)
-            }
+            try syncStations(stationData.stations, modelContext: modelContext)
 
-            try modelContext.save()
             #if DEBUG
-            print("✅ Successfully loaded \(stationData.stations.count) stations into SwiftData")
+            print("✅ Successfully synced stations from bundled JSON")
             #endif
         } catch let decodingError as DecodingError {
             #if DEBUG
@@ -112,6 +57,90 @@ struct StationDataLoader {
             print("❌ ERROR loading stations: \(error)")
             #endif
         }
+    }
+
+    /// Syncs the given JSON stations into the database using upsert logic:
+    /// - Updates existing stations (preserving user preferences like isFavorite, isSelected)
+    /// - Inserts new stations
+    /// - Deletes stations no longer present in the JSON
+    static func syncStations(_ jsonStations: [StationJSON], modelContext: ModelContext) throws {
+        // Fetch all existing stations into a lookup dictionary
+        let descriptor = FetchDescriptor<CaltrainStation>()
+        let existingStations = try modelContext.fetch(descriptor)
+        var existingDict: [String: CaltrainStation] = [:]
+        for station in existingStations {
+            existingDict[station.stationId] = station
+        }
+
+        // Track which station IDs are in the JSON
+        var jsonStationIds = Set<String>()
+
+        for jsonStation in jsonStations {
+            jsonStationIds.insert(jsonStation.id)
+
+            if let existing = existingDict[jsonStation.id] {
+                // Update data fields, preserve user preferences (isFavorite, isSelected)
+                existing.name = jsonStation.name
+                existing.shortCode = jsonStation.shortCode
+                existing.gtfsStopIdSouth = jsonStation.gtfsStopIdSouth
+                existing.gtfsStopIdNorth = jsonStation.gtfsStopIdNorth
+                existing.latitude = jsonStation.latitude
+                existing.longitude = jsonStation.longitude
+                existing.zoneNumber = jsonStation.zone
+                existing.address = jsonStation.address
+                existing.addressNumber = jsonStation.addressNumber
+                existing.addressStreet = jsonStation.addressStreet
+                existing.addressCity = jsonStation.addressCity
+                existing.addressPostalCode = jsonStation.addressPostalCode
+                existing.addressState = jsonStation.addressState
+                existing.addressCountry = jsonStation.addressCountry
+                existing.hasParking = jsonStation.hasParking
+                existing.hasBikeParking = jsonStation.hasBikeParking
+                existing.parkingSpaces = jsonStation.parkingSpaces
+                existing.bikeRacks = jsonStation.bikeRacks
+                existing.hasBikeLockers = jsonStation.hasBikeLockers
+                existing.hasRestrooms = jsonStation.hasRestrooms
+                existing.ticketMachines = jsonStation.ticketMachines
+                existing.hasElevator = jsonStation.hasElevator
+            } else {
+                // Insert new station
+                let newStation = CaltrainStation(
+                    stationId: jsonStation.id,
+                    name: jsonStation.name,
+                    shortCode: jsonStation.shortCode,
+                    gtfsStopIdSouth: jsonStation.gtfsStopIdSouth,
+                    gtfsStopIdNorth: jsonStation.gtfsStopIdNorth,
+                    latitude: jsonStation.latitude,
+                    longitude: jsonStation.longitude,
+                    zoneNumber: jsonStation.zone,
+                    address: jsonStation.address,
+                    addressNumber: jsonStation.addressNumber,
+                    addressStreet: jsonStation.addressStreet,
+                    addressCity: jsonStation.addressCity,
+                    addressPostalCode: jsonStation.addressPostalCode,
+                    addressState: jsonStation.addressState,
+                    addressCountry: jsonStation.addressCountry,
+                    hasParking: jsonStation.hasParking,
+                    hasBikeParking: jsonStation.hasBikeParking,
+                    parkingSpaces: jsonStation.parkingSpaces,
+                    bikeRacks: jsonStation.bikeRacks,
+                    hasBikeLockers: jsonStation.hasBikeLockers,
+                    hasRestrooms: jsonStation.hasRestrooms,
+                    ticketMachines: jsonStation.ticketMachines,
+                    hasElevator: jsonStation.hasElevator
+                )
+                modelContext.insert(newStation)
+            }
+        }
+
+        // Delete stations that are no longer in the JSON
+        for existing in existingStations {
+            if !jsonStationIds.contains(existing.stationId) {
+                modelContext.delete(existing)
+            }
+        }
+
+        try modelContext.save()
     }
 }
 
