@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6B938D0C2F4233C300AB1896 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6B938D0B2F4233C300AB1896 /* Config.xcconfig */; };
-		6B938D0E2F42886200AB1896 /* version.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6B938D0D2F42885C00AB1896 /* version.sh */; };
+
 		6BA3ECB32F2BF44500FC18EE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3ECB22F2BF44500FC18EE /* WidgetKit.framework */; };
 		6BA3ECB52F2BF44500FC18EE /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BA3ECB42F2BF44500FC18EE /* SwiftUI.framework */; };
 		6BA3ECC42F2BF44600FC18EE /* CaltrainWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6BA3ECB02F2BF44500FC18EE /* CaltrainWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -475,7 +475,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B938D0E2F42886200AB1896 /* version.sh in Resources */,
 				6B938D0C2F4233C300AB1896 /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
