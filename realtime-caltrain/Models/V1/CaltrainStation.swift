@@ -43,9 +43,6 @@ extension AppSchemaV1 {
         var isFavorite: Bool         // User's favorite status
         var isSelected: Bool         // User's selected station status
         
-        @available(*, deprecated, message: "lastRefreshed is no longer used. Global refresh state is managed by DepartureRefreshState.")
-        var lastRefreshed: Date?     // Timestamp of last API refresh (DEPRECATED - use DepartureRefreshState instead)
-        
         // Computed property for CLLocation
         var location: CLLocation {
             CLLocation(latitude: latitude, longitude: longitude)
