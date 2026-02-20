@@ -60,7 +60,7 @@ extension SwiftDataTestSuite {
 
         try context.save()
 
-        // Use a date far in the past so all departures are "upcoming"
+        // Use start of day so all departures are "upcoming"
         let pastDate = Calendar.current.startOfDay(for: Date())
         let departures = DepartureService.upcomingDepartures(
             modelContext: context, for: station, at: pastDate
@@ -103,19 +103,22 @@ extension SwiftDataTestSuite {
         let weekday = Calendar.current.component(.weekday, from: Date())
         let isWeekend = weekday == 1 || weekday == 7
 
+        // Use a fixed reference date so departure times are always within the 12-hour window
+        let referenceDate = Calendar.current.startOfDay(for: Date())
+        let futureDate = referenceDate.addingTimeInterval(3600) // 1 AM – within 12h of midnight
+
         // Insert a planned departure for train 101
         context.insert(PlannedDeparture(
             stationId: "north1",
             trainType: .local,
             trainNumber: "101",
-            scheduledTime: "23:59:00",
+            scheduledTime: "01:00:00",
             destination: "San Francisco",
             onWeekdays: !isWeekend,
             onWeekends: isWeekend
         ))
 
         // Insert a real-time departure for the same train 101
-        let futureDate = Date().addingTimeInterval(3600)
         context.insert(TrainDeparture(
             stationId: "test",
             direction: .northbound,
@@ -130,9 +133,8 @@ extension SwiftDataTestSuite {
 
         try context.save()
 
-        let pastDate = Calendar.current.startOfDay(for: Date())
         let departures = DepartureService.upcomingDepartures(
-            modelContext: context, for: station, at: pastDate
+            modelContext: context, for: station, at: referenceDate
         )
 
         let train101 = departures.filter { $0.trainNumber == "101" }
