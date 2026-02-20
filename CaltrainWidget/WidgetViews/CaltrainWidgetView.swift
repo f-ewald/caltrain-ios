@@ -28,6 +28,18 @@ struct CaltrainWidgetView: View {
     }
 }
 
+// MARK: Live hint
+
+/// Prompt the user to tap the widget
+struct LiveHintView: View {
+    var body: some View {
+        Text("Tap on the widget to view live departure times")
+            .foregroundStyle(.tertiary)
+            .font(.system(size: 8))
+            .padding(.bottom, 4)
+    }
+}
+
 // MARK: - Medium Widget View
 
 struct MediumWidgetView: View {
@@ -82,6 +94,8 @@ struct MediumWidgetView: View {
                 }
             }
             .padding(.vertical, 8)
+            
+            LiveHintView()
         }
     }
 }
@@ -108,7 +122,7 @@ struct LargeWidgetView: View {
                 isCompact: false,
                 shortStationCode: false
             )
-            .padding(.vertical, 8)
+            .padding(.top, 6)
 
             Divider()
 
@@ -119,7 +133,8 @@ struct LargeWidgetView: View {
                 isCompact: false,
                 shortStationCode: false
             )
-            .padding(.vertical, 8)
+            .padding(.top, 6)
+            LiveHintView()
         }
     }
 }
@@ -181,7 +196,8 @@ struct DirectionSection: View {
     
     /// Filter maximum number of departures depending on display size
     var displayedDepartures: [TrainDeparture] {
-        Array(departures.prefix(3))
+        // Large widgets have one more space
+        Array(departures.prefix(isCompact ? 3 : 4))
     }
 
     var body: some View {
@@ -251,44 +267,25 @@ struct CompactDepartureRow: View {
                 Text(timeString)
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(.primary)
-
-                if minutesUntilDeparture <= 20 {
-                    // This updates automatically, no need to use a timeline entry
-                    HStack(spacing: 4) {
-                        Text("in")
-                        if minutesUntilDeparture < 2 {
-                            Text(departureTime, style: .relative)
-                        } else {
-                            Text("\(minutesUntilDeparture) min")
-                        }
-                    }
-                    .font(.system(size: 9, weight: .medium))
-                }
             }
             .frame(width: 60, alignment: .leading)
 
-            // Train type indicator
-            TrainTypeIndicator(trainType: departure.trainType)
-
             // Destination (truncated)
             Text(shortStationCode ? departure.shortDestinationName : departure.destinationName)
-                .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(.secondary)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(departure.trainType.color)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
+                .font(.system(size: 10, weight: .semibold))
                 .lineLimit(1)
                 .truncationMode(.tail)
+            
+            Text("#\(departure.trainNumber)")
+                .foregroundStyle(.secondary)
+                .font(.system(size: 10))
 
             Spacer(minLength: 0)
-
-            // Status indicator
-            if departure.status == .delayed {
-                Image(systemName: "exclamationmark.circle.fill")
-                    .font(.system(size: 10))
-                    .foregroundStyle(.red)
-            } else if departure.status == .onTime {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 10))
-                    .foregroundStyle(.green)
-            }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 2)
@@ -338,52 +335,27 @@ struct ExtendedDepartureRow: View {
                 Text(timeString)
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
                     .foregroundStyle(.primary)
-
-                if minutesUntilDeparture <= 20 {
-                    Text("in \(minutesUntilDeparture) min")
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(minutesUntilDeparture <= 5 ? .red : .orange)
-                }
             }
-            .frame(width: 55, alignment: .leading)
-
-            // Train type indicator
-            TrainTypeIndicator(trainType: departure.trainType)
+            .frame(width: 60, alignment: .leading)
 
             // Train details
-            VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 2) {
+                Text("Train #\(departure.trainNumber)")
+                    .font(.system(size: 9))
+                    .foregroundStyle(.secondary)
                 Text(departure.destinationName)
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.primary)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(departure.trainType.color)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
                     .lineLimit(1)
-
-                HStack(spacing: 4) {
-                    Text("Train \(departure.trainNumber)")
-                        .font(.system(size: 9))
-                        .foregroundStyle(.secondary)
-
-                    Text("•")
-                        .font(.system(size: 9))
-                        .foregroundStyle(.secondary)
-
-                    Text(statusText)
-                        .font(.system(size: 9))
-                        .foregroundStyle(departure.status == .delayed ? .red : .secondary)
-                }
+                    .truncationMode(.tail)
             }
 
             Spacer(minLength: 0)
-
-            // Status icon
-            if departure.status == .delayed {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.system(size: 12))
-                    .foregroundStyle(.red)
-            } else if departure.status == .onTime {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 12))
-                    .foregroundStyle(.green)
-            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 4)
