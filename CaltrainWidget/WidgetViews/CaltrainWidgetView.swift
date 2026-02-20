@@ -44,6 +44,7 @@ struct LiveHintView: View {
 
 struct MediumWidgetView: View {
     let entry: CaltrainWidgetEntry
+    let numDepartures: Int = 3
 
     var body: some View {
         VStack(spacing: 0) {
@@ -54,43 +55,38 @@ struct MediumWidgetView: View {
                 .padding(.bottom, 8)
 
             Divider()
+            
+            
+            let nbDepartures = DirectionSection(
+                direction: .northbound,
+                departures: entry.northboundDepartures,
+                isCompact: true,
+                shortStationCode: true,
+                numDepartures: numDepartures,
+            )
+            let sbDepartures = DirectionSection(
+                direction: .southbound,
+                departures: entry.southboundDepartures,
+                isCompact: true,
+                shortStationCode: true,
+                numDepartures: numDepartures,
+            )
 
             // Departures in two columns
             HStack(spacing: 0) {
                 if entry.configuration.direction == .both {
                     // Northbound
-                    DirectionSection(
-                        direction: .northbound,
-                        departures: entry.northboundDepartures,
-                        isCompact: true,
-                        shortStationCode: true
-                    )
-                    
+                    nbDepartures
                     Divider()
-                    
+                    sbDepartures
                     // Southbound
-                    DirectionSection(
-                        direction: .southbound,
-                        departures: entry.southboundDepartures,
-                        isCompact: true,
-                        shortStationCode: true
-                    )
+                    
                 } else if entry.configuration.direction == .north {
                     // Only northbound connections
-                    DirectionSection(
-                        direction: .northbound,
-                        departures: entry.northboundDepartures,
-                        isCompact: true,
-                        shortStationCode: false
-                    )
+                    nbDepartures
                 } else if entry.configuration.direction == .south {
                     // Only southbound connections
-                    DirectionSection(
-                        direction: .southbound,
-                        departures: entry.southboundDepartures,
-                        isCompact: true,
-                        shortStationCode: false
-                    )
+                    sbDepartures
                 }
             }
             .padding(.vertical, 8)
@@ -104,6 +100,11 @@ struct MediumWidgetView: View {
 
 struct LargeWidgetView: View {
     let entry: CaltrainWidgetEntry
+    
+    // Dynamically change number of departures, depending on direction view.
+    var numDepartures: Int {
+        entry.configuration.direction == .both ? 4 : 8
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -114,26 +115,38 @@ struct LargeWidgetView: View {
                 .padding(.bottom, 8)
 
             Divider()
-
+            
             // Northbound section
-            DirectionSection(
+            let nbDirectionSection = DirectionSection(
                 direction: .northbound,
                 departures: entry.northboundDepartures,
                 isCompact: false,
-                shortStationCode: false
+                shortStationCode: false,
+                numDepartures: numDepartures,
             )
-            .padding(.top, 6)
-
-            Divider()
-
+                .padding(.top, 6)
+            
             // Southbound section
-            DirectionSection(
+            let sbDirectionSection = DirectionSection(
                 direction: .southbound,
                 departures: entry.southboundDepartures,
                 isCompact: false,
-                shortStationCode: false
+                shortStationCode: false,
+                numDepartures: numDepartures,
             )
-            .padding(.top, 6)
+                .padding(.top, 6)
+            
+            
+            if entry.configuration.direction == .both {
+                nbDirectionSection
+                Divider()
+                sbDirectionSection
+            } else if entry.configuration.direction == .north {
+                nbDirectionSection
+            } else {
+                sbDirectionSection
+            }
+            
             LiveHintView()
         }
     }
@@ -193,11 +206,12 @@ struct DirectionSection: View {
     let departures: [TrainDeparture]
     let isCompact: Bool
     let shortStationCode: Bool
+    let numDepartures: Int
     
     /// Filter maximum number of departures depending on display size
     var displayedDepartures: [TrainDeparture] {
         // Large widgets have one more space
-        Array(departures.prefix(isCompact ? 3 : 4))
+        Array(departures.prefix(numDepartures))
     }
 
     var body: some View {
