@@ -22,7 +22,7 @@ struct CaltrainTimelineProvider: AppIntentTimelineProvider {
             return self.retryTimeline(for: configuration)
         }
         let modelContext = ModelContext(container)
-        guard let station = loadCurrentStation(context: modelContext) else {
+        guard let station = loadCurrentStation(context: modelContext, configuration: configuration) else {
             return self.retryTimeline(for: configuration)
         }
         
@@ -30,6 +30,10 @@ struct CaltrainTimelineProvider: AppIntentTimelineProvider {
         let northboundDepartures = departures.filter({ $0.direction == .northbound })
         let southboundDepartures = departures.filter({ $0.direction == .southbound })
         
+        // The next time when the widget needs to fetch fresh data.
+        // This time is calculated dynamically whenever one of the departures (nortbound or southbound)
+        // has less than 3 departures left.
+        var nextUpdateTime = Date()
         
         for departure in departures {
             // Define the time when the widget should be updated
@@ -43,6 +47,14 @@ struct CaltrainTimelineProvider: AppIntentTimelineProvider {
                 return departure.departureTime > future
             }
             
+            if northboundFiltered.count < 3 || southboundFiltered.count < 3 {
+                // At this point there are too few future entries remaining and we need to
+                // call the widget again.
+                break
+            }
+            // Update the next update time only if there are enough entries available
+            nextUpdateTime = future
+            
             #if DEBUG
             print(String(format: "WIDGET: Departure at %@, northbound: %d, southbound: %d",
                          future.formatted(date: .omitted, time: .complete),
@@ -51,7 +63,6 @@ struct CaltrainTimelineProvider: AppIntentTimelineProvider {
                         ))
             #endif
 
-            
             entries.append(CaltrainWidgetEntry(
                 date: future,
                 configuration: configuration,
@@ -63,45 +74,9 @@ struct CaltrainTimelineProvider: AppIntentTimelineProvider {
             )
         }
         
-        
-//        for i in 0...24 {
-//            let future = Calendar.current.date(byAdding: .hour, value: i, to: now) ?? now
-//            entries.append(CaltrainWidgetEntry(
-//                date: future,
-//                configuration: configuration,
-//                station: station,
-//                northboundDepartures: departures[.northbound] ?? [],
-//                southboundDepartures: departures[.southbound] ?? [],
-//                error: .none,
-//                debugMessage: String(format: "%d", i))
-//            )
-//            #if DEBUG
-//            print(String(format: "WIDGET: Added entry %d with date: %@", i, future.formatted(date: .omitted, time: .complete)))
-//            #endif
-//        }
-//        
-        
-//        let nextUpdateNorthbound = departures[.northbound]?.first!.departureTime ?? Calendar.current.date(byAdding: .minute, value: 15, to: now)!
-//        let nextUpdateSouthbound = departures[.southbound]?.first?.departureTime ?? Calendar.current.date(byAdding: .minute, value: 15, to: now)!
-//        let nextUpdate = min(nextUpdateNorthbound, nextUpdateSouthbound)
-        
-        #if DEBUG
-//        print(String(format: "WIDGET: %d northbound departures, %d southbound departures",
-//                     departures[.northbound]?.count ?? 0,
-//                     departures[.southbound]?.count ?? 0,
-//                    ))
-//        print(String(format: "WIDGET: It is now %@, running next update at %@",
-//                     now.formatted(date: .omitted, time: .complete),
-//                     nextUpdate.formatted(date: .omitted, time: .complete)
-//                     )
-//        )
-        #endif
-
-        // Update every minute
-//        let nextUpdate: Date = Calendar.current.date(byAdding: .minute, value: 15, to: now)!
         let timeline = Timeline(
             entries: entries,
-            policy: .never)
+            policy: .after(nextUpdateTime))
         return timeline
     }
     
@@ -138,12 +113,20 @@ struct CaltrainTimelineProvider: AppIntentTimelineProvider {
         return allStations
     }
     
-    /// Load current station if set
-    private func loadCurrentStation(context: ModelContext) -> CaltrainStation? {
-        let stationId = LocationCacheService.cachedNearestStationId()
+    /// Load current station based on widget configuration.
+    /// If the user selected a specific station, use that; otherwise fall back to nearest station.
+    private func loadCurrentStation(context: ModelContext, configuration: CaltrainConfigurationIntent) -> CaltrainStation? {
         let allStations = loadAllStations(context: context)
-        let station = allStations.first { $0.stationId == stationId }
-        return station
+
+        // If user selected a specific station (not "Nearest Station"), use it
+        if let selectedStation = configuration.station,
+           selectedStation.id != "_my_location_" {
+            return allStations.first { $0.stationId == selectedStation.id }
+        }
+
+        // Fall back to cached nearest station
+        let stationId = LocationCacheService.cachedNearestStationId()
+        return allStations.first { $0.stationId == stationId }
     }
     
     /// Load Northbound and southbound departures for a given station at a given date.

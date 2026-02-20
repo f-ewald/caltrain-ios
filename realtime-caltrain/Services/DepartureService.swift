@@ -17,11 +17,10 @@ struct DepartureService {
         let southId = station.gtfsStopIdSouth
         let stationIds = [northId, southId]
         
-        // Define weekend and weekday
-        let weekday = Calendar.current.component(.weekday, from: Date())
+        // Define weekend and weekday for the given date
+        let weekday = Calendar.current.component(.weekday, from: date)
         let isWeekend = weekday == 1 || weekday == 7
         let isWeekday = !isWeekend
-        
         
         // Fetch planned departures
         let plannedDescriptor = FetchDescriptor<PlannedDeparture>(
@@ -30,7 +29,6 @@ struct DepartureService {
                     (isWeekday && departure.onWeekdays) ||
                     (isWeekend && departure.onWeekends)
                 )
-                
             }
         )
         let plannedDepartures = (try? modelContext.fetch(plannedDescriptor)) ?? []
@@ -57,8 +55,9 @@ struct DepartureService {
         // Merge and sort by scheduled time
         let merged = realtimeDepartures + convertedPlanned
         
+        // Filter for departures that are in the future by at most 12 hours.
         let filtered = merged.filter {
-            $0.departureTime >= date
+            $0.departureTime >= date && $0.departureTime <= date.advanced(by: 12 * 60 * 60)
         }
         
         let sorted = filtered.sorted { $0.scheduledTime < $1.scheduledTime }
