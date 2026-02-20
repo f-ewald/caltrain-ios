@@ -33,7 +33,7 @@ struct StationEntity: Identifiable, Hashable, Sendable {
     static var myLocation: StationEntity {
         StationEntity(
             id: "_my_location_",
-            name: "My Location",
+            name: "Nearest Station",
             shortCode: "📍"
         )
     }
